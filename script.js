@@ -1,7 +1,11 @@
 /* WBExamPDF — script.js
    FINAL VERSION
-   Desktop + Mobile fixes
+   Original functionality + final fixes
 */
+
+/* =========================================================
+   ORIGINAL DATA
+========================================================= */
 
 var I={
   c1:"images/card1.jpg",
@@ -58,30 +62,228 @@ var col={
 
 
 /* =========================================================
-   TRANSLATION
+   BASIC CARD
 ========================================================= */
 
-var IS_HOME=document.body.hasAttribute("data-home"),
-IDX={
+function card(d){
+
+  return '<div class="card">'+
+    '<div class="im">'+
+      '<img src="'+I[d[1]]+'" alt="">'+
+      '<span class="tag" style="background:'+col[d[0]]+'">'+
+        d[0]+
+      '</span>'+
+    '</div>'+
+
+    '<h3>'+
+      d[2]+
+      '<small>'+d[3]+'</small>'+
+    '</h3>'+
+
+    (d[4]
+      ?'<p>'+d[4]+'</p>'
+      :'<p></p>'
+    )+
+
+    '<div class="pr">'+
+      '<div class="a"><span>★ 100%</span>₹1000</div>'+
+      '<div class="b"><span>★ 50%</span>₹500</div>'+
+      '<div class="c"><span>★ 20%</span>₹100</div>'+
+    '</div>'+
+
+    '<a class="buy">BUY NOW →</a>'+
+
+    '<div class="ft">'+
+      '<div data-link="sample" data-exam="'+d[2]+'">'+
+        '<svg class="i"><use href="#e"/></svg>'+
+        '<span>Sample Preview<br>(2-3 Page)</span>'+
+      '</div>'+
+
+      '<div>'+
+        '<svg class="i"><use href="#l"/></svg>'+
+        '<span>PDF + Unique<br>Password</span>'+
+      '</div>'+
+    '</div>'+
+
+  '</div>';
+
+}
+
+
+if(document.getElementById("r1")){
+
+  document.getElementById("r1").innerHTML=
+    C1.map(card).join("");
+
+  document.getElementById("r2").innerHTML=
+    C2.map(card).join("");
+
+}
+
+
+/* =========================================================
+   ORIGINAL REVIEWS
+========================================================= */
+
+var R=[
+  [
+    "Rohit Das",
+    "“PDF গুলো খুবই ভালোভাবে সাজানো, পরীক্ষার প্রস্তুতির জন্য খুবই সহায়ক!”",
+    "WBPSC Aspirant | 2 দিন আগে"
+  ],
+  [
+    "Priya Mondal",
+    "“প্রতিটি টপিক খুবই ক্লিয়ার এবং সহজ ভাষায় লেখা আছে।”",
+    "SSC CHSL Aspirant | 5 দিন আগে"
+  ],
+  [
+    "Arindam Pal",
+    "“চলমান পরীক্ষার জন্য PDF খুবই উপকারী। সাম্প্রতিক ঘটনা এবং 100% ম্যাচ।”",
+    "Railway NTPC Aspirant | 1 সপ্তাহ আগে"
+  ],
+  [
+    "Soma Ghosh",
+    "“আমি TET এর জন্য নিয়েছি, সত্যিই ভালো কনটেন্ট। সব কিছু এক জায়গায় পাওয়া যায়!”",
+    "TET Aspirant | 3 দিন আগে"
+  ]
+];
+
+
+if(document.getElementById("rr")){
+
+  document.getElementById("rr").innerHTML=
+    R.map(function(r,i){
+
+      return '<div class="rc">'+
+        '<img src="'+F[i]+'" alt="">'+
+        '<div>'+
+          '<b>'+r[0]+'</b>'+
+          '<span class="st">★★★★★</span>'+
+          '<q>'+r[1]+'</q>'+
+          '<small>'+r[2]+'</small>'+
+        '</div>'+
+      '</div>';
+
+    }).join("");
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+var t=
+  1*86400+
+  23*3600+
+  45*60+
+  12;
+
+setInterval(function(){
+
+  t--;
+
+  var v=[
+    Math.floor(t/86400),
+    Math.floor(t%86400/3600),
+    Math.floor(t%3600/60),
+    t%60
+  ];
+
+  document
+    .querySelectorAll(".cd .n")
+    .forEach(function(n,k){
+
+      var x=
+        String(v[k%4]).padStart(2,"0");
+
+      var o=
+        n.dataset.v||
+        n.textContent;
+
+      if(n.dataset.v===x)return;
+
+      n.dataset.v=x;
+
+      n.innerHTML=
+        '<span class="ro">'+
+          '<span>'+x+'</span>'+
+          '<span>'+o+'</span>'+
+        '</span>';
+
+    });
+
+},1000);
+
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+var LINKS={
+  youtube:"",
+  facebook:"",
+  instagram:"",
+  home:"",
+  upcoming:"",
+  bestselling:"",
+  college:"",
+  school:"",
+  courses:"",
+  pdfpackage:"",
+  notifications:"",
+  cart:"",
+  search:"",
+  login:"",
+  register:"",
+  allRunning:"",
+  allUpcoming:"",
+  allReviews:"",
+  buy:"",
+  sample:""
+};
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+var IS_HOME=
+  document.body.hasAttribute("data-home");
+
+var IDX={
   bn:0,
   en:1,
   hi:2
 };
 
+
 function stor(k,v){
+
   try{
-    if(v===undefined)return localStorage.getItem(k);
+
+    if(v===undefined)
+      return localStorage.getItem(k);
+
     localStorage.setItem(k,v);
+
   }catch(e){
+
     return null;
+
   }
+
 }
 
-var LG=stor("lang")||"bn";
+
+var LG=
+  stor("lang")||
+  "bn";
 
 if(!IDX.hasOwnProperty(LG)){
   LG="bn";
 }
+
 
 var DX={};
 
@@ -112,12 +314,12 @@ LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time 
 (গুরুত্বপূর্ণ বিষয়)~~(Important topics)~(महत्वपूर्ण विषय)
 (অতিরিক্ত / সাধারণ বিষয়)~~(Extra / General topics)~(अतिरिक्त / सामान्य विषय)
 চলমান পরীক্ষার PDF~~Running Exam PDF~चालू परीक्षा की PDF
-(Currently Running Exams)~~ ~
+(Currently Running Exams)~~Currently Running Exams~Aktuell laufende Prüfungen
 যে পরীক্ষাগুলো চলছে, তাদের PDF এখনই সংগ্রহ করুন~~Get PDFs for the exams running now~जो परीक्षाएँ चल रही हैं, उनकी PDF अभी पाएँ
 সব দেখুন →~~View all →~सब देखें →
-অনলিম্র PDF প্যাকেজ~আসন্ন PDF প্যাকেজ~Upcoming PDF Package~आगामी PDF पैकेज
+আসন্ন PDF প্যাকেজ~~Upcoming PDF Package~आगामी PDF पैकेज
 চলতি ও আসন্ন পরীক্ষার জন্য Priority-wise PDF~~For current & upcoming exams: Priority-wise PDF~चालू और आगामी परीक्षाओं के लिए Priority-wise PDF
-এই অফারটি সীমিত সময়ের জন্য~~This offer is for a limited time~यह ऑफर सीमित समय के लिए
+এই অফারটি সীমিত সময়ের জন্য~~This offer is for a limited time~यह ऑफर सीमित समय के लिए है
 এখনই PDF কিনুন →~~Buy PDF now →~अभी PDF खरीदें →
 রিভিউ & ফিডব্যাক~~Reviews & Feedback~रिव्यू और फीडबैक
 আমাদের শিক্ষার্থীদের বাস্তব অভিজ্ঞতা~~Real experiences of our students~हमारे विद्यार्थियों के असली अनुभव
@@ -132,16 +334,20 @@ LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time 
 জরুরি বিষয় আগে, সময় বাঁচান~~Urgent topics first, save time~ज़रूरी विषय पहले, समय बचाएँ
 নমুনা দেখে, তারপর কিনুন~~Preview a sample, then buy~पहले नमूना देखें, फिर खरीदें
 সীমিত সময়ের জন্য ৭০% পর্যন্ত ছাড়~~Up to 70% off for a limited time~सीमित समय के लिए 70% तक की छूट
-Follow Us~ফলো করুন~Follow Us~फ़ॉलो करें
+Follow Us~~Follow Us~फ़ॉलो करें
 `
 .split("\n")
 .forEach(function(l){
-  var p=l.split("~");
+
+  var p=
+    l.split("~");
+
   DX[p[0]]=[
     p[1]||p[0],
-    p[2],
-    p[3]
+    p[2]||p[1]||p[0],
+    p[3]||p[2]||p[1]||p[0]
   ];
+
 });
 
 
@@ -151,45 +357,56 @@ var Y={
     "BUY NOW →",
     "अभी खरीदें →"
   ],
+
   sample:[
     "নমুনা দেখুন",
     "Sample Preview",
     "नमूना देखें"
   ],
+
   pg:[
     "(২-৩ পৃষ্ঠা)",
     "(2-3 Page)",
     "(2-3 पृष्ठ)"
   ],
+
   pw1:[
     "PDF + ইউনিক",
     "PDF + Unique",
     "PDF + यूनिक"
   ],
+
   pw2:[
     "পাসওয়ার্ড",
     "Password",
     "पासवर्ड"
   ],
+
   off:[
     "ছাড়",
     "OFF",
     "छूट"
   ],
+
   sold:[
     "জন কিনেছেন",
     "bought",
     "ने खरीदा"
   ],
+
   share:[
     "শেয়ার",
     "Share",
     "शेयर"
   ]
+
 };
 
+
 function tr(k){
+
   return Y[k][IDX[LG]];
+
 }
 
 
@@ -199,11 +416,13 @@ var DS={
     "Complete preparation with Bengali, History, Geography, Constitution, Economy & Current Affairs",
     "बंगाली, इतिहास, भूगोल, संविधान, अर्थशास्त्र और करेंट अफेयर्स के साथ पूरी तैयारी"
   ],
+
   b:[
     "পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি",
     "Complete preparation with Arithmetic, Reasoning, GK & Current Affairs",
     "अंकगणित, रीज़निंग, सामान्य ज्ञान और करेंट अफेयर्स के साथ पूरी तैयारी"
   ],
+
   c:[
     "বাংলা, অঙ্ক, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি",
     "Complete preparation with Bengali, Maths, Reasoning, GK & Current Affairs",
@@ -211,7 +430,16 @@ var DS={
   ]
 };
 
-var DK=["a","b","c","c","b","a"];
+
+var DK=[
+  "a",
+  "b",
+  "c",
+  "c",
+  "b",
+  "a"
+];
+
 
 var TI=[
   ["a","★ 100%",3333,1000],
@@ -219,113 +447,177 @@ var TI=[
   ["c","★ 20%",333,100]
 ];
 
+
 function rp(n){
-  return "₹"+n.toLocaleString("en-IN");
+
+  return "₹"+
+    n.toLocaleString("en-IN");
+
 }
 
 
 /* =========================================================
-   CART STORAGE
+   CART
 ========================================================= */
 
-function carts(){
-  try{
-    var raw=stor("cart");
-
-    if(raw){
-      return JSON.parse(raw);
-    }
-
-    var old=likes();
-
-    if(Object.keys(old).length){
-      stor("cart",JSON.stringify(old));
-      return old;
-    }
-
-    return {};
-  }catch(e){
-    return {};
-  }
-}
-
 function likes(){
+
   try{
-    return JSON.parse(stor("likes")||"{}");
+
+    return JSON.parse(
+      stor("likes")||"{}"
+    );
+
   }catch(e){
+
     return {};
+
   }
+
 }
+
+
+function carts(){
+
+  try{
+
+    var x=
+      JSON.parse(
+        stor("wb_pdf_cart")||"{}"
+      );
+
+    if(
+      x &&
+      typeof x==="object"
+    ){
+      return x;
+    }
+
+  }catch(e){}
+
+  return {};
+
+}
+
+
+function saveCart(x){
+
+  stor(
+    "wb_pdf_cart",
+    JSON.stringify(x)
+  );
+
+}
+
+
+/* Migrate old cart once */
+
+(function(){
+
+  var c=carts();
+
+  if(
+    Object.keys(c).length===0
+  ){
+
+    try{
+
+      var old=
+        JSON.parse(
+          stor("likes")||"{}"
+        );
+
+      if(
+        old &&
+        typeof old==="object" &&
+        Object.keys(old).length
+      ){
+
+        saveCart(old);
+
+      }
+
+    }catch(e){}
+
+  }
+
+})();
+
 
 function cartCount(){
-  var C=carts();
-  var n=Object.keys(C).length;
+
+  var n=
+    Object.keys(carts()).length;
 
   document
-    .querySelectorAll("[data-link=cart] em")
+    .querySelectorAll(
+      '[data-link="cart"] em'
+    )
     .forEach(function(e){
+
       e.textContent=n;
+
     });
 
   return n;
+
 }
 
 
 /* =========================================================
-   PDF CARD
-   Badge duplicate protection included
+   FINAL PDF CARD
+   IMPORTANT:
+   Image already contains badge.
+   Therefore HTML does NOT create second badge.
 ========================================================= */
 
-function card(d,id){
+function finalCard(d,id){
 
-  var lk=likes()[id];
-  var sd=d[5]||0;
-  var soon=d[0]=="Offer Ending Soon";
+  var C=carts();
 
-  var safeLabel=d[0];
+  var added=
+    !!C[id];
 
-  /*
-     IMPORTANT:
-     Badge text is generated only once.
-  */
+  var sd=
+    d[5]||0;
 
-  if(safeLabel=="Most Popular Popular"){
-    safeLabel="Most Popular";
+  var desc="";
+
+  if(
+    id &&
+    id.charAt(0)==="a" &&
+    DS[DK[+id.slice(1)]]
+  ){
+
+    desc=
+      DS[
+        DK[+id.slice(1)]
+      ][IDX[LG]]
+      ||
+      DS[
+        DK[+id.slice(1)]
+      ][0];
+
   }
 
-  if(safeLabel=="Live Live"){
-    safeLabel="Live";
-  }
 
-  if(safeLabel=="New New"){
-    safeLabel="New";
-  }
+  var pr=
+    TI.map(function(x){
 
-  if(safeLabel=="Trending Trending"){
-    safeLabel="Trending";
-  }
-
-  if(safeLabel=="Offer Ending Soon Offer Ending Soon"){
-    safeLabel="Offer Ending Soon";
-  }
-
-  var pr=TI.map(function(x){
-    return '<div class="'+x[0]+'">'+
-      '<span>'+x[1]+'</span>'+
-      '<s>'+rp(x[2])+'</s>'+
-      rp(x[3])+
-      '<em>70% '+tr("off")+'</em>'+
+      return '<div class="'+x[0]+'">'+
+        '<span>'+x[1]+'</span>'+
+        '<s>'+rp(x[2])+'</s>'+
+        rp(x[3])+
+        '<em>70% '+tr("off")+'</em>'+
       '</div>';
-  }).join("");
+
+    }).join("");
+
 
   return '<div class="card">'+
 
     '<div class="im">'+
       '<img src="'+I[d[1]]+'" alt="">'+
-      '<span class="tag" style="background:'+col[safeLabel]+'">'+
-        (soon?'<svg class="i spin"><use href="#t"/></svg>':'')+
-        safeLabel+
-      '</span>'+
     '</div>'+
 
     '<h3>'+
@@ -333,13 +625,11 @@ function card(d,id){
       '<small>'+d[3]+'</small>'+
     '</h3>'+
 
-    '<p>'+
-      (id[0]=="a"
-        ?DS[DK[+id.slice(1)]][IDX[LG]]
-        :"")+
-    '</p>'+
+    '<p>'+desc+'</p>'+
 
-    '<div class="pr">'+pr+'</div>'+
+    '<div class="pr">'+
+      pr+
+    '</div>'+
 
     '<a class="buy" data-link="buy" data-exam="'+d[2]+'">'+
       tr("buy")+
@@ -348,44 +638,83 @@ function card(d,id){
     '<div class="mt">'+
 
       (sd>0
-        ?'<span><svg class="i"><use href="#w"/></svg> '+sd+" "+tr("sold")+"</span>"
+        ?'<span>'+
+          '<svg class="i"><use href="#w"/></svg> '+
+          sd+" "+tr("sold")+
+        '</span>'
         :""
       )+
 
       '<span class="ac">'+
 
-        '<button class="lk'+
-          (lk?" on":"")+
-          '" data-id="'+id+'"'+
-          ' aria-label="'+(lk?"Added to cart":"Add to cart")+'"'+
-          ' title="'+(lk?"Added to cart":"Add to cart")+'">'+
-          '<svg class="i"><use href="#c"/></svg>'+
-          '<b>'+(lk?1:"")+'</b>'+
+        '<button type="button" '+
+          'class="lk'+
+            (added?" on":"")+
+          '" '+
+          'data-id="'+id+'" '+
+          'aria-label="'+
+            (added
+              ?"Remove from cart"
+              :"Add to cart"
+            )+
+          '" '+
+          'title="'+
+            (added
+              ?"Remove from cart"
+              :"Add to cart"
+            )+
+          '">'+
+
+          '<svg class="i">'+
+            '<use href="#c"/>'+
+          '</svg>'+
+
+          '<b>'+
+            (added?"1":"")+
+          '</b>'+
+
         '</button>'+
 
-        '<button class="sb" data-n="'+d[2]+'">'+
-          '<svg class="i"><use href="#sh"/></svg>'+
+        '<button type="button" '+
+          'class="sb" '+
+          'data-n="'+d[2]+'">'+
+
+          '<svg class="i">'+
+            '<use href="#sh"/>'+
+          '</svg>'+
+
           tr("share")+
+
         '</button>'+
 
       '</span>'+
+
     '</div>'+
 
     '<div class="ft">'+
 
       '<div data-link="sample" data-exam="'+d[2]+'">'+
         '<svg class="i"><use href="#e"/></svg>'+
-        '<span>'+tr("sample")+'<br>'+tr("pg")+'</span>'+
+        '<span>'+
+          tr("sample")+
+          '<br>'+
+          tr("pg")+
+        '</span>'+
       '</div>'+
 
       '<div>'+
         '<svg class="i"><use href="#l"/></svg>'+
-        '<span>'+tr("pw1")+'<br>'+tr("pw2")+'</span>'+
+        '<span>'+
+          tr("pw1")+
+          '<br>'+
+          tr("pw2")+
+        '</span>'+
       '</div>'+
 
     '</div>'+
 
   '</div>';
+
 }
 
 
@@ -393,80 +722,150 @@ function sec(a,p){
 
   return a
     .map(function(d,i){
-      return [d,p+i];
+
+      return [
+        d,
+        p+i
+      ];
+
     })
     .sort(function(x,y){
-      return (y[0][5]||0)-(x[0][5]||0);
+
+      return (
+        y[0][5]||0
+      )-
+      (
+        x[0][5]||0
+      );
+
     })
     .map(function(z){
-      return card(z[0],z[1]);
+
+      return finalCard(
+        z[0],
+        z[1]
+      );
+
     })
     .join("");
+
 }
 
 
 function render(){
 
-  if(!document.getElementById("r1"))return;
+  if(
+    !document.getElementById("r1")
+  ){
+    return;
+  }
 
-  document.getElementById("r1").innerHTML=sec(C1,"a");
-  document.getElementById("r2").innerHTML=sec(C2,"b");
+  document.getElementById("r1").innerHTML=
+    sec(C1,"a");
+
+  document.getElementById("r2").innerHTML=
+    sec(C2,"b");
+
 }
 
 
 /* =========================================================
-   LANGUAGE
+   LANGUAGE TEXT SCAN
 ========================================================= */
 
 var NODES=[];
 
+
 function scan(){
 
-  var w=document.createTreeWalker(
-    document.body,
-    NodeFilter.SHOW_TEXT
-  );
+  var w=
+    document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT
+    );
 
   var n;
 
-  while(n=w.nextNode()){
+  while(
+    n=w.nextNode()
+  ){
 
-    var p=n.parentNode.nodeName;
+    var p=
+      n.parentNode.nodeName;
 
-    if(p=="SCRIPT"||p=="STYLE"||p=="OPTION")continue;
+    if(
+      p==="SCRIPT"||
+      p==="STYLE"||
+      p==="OPTION"
+    ){
+      continue;
+    }
 
-    var k=n.nodeValue.trim();
+    var k=
+      n.nodeValue.trim();
 
     if(DX[k]){
+
       NODES.push([
         n,
         k,
-        n.nodeValue.replace(k,"§")
+        n.nodeValue.replace(
+          k,
+          "§"
+        )
       ]);
+
     }
+
   }
+
 }
+
 
 function apply(){
 
   NODES.forEach(function(x){
 
+    var a=
+      DX[x[1]]||
+      [];
+
+    var v=
+      a[IDX[LG]];
+
+    if(
+      v===undefined||
+      v===null||
+      v===""
+    ){
+
+      v=x[1];
+
+    }
+
     x[0].nodeValue=
       x[2].replace(
         "§",
-        DX[x[1]][IDX[LG]]
+        v
       );
 
   });
+
 }
+
 
 function setLang(l){
 
   LG=l;
 
-  stor("lang",l);
+  stor(
+    "lang",
+    l
+  );
 
-  document.getElementById("lg").value=l;
+  document.getElementById(
+    "lg"
+  ).value=l;
 
   document.documentElement.lang=l;
 
@@ -476,562 +875,836 @@ function setLang(l){
 
   cartCount();
 
-  setupPdfRows();
 }
 
-
-/* =========================================================
-   INITIAL
-========================================================= */
 
 scan();
 
 render();
 
-setupPdfRows();
-
-window.addEventListener("resize",function(){
-
-  if(innerWidth<900){
-    setupPdfRows();
-  }
-
-});
-
-document.getElementById("lg").value=LG;
+cartCount();
 
 document.documentElement.lang=LG;
+
+document.getElementById("lg").value=LG;
 
 apply();
 
 
-var lp=document.getElementById("lp");
+var lp=
+  document.getElementById("lp");
+
 
 if(
   lp &&
   IS_HOME &&
   !stor("langChosen")
 ){
+
   lp.classList.add("on");
+
 }
 
 
-document.getElementById("lg").onchange=function(){
+document.getElementById(
+  "lg"
+).onchange=function(){
 
-  stor("langChosen","1");
+  stor(
+    "langChosen",
+    "1"
+  );
 
-  setLang(this.value);
+  setLang(
+    this.value
+  );
 
 };
 
 
 /* =========================================================
-   MOBILE PDF CAROUSEL
+   MOBILE PDF ROW
 ========================================================= */
 
 function setupPdfRows(){
 
-  var mobile=innerWidth<900;
+  var mobile=
+    innerWidth<900;
 
-  document.querySelectorAll(".sec .row").forEach(function(row){
+  document
+    .querySelectorAll(
+      ".sec .row"
+    )
+    .forEach(function(row){
 
-    var isRunning=row.id==="r1";
-
-    if(
-      mobile &&
-      !row.parentElement.classList.contains("pdf-row-wrap")
-    ){
-
-      var wrap=document.createElement("div");
-
-      wrap.className="pdf-row-wrap";
-
-      row.parentNode.insertBefore(wrap,row);
-
-      wrap.appendChild(row);
-
-      var l=document.createElement("button");
-      var r=document.createElement("button");
-
-      l.className="pdf-arrow left";
-      r.className="pdf-arrow right";
-
-      l.type="button";
-      r.type="button";
-
-      l.innerHTML="‹";
-      r.innerHTML="›";
-
-      l.setAttribute("aria-label","Previous PDF");
-      r.setAttribute("aria-label","Next PDF");
-
-      wrap.appendChild(l);
-      wrap.appendChild(r);
-
-      l.addEventListener("click",function(){
-
-        row.scrollBy({
-          left:-Math.max(220,row.clientWidth*.72),
-          behavior:"smooth"
-        });
-
-      });
-
-      r.addEventListener("click",function(){
-
-        row.scrollBy({
-          left:Math.max(220,row.clientWidth*.72),
-          behavior:"smooth"
-        });
-
-      });
-
-    }
+      var isRunning=
+        row.id==="r1";
 
 
-    if(
-      isRunning &&
-      !row.dataset.autoSlide
-    ){
+      if(
+        mobile &&
+        !row.parentElement.classList.contains(
+          "pdf-row-wrap"
+        )
+      ){
 
-      row.dataset.autoSlide="1";
+        var wrap=
+          document.createElement(
+            "div"
+          );
 
-      var timer=null;
+        wrap.className=
+          "pdf-row-wrap";
 
-      function nextRunning(){
+        row.parentNode.insertBefore(
+          wrap,
+          row
+        );
 
-        if(!document.body.contains(row))return;
+        wrap.appendChild(
+          row
+        );
 
-        var max=row.scrollWidth-row.clientWidth;
 
-        if(max<=2)return;
+        var left=
+          document.createElement(
+            "button"
+          );
 
-        var step=mobile?236:row.clientWidth;
+        var right=
+          document.createElement(
+            "button"
+          );
 
-        var next=row.scrollLeft+step;
+        left.type="button";
+        right.type="button";
 
-        if(next>=max-2){
-          next=0;
-        }
+        left.className=
+          "pdf-arrow left";
 
-        row.scrollTo({
-          left:next,
-          behavior:"smooth"
-        });
+        right.className=
+          "pdf-arrow right";
 
-      }
+        left.innerHTML="‹";
+        right.innerHTML="›";
 
-      function startAuto(){
+        left.setAttribute(
+          "aria-label",
+          "Previous PDF"
+        );
 
-        clearInterval(timer);
+        right.setAttribute(
+          "aria-label",
+          "Next PDF"
+        );
 
-        timer=setInterval(
-          nextRunning,
-          3000
+        wrap.appendChild(left);
+        wrap.appendChild(right);
+
+
+        left.addEventListener(
+          "click",
+          function(){
+
+            row.scrollBy({
+              left:-Math.max(
+                220,
+                row.clientWidth*.72
+              ),
+              behavior:"smooth"
+            });
+
+          }
+        );
+
+
+        right.addEventListener(
+          "click",
+          function(){
+
+            row.scrollBy({
+              left:Math.max(
+                220,
+                row.clientWidth*.72
+              ),
+              behavior:"smooth"
+            });
+
+          }
         );
 
       }
 
-      row.addEventListener(
-        "mouseenter",
-        function(){
-          if(innerWidth>=900){
-            clearInterval(timer);
-          }
-        }
-      );
-
-      row.addEventListener(
-        "mouseleave",
-        function(){
-          if(innerWidth>=900){
-            startAuto();
-          }
-        }
-      );
-
-      row.addEventListener(
-        "touchstart",
-        function(){
-          clearInterval(timer);
-        },
-        {passive:true}
-      );
-
-      row.addEventListener(
-        "touchend",
-        function(){
-          setTimeout(startAuto,900);
-        },
-        {passive:true}
-      );
-
-      startAuto();
-
-    }
-
-  });
-
-
-  if(!window.__pdfIO){
-
-    window.__pdfIO=
-      new IntersectionObserver(
-        function(es){
-
-          es.forEach(function(e){
-
-            e.target.classList.toggle(
-              "pdf-active",
-              e.isIntersecting &&
-              e.intersectionRatio>.22
-            );
-
-          });
-
-        },
-        {threshold:[.22]}
-      );
-
-    document.querySelectorAll(".sec").forEach(function(sec){
 
       if(
-        sec.querySelector(".pdf-row-wrap")
+        isRunning &&
+        !row.dataset.autoSlide
       ){
-        window.__pdfIO.observe(sec);
+
+        row.dataset.autoSlide="1";
+
+        var timer=null;
+
+
+        function nextRunning(){
+
+          var max=
+            row.scrollWidth-
+            row.clientWidth;
+
+          if(max<=2)return;
+
+          var step=
+            innerWidth<900
+              ?236
+              :row.clientWidth;
+
+          var next=
+            row.scrollLeft+
+            step;
+
+          if(
+            next>=max-2
+          ){
+            next=0;
+          }
+
+          row.scrollTo({
+            left:next,
+            behavior:"smooth"
+          });
+
+        }
+
+
+        function startAuto(){
+
+          clearInterval(
+            timer
+          );
+
+          timer=
+            setInterval(
+              nextRunning,
+              3000
+            );
+
+        }
+
+
+        row.addEventListener(
+          "mouseenter",
+          function(){
+
+            if(
+              innerWidth>=900
+            ){
+
+              clearInterval(
+                timer
+              );
+
+            }
+
+          }
+        );
+
+
+        row.addEventListener(
+          "mouseleave",
+          function(){
+
+            if(
+              innerWidth>=900
+            ){
+
+              startAuto();
+
+            }
+
+          }
+        );
+
+
+        row.addEventListener(
+          "touchstart",
+          function(){
+
+            clearInterval(
+              timer
+            );
+
+          },
+          {passive:true}
+        );
+
+
+        row.addEventListener(
+          "touchend",
+          function(){
+
+            setTimeout(
+              startAuto,
+              700
+            );
+
+          },
+          {passive:true}
+        );
+
+
+        startAuto();
+
       }
 
     });
+
+
+  if(
+    !window.__wbPdfObserver
+  ){
+
+    window.__wbPdfObserver=
+      new IntersectionObserver(
+        function(entries){
+
+          entries.forEach(
+            function(e){
+
+              e.target.classList.toggle(
+                "pdf-active",
+                e.isIntersecting &&
+                e.intersectionRatio>.22
+              );
+
+            }
+          );
+
+        },
+        {
+          threshold:[.22]
+        }
+      );
+
+
+    document
+      .querySelectorAll(".sec")
+      .forEach(function(sec){
+
+        if(
+          sec.querySelector(
+            "#r1"
+          )
+        ){
+
+          window.__wbPdfObserver.observe(
+            sec
+          );
+
+        }
+
+      });
 
   }
 
 }
 
 
+setupPdfRows();
+
+
+window.addEventListener(
+  "resize",
+  function(){
+
+    if(
+      innerWidth<900
+    ){
+
+      setupPdfRows();
+
+    }
+
+  }
+);
+
+
 /* =========================================================
    CART CLICK
-   IMPORTANT:
    ADD = +1
-   REMOVE = NO CHANGE
+   REMOVE = NO DECREASE
+   RE-ADD = +1
 ========================================================= */
 
 cartCount();
 
 
-var lx=document.getElementById("lx");
+var lx=
+  document.getElementById("lx");
+
 
 if(lx){
 
   lx.onclick=function(){
 
-    stor("langChosen","1");
+    stor(
+      "langChosen",
+      "1"
+    );
 
-    lp.classList.remove("on");
+    lp.classList.remove(
+      "on"
+    );
 
   };
 
 }
 
 
-document.addEventListener("click",function(e){
+/* =========================================================
+   SUPABASE
+========================================================= */
 
-  var b=e.target.closest("button");
+var SUPABASE_URL=
+  "https://xitiwikhzvfyeqdxspqk.supabase.co";
 
-  if(!b)return;
+var SUPABASE_KEY=
+  "sb_publishable_PzuDMCMLsQRnpbuob8uhEQ_xQ20Y75D";
+
+var sbClient=null;
+
+var sbLoading=null;
 
 
-  if(b.dataset.l){
+function getSupabase(){
 
-    stor("langChosen","1");
+  if(sbClient){
 
-    setLang(b.dataset.l);
-
-    if(lp){
-      lp.classList.remove("on");
-    }
+    return Promise.resolve(
+      sbClient
+    );
 
   }
 
 
-  else if(b.classList.contains("lk")){
+  if(
+    window.supabase &&
+    typeof window.supabase.createClient===
+      "function"
+  ){
 
-    var L=likes();
-    var C=carts();
-    var id=b.dataset.id;
+    sbClient=
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
 
-    /*
-       This is checked BEFORE changing state.
-    */
-    var wasAdded=!!L[id];
+    return Promise.resolve(
+      sbClient
+    );
+
+  }
+
+
+  if(sbLoading){
+
+    return sbLoading;
+
+  }
+
+
+  sbLoading=
+    new Promise(
+      function(resolve,reject){
+
+        var s=
+          document.createElement(
+            "script"
+          );
+
+        s.src=
+          "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+        s.async=true;
+
+
+        s.onload=function(){
+
+          if(
+            window.supabase &&
+            typeof window.supabase.createClient===
+              "function"
+          ){
+
+            sbClient=
+              window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+              );
+
+            resolve(
+              sbClient
+            );
+
+          }else{
+
+            reject(
+              new Error(
+                "Supabase unavailable"
+              )
+            );
+
+          }
+
+        };
+
+
+        s.onerror=function(){
+
+          reject(
+            new Error(
+              "Supabase load failed"
+            )
+          );
+
+        };
+
+
+        document.head.appendChild(
+          s
+        );
+
+      }
+    );
+
+
+  return sbLoading;
+
+}
+
+
+function showSold(total){
+
+  var n=
+    Number(total);
+
+  if(
+    !Number.isFinite(n)
+  ){
+    return;
+  }
+
+
+  document
+    .querySelectorAll(
+      ".wb-total-pdf-added"
+    )
+    .forEach(function(el){
+
+      el.textContent=
+        "Total PDF Sold : "+
+        n.toLocaleString(
+          "en-IN"
+        );
+
+
+      el.classList.remove(
+        "wb-counter-update"
+      );
+
+      void el.offsetWidth;
+
+      el.classList.add(
+        "wb-counter-update"
+      );
+
+
+      setTimeout(
+        function(){
+
+          el.classList.remove(
+            "wb-counter-update"
+          );
+
+        },
+        350
+      );
+
+    });
+
+}
+
+
+function loadSold(){
+
+  getSupabase()
+    .then(function(db){
+
+      return db
+        .from("pdf_sales_counter")
+        .select("total_sold")
+        .eq("id",1)
+        .single();
+
+    })
+    .then(function(r){
+
+      if(
+        !r.error &&
+        r.data
+      ){
+
+        showSold(
+          r.data.total_sold
+        );
+
+      }
+
+    })
+    .catch(function(e){
+
+      console.error(
+        "PDF counter load:",
+        e
+      );
+
+    });
+
+}
+
+
+function incrementSold(){
+
+  getSupabase()
+    .then(function(db){
+
+      return db.rpc(
+        "increment_pdf_sales"
+      );
+
+    })
+    .then(function(r){
+
+      if(
+        r.error
+      ){
+
+        console.error(
+          "PDF counter increment:",
+          r.error
+        );
+
+        return;
+
+      }
+
+
+      var v=
+        r.data;
+
+
+      if(
+        Array.isArray(v) &&
+        v[0] &&
+        v[0].total_sold!==undefined
+      ){
+
+        v=
+          v[0].total_sold;
+
+      }
+
+
+      if(
+        v!==undefined &&
+        v!==null
+      ){
+
+        showSold(v);
+
+      }else{
+
+        loadSold();
+
+      }
+
+    })
+    .catch(function(e){
+
+      console.error(
+        "PDF counter increment:",
+        e
+      );
+
+    });
+
+}
+
+
+window.wbIncrementPdfSold=
+  incrementSold;
+
+
+/* =========================================================
+   CART EVENT
+   Capture phase stops old cart handler.
+========================================================= */
+
+document.addEventListener(
+  "click",
+  function(e){
+
+    var b=
+      e.target.closest(
+        "button.lk"
+      );
+
+    if(!b)return;
+
+
+    e.preventDefault();
+
+    e.stopImmediatePropagation();
+
+
+    var id=
+      b.dataset.id;
+
+    var C=
+      carts();
+
+    var wasAdded=
+      !!C[id];
+
 
     if(wasAdded){
 
-      /*
-         REMOVE:
-         cart removed
-         global sold counter DOES NOT decrease
-      */
-
-      delete L[id];
       delete C[id];
 
     }else{
 
-      /*
-         ADD:
-         cart added
-         global sold counter +1
-      */
-
-      L[id]=1;
       C[id]=1;
 
     }
 
-    stor(
-      "likes",
-      JSON.stringify(L)
-    );
 
-    stor(
-      "cart",
-      JSON.stringify(C)
-    );
+    saveCart(C);
+
 
     b.classList.toggle(
       "on",
-      !!L[id]
+      !wasAdded
     );
 
-    b.querySelector("b").textContent=
-      L[id]?1:"";
+
+    var count=
+      b.querySelector("b");
+
+    if(count){
+
+      count.textContent=
+        !wasAdded
+          ?"1"
+          :"";
+
+    }
+
 
     b.setAttribute(
       "aria-label",
-      L[id]
-        ?"Added to cart"
+      !wasAdded
+        ?"Remove from cart"
         :"Add to cart"
     );
 
+
     b.title=
-      L[id]
-        ?"Added to cart"
+      !wasAdded
+        ?"Remove from cart"
         :"Add to cart";
+
 
     cartCount();
 
 
     /*
-       Only ADD triggers Supabase +1.
+      ADD:
+      +1
+
+      REMOVE:
+      No decrease
     */
 
-    if(
-      !wasAdded &&
-      typeof window.wbIncrementPdfSold==="function"
-    ){
+    if(!wasAdded){
 
-      window.wbIncrementPdfSold();
+      incrementSold();
 
     }
 
-  }
-
-
-  else if(b.classList.contains("sb")){
-
-    var u=
-      location.href.split("#")[0];
-
-    var x=
-      b.dataset.n+
-      " – WBExamPDF";
-
-    if(navigator.share){
-
-      navigator.share({
-        title:x,
-        url:u
-      }).catch(function(){});
-
-    }else{
-
-      window.open(
-        "https://wa.me/?text="+
-        encodeURIComponent(
-          x+" "+u
-        ),
-        "_blank"
-      );
-
-    }
-
-  }
-
-});
-
-
-/* =========================================================
-   TIMER
-========================================================= */
-
-var t=
-  1*86400+
-  23*3600+
-  45*60+
-  12;
-
-setInterval(function(){
-
-  t--;
-
-  var v=[
-    Math.floor(t/86400),
-    Math.floor(t%86400/3600),
-    Math.floor(t%3600/60),
-    t%60
-  ];
-
-  document
-    .querySelectorAll(".cd .n")
-    .forEach(function(n,k){
-
-      var x=
-        String(v[k%4])
-        .padStart(2,"0");
-
-      var o=
-        n.dataset.v||
-        n.textContent;
-
-      if(n.dataset.v===x)return;
-
-      n.dataset.v=x;
-
-      n.innerHTML=
-        '<span class="ro">'+
-          '<span>'+x+'</span>'+
-          '<span>'+o+'</span>'+
-        '</span>';
-
-    });
-
-},1000);
-
-
-/* =========================================================
-   MUTATION / ANIMATION
-========================================================= */
-
-new MutationObserver(function(ms){
-
-  ms.forEach(function(m){
-
-    var e=
-      m.target.nodeType===3
-        ?m.target.parentNode
-        :m.target;
-
-    if(
-      e &&
-      e.classList &&
-      e.classList.contains("n")
-    ){
-
-      e.classList.remove("fl");
-
-      void e.offsetWidth;
-
-      e.classList.add("fl");
-
-    }
-
-  });
-
-  if(t<3600){
-
-    document
-      .querySelectorAll(".tim,.box")
-      .forEach(function(x){
-        x.classList.add("hot");
-      });
-
-  }
-
-}).observe(
-  document.body,
-  {
-    subtree:true,
-    childList:true,
-    characterData:true
-  }
+  },
+  true
 );
 
 
 /* =========================================================
-   GLOBAL LINKS
-========================================================= */
-
-var LINKS={
-  youtube:"",
-  facebook:"",
-  instagram:"",
-  home:"",
-  upcoming:"",
-  bestselling:"",
-  college:"",
-  school:"",
-  courses:"",
-  pdfpackage:"",
-  notifications:"",
-  cart:"",
-  search:"",
-  login:"",
-  register:"",
-  allRunning:"",
-  allUpcoming:"",
-  allReviews:"",
-  buy:"",
-  sample:""
-};
-
-
-/* =========================================================
-   ACCOUNT MENU + HERO SLIDER
+   HERO / ACCOUNT / LINKS
 ========================================================= */
 
 (function(){
 
-  var am=document.getElementById("am");
+  var am=
+    document.getElementById(
+      "am"
+    );
 
-  function tog(el,up){
 
-    if(am.classList.contains("on")){
+  function tog(
+    el,
+    up
+  ){
 
-      am.classList.remove("on");
+    if(
+      am.classList.contains(
+        "on"
+      )
+    ){
+
+      am.classList.remove(
+        "on"
+      );
 
       return;
 
     }
 
-    var r=el.getBoundingClientRect();
+
+    var r=
+      el.getBoundingClientRect();
+
 
     am.style.right=
       Math.max(
         8,
         innerWidth-r.right-4
-      )+"px";
+      )+
+      "px";
+
 
     am.style.top=
       up
         ?"auto"
         :(r.bottom+8)+"px";
 
+
     am.style.bottom=
       up
         ?(innerHeight-r.top+8)+"px"
         :"auto";
 
-    am.classList.add("on");
+
+    am.classList.add(
+      "on"
+    );
 
   }
 
@@ -1044,6 +1717,7 @@ var LINKS={
         e.target.closest(
           ".pf,.pfb"
         );
+
 
       if(p){
 
@@ -1058,33 +1732,52 @@ var LINKS={
 
       }
 
+
       if(
-        !e.target.closest("#am")
+        !e.target.closest(
+          "#am"
+        )
       ){
 
-        am.classList.remove("on");
+        am.classList.remove(
+          "on"
+        );
 
       }
+
 
       var a=
         e.target.closest(
           "[data-link]"
         );
 
+
       if(!a)return;
+
 
       e.preventDefault();
 
+
       var u=
-        LINKS[a.dataset.link]||"";
+        LINKS[
+          a.dataset.link
+        ]||
+        "";
+
 
       if(!u)return;
 
-      am.classList.remove("on");
+
+      am.classList.remove(
+        "on"
+      );
+
 
       if(
         /^(youtube|facebook|instagram)$/
-        .test(a.dataset.link)
+          .test(
+            a.dataset.link
+          )
       ){
 
         window.open(
@@ -1096,6 +1789,7 @@ var LINKS={
         return;
 
       }
+
 
       location.href=
         u.replace(
@@ -1113,9 +1807,13 @@ var LINKS={
     "keydown",
     function(e){
 
-      if(e.key==="Escape"){
+      if(
+        e.key==="Escape"
+      ){
 
-        am.classList.remove("on");
+        am.classList.remove(
+          "on"
+        );
 
       }
 
@@ -1123,15 +1821,27 @@ var LINKS={
   );
 
 
-  if(!document.getElementById("trk"))return;
+  if(
+    !document.getElementById(
+      "trk"
+    )
+  ){
+    return;
+  }
+
 
   var trk=
-    document.getElementById("trk");
+    document.getElementById(
+      "trk"
+    );
 
   var dots=
-    document.getElementById("dots");
+    document.getElementById(
+      "dots"
+    );
 
-  var n=trk.children.length;
+  var n=
+    trk.children.length;
 
   var i=0;
 
@@ -1140,10 +1850,14 @@ var LINKS={
 
   function go(k){
 
-    i=(k+n)%n;
+    i=
+      (k+n)%n;
 
     trk.style.transform=
-      "translateX(-"+i*100+"%)";
+      "translateX(-"+
+      i*100+
+      "%)";
+
 
     [].forEach.call(
       dots.children,
@@ -1162,14 +1876,19 @@ var LINKS={
 
   function start(){
 
-    clearInterval(tm);
-
-    tm=setInterval(
-      function(){
-        go(i+1);
-      },
-      3000
+    clearInterval(
+      tm
     );
+
+    tm=
+      setInterval(
+        function(){
+
+          go(i+1);
+
+        },
+        3000
+      );
 
   }
 
@@ -1183,12 +1902,15 @@ var LINKS={
     (function(k){
 
       var d=
-        document.createElement("button");
+        document.createElement(
+          "button"
+        );
 
       d.setAttribute(
         "aria-label",
         "Slide "+(k+1)
       );
+
 
       d.onclick=function(){
 
@@ -1198,7 +1920,10 @@ var LINKS={
 
       };
 
-      dots.appendChild(d);
+
+      dots.appendChild(
+        d
+      );
 
     })(k);
 
@@ -1206,46 +1931,70 @@ var LINKS={
 
 
   var sl=
-    document.getElementById("sl");
+    document.getElementById(
+      "sl"
+    );
 
   var sx=0;
 
-  sl.onmouseenter=function(){
-    clearInterval(tm);
-  };
 
-  sl.onmouseleave=start;
+  if(sl){
 
+    sl.onmouseenter=function(){
 
-  sl.addEventListener(
-    "touchstart",
-    function(e){
-      sx=e.touches[0].clientX;
-    },
-    {passive:true}
-  );
+      clearInterval(
+        tm
+      );
+
+    };
 
 
-  sl.addEventListener(
-    "touchend",
-    function(e){
+    sl.onmouseleave=
+      start;
 
-      var dx=
-        e.changedTouches[0].clientX-sx;
 
-      if(Math.abs(dx)>40){
+    sl.addEventListener(
+      "touchstart",
+      function(e){
 
-        go(
-          i+
-          (dx<0?1:-1)
-        );
+        sx=
+          e.touches[0].clientX;
 
-        start();
+      },
+      {passive:true}
+    );
+
+
+    sl.addEventListener(
+      "touchend",
+      function(e){
+
+        var dx=
+          e.changedTouches[0].clientX-
+          sx;
+
+
+        if(
+          Math.abs(dx)>40
+        ){
+
+          go(
+            i+
+            (
+              dx<0
+                ?1
+                :-1
+            )
+          );
+
+          start();
+
+        }
 
       }
+    );
 
-    }
-  );
+  }
 
 
   go(0);
@@ -1256,12 +2005,19 @@ var LINKS={
 
 
 /* =========================================================
-   REVIEW SYSTEM
+   REVIEWS
 ========================================================= */
 
 (function(){
 
-  if(!document.getElementById("rr"))return;
+  if(
+    !document.getElementById(
+      "rr"
+    )
+  ){
+    return;
+  }
+
 
   var RT={
     title:[
@@ -1269,135 +2025,117 @@ var LINKS={
       "Write your review",
       "अपना रिव्यू लिखें"
     ],
+
     open:[
       "রিভিউ লিখুন",
       "Write a review",
       "रिव्यू लिखें"
     ],
+
     rate:[
       "আপনার রেটিং",
       "Your rating",
       "आपकी रेटिंग"
     ],
+
     submit:[
       "রিভিউ জমা দিন",
       "Submit review",
       "रिव्यू जमा करें"
     ],
+
     name:[
       "আপনার নাম",
       "Your name",
       "आपका नाम"
     ],
+
     exam:[
       "কোন পরীক্ষার জন্য নিয়েছেন? (ঐচ্ছিক)",
       "Which exam did you prepare for? (optional)",
       "किस परीक्षा के लिए लिया? (वैकल्पिक)"
     ],
+
     text:[
       "আপনার অভিজ্ঞতা লিখুন...",
       "Share your experience...",
       "अपना अनुभव साझा करें..."
     ],
+
     err:[
       "নাম ও রিভিউ (কমপক্ষে ১০ অক্ষর) লিখুন",
       "Please enter your name and a review (min 10 characters)",
       "नाम और रिव्यू (कम से कम 10 अक्षर) लिखें"
     ],
+
     thanks:[
       "ধন্যবাদ! আপনার রিভিউ যোগ হয়েছে",
       "Thank you! Your review has been added",
       "धन्यवाद! आपका रिव्यू जुड़ गया"
     ],
+
     just:[
       "এইমাত্র",
       "Just now",
       "अभी-अभी"
     ]
+
   };
 
 
   function rt(k){
+
     return RT[k][IDX[LG]];
+
   }
 
 
   function rtApply(){
 
-    []
-      .forEach.call(
-        document.querySelectorAll("[data-rt]"),
-        function(e){
-          e.textContent=
-            rt(e.dataset.rt);
-        }
-      );
+    document
+      .querySelectorAll(
+        "[data-rt]"
+      )
+      .forEach(function(e){
 
-    []
-      .forEach.call(
-        document.querySelectorAll("[data-ph]"),
-        function(e){
-          e.placeholder=
-            rt(e.dataset.ph);
-        }
-      );
+        e.textContent=
+          rt(
+            e.dataset.rt
+          );
+
+      });
+
+
+    document
+      .querySelectorAll(
+        "[data-ph]"
+      )
+      .forEach(function(e){
+
+        e.placeholder=
+          rt(
+            e.dataset.ph
+          );
+
+      });
 
   }
 
 
-  var _sl=setLang;
+  var oldSetLang=
+    setLang;
+
 
   setLang=function(l){
 
-    _sl(l);
+    oldSetLang(l);
 
     rtApply();
 
   };
 
+
   rtApply();
-
-
-  /* =====================================================
-     MOVE WRITE REVIEW TO RIGHT SIDE
-     DESKTOP ONLY VIA CSS
-  ===================================================== */
-
-  function placeReviewButton(){
-
-    var section=
-      document.querySelector(".rv");
-
-    var head=
-      section &&
-      section.querySelector(".sh");
-
-    var button=
-      document.getElementById("rvb");
-
-    var holder=
-      button &&
-      button.closest(".rvf");
-
-    if(
-      !head||
-      !button||
-      !holder
-    )return;
-
-    if(!head.contains(holder)){
-
-      head.appendChild(holder);
-
-    }
-
-    holder.classList.add(
-      "wb-review-right"
-    );
-
-  }
-
-  placeReviewButton();
 
 
   /* =====================================================
@@ -1405,7 +2143,9 @@ var LINKS={
   ===================================================== */
 
   var r=
-    document.getElementById("rr");
+    document.getElementById(
+      "rr"
+    );
 
   var hold=false;
 
@@ -1417,12 +2157,17 @@ var LINKS={
     if(
       hold||
       Date.now()<until
-    )return;
+    ){
+      return;
+    }
+
 
     var c=
       r.firstElementChild;
 
+
     if(!c)return;
+
 
     if(
       r.scrollLeft+
@@ -1438,7 +2183,8 @@ var LINKS={
     }else{
 
       r.scrollBy({
-        left:c.offsetWidth+10,
+        left:
+          c.offsetWidth+10,
         behavior:"smooth"
       });
 
@@ -1460,6 +2206,7 @@ var LINKS={
     }
   );
 
+
   r.addEventListener(
     "mouseleave",
     function(){
@@ -1472,13 +2219,15 @@ var LINKS={
     "touchstart",
     "pointerdown",
     "wheel"
-  ]
-  .forEach(function(e){
+  ].forEach(function(e){
 
     r.addEventListener(
       e,
       function(){
-        until=Date.now()+6000;
+
+        until=
+          Date.now()+6000;
+
       },
       {passive:true}
     );
@@ -1487,7 +2236,7 @@ var LINKS={
 
 
   /* =====================================================
-     USER REVIEWS
+     USER REVIEW FORM
   ===================================================== */
 
   var REVIEW_POST="";
@@ -1495,20 +2244,21 @@ var LINKS={
 
   function esc(x){
 
-    return String(x).replace(
-      /[&<>"']/g,
-      function(c){
+    return String(x)
+      .replace(
+        /[&<>"']/g,
+        function(c){
 
-        return {
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#39;"
-        }[c];
+          return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#39;"
+          }[c];
 
-      }
-    );
+        }
+      );
 
   }
 
@@ -1516,11 +2266,15 @@ var LINKS={
   function mine(){
 
     try{
+
       return JSON.parse(
         stor("myReviews")||"[]"
       );
+
     }catch(e){
+
       return [];
+
     }
 
   }
@@ -1532,26 +2286,32 @@ var LINKS={
       "★".repeat(v.s)+
       "☆".repeat(5-v.s);
 
+
     return '<div class="rc mine">'+
+
       '<div class="av">'+
         esc(
           v.n
-          .trim()
-          .charAt(0)
-          .toUpperCase()
+            .trim()
+            .charAt(0)
+            .toUpperCase()
         )+
       '</div>'+
+
       '<div>'+
         '<b>'+esc(v.n)+'</b>'+
         '<span class="st">'+st+'</span>'+
         '<q>“'+esc(v.t)+'”</q>'+
         '<small>'+
-          (v.e
-            ?esc(v.e)+" | "
-            :"")+
+          (
+            v.e
+              ?esc(v.e)+" | "
+              :""
+          )+
           rt("just")+
         '</small>'+
       '</div>'+
+
     '</div>';
 
   }
@@ -1571,15 +2331,21 @@ var LINKS={
 
 
   var rm=
-    document.getElementById("rm");
+    document.getElementById(
+      "rm"
+    );
 
   var rs=
-    document.getElementById("rs");
+    document.getElementById(
+      "rs"
+    );
 
   var rate=5;
 
   var tx=
-    document.getElementById("rtx");
+    document.getElementById(
+      "rtx"
+    );
 
 
   function paint(){
@@ -1599,6 +2365,7 @@ var LINKS={
 
   }
 
+
   paint();
 
 
@@ -1607,11 +2374,14 @@ var LINKS={
     function(e){
 
       var b=
-        e.target.closest("button");
+        e.target.closest(
+          "button"
+        );
 
       if(!b)return;
 
-      rate=+b.dataset.s;
+      rate=
+        +b.dataset.s;
 
       paint();
 
@@ -1621,17 +2391,25 @@ var LINKS={
 
   function openM(){
 
-    rm.classList.add("on");
+    rm.classList.add(
+      "on"
+    );
 
     document.body.style.overflow=
       "hidden";
 
-    document.getElementById("rer")
-      .textContent="";
+    document.getElementById(
+      "rer"
+    ).textContent="";
+
 
     setTimeout(
       function(){
-        document.getElementById("rn").focus();
+
+        document.getElementById(
+          "rn"
+        ).focus();
+
       },
       50
     );
@@ -1641,26 +2419,38 @@ var LINKS={
 
   function closeM(){
 
-    rm.classList.remove("on");
+    rm.classList.remove(
+      "on"
+    );
 
-    document.body.style.overflow="";
+    document.body.style.overflow=
+      "";
 
   }
 
 
-  document.getElementById("rvb")
-    .onclick=openM;
+  document.getElementById(
+    "rvb"
+  ).onclick=
+    openM;
 
-  document.getElementById("rmx")
-    .onclick=closeM;
+
+  document.getElementById(
+    "rmx"
+  ).onclick=
+    closeM;
 
 
   rm.addEventListener(
     "click",
     function(e){
 
-      if(e.target===rm){
+      if(
+        e.target===rm
+      ){
+
         closeM();
+
       }
 
     }
@@ -1671,8 +2461,12 @@ var LINKS={
     "keydown",
     function(e){
 
-      if(e.key==="Escape"){
+      if(
+        e.key==="Escape"
+      ){
+
         closeM();
+
       }
 
     }
@@ -1683,141 +2477,166 @@ var LINKS={
     "input",
     function(){
 
-      document.getElementById("rcn")
-        .textContent=
-        tx.value.length+"/200";
+      document.getElementById(
+        "rcn"
+      ).textContent=
+        tx.value.length+
+        "/200";
 
     }
   );
 
 
-  document.getElementById("rsb")
-    .onclick=function(){
+  document.getElementById(
+    "rsb"
+  ).onclick=function(){
 
-      var n=
-        document.getElementById("rn")
-        .value.trim();
+    var n=
+      document.getElementById(
+        "rn"
+      ).value.trim();
 
-      var e=
-        document.getElementById("re")
-        .value.trim();
+    var e=
+      document.getElementById(
+        "re"
+      ).value.trim();
 
-      var t=
-        tx.value.trim();
-
-
-      if(
-        !n||
-        t.length<10
-      ){
-
-        document.getElementById("rer")
-          .textContent=
-          rt("err");
-
-        return;
-
-      }
+    var t=
+      tx.value.trim();
 
 
-      var v={
-        n:n,
-        e:e,
-        t:t,
-        s:rate,
-        d:Date.now()
-      };
+    if(
+      !n||
+      t.length<10
+    ){
+
+      document.getElementById(
+        "rer"
+      ).textContent=
+        rt("err");
+
+      return;
+
+    }
 
 
-      var L=mine();
+    var v={
+      n:n,
+      e:e,
+      t:t,
+      s:rate,
+      d:Date.now()
+    };
 
-      L.push(v);
 
+    var list=
+      mine();
+
+    list.push(v);
+
+
+    try{
+
+      stor(
+        "myReviews",
+        JSON.stringify(
+          list.slice(-20)
+        )
+      );
+
+    }catch(x){}
+
+
+    if(REVIEW_POST){
 
       try{
 
-        stor(
-          "myReviews",
-          JSON.stringify(
-            L.slice(-20)
-          )
+        fetch(
+          REVIEW_POST,
+          {
+            method:"POST",
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
+            body:
+              JSON.stringify(v)
+          }
+        ).catch(
+          function(){}
         );
 
       }catch(x){}
 
-
-      if(REVIEW_POST){
-
-        try{
-
-          fetch(
-            REVIEW_POST,
-            {
-              method:"POST",
-              headers:{
-                "Content-Type":
-                  "application/json"
-              },
-              body:JSON.stringify(v)
-            }
-          ).catch(function(){});
-
-        }catch(x){}
-
-      }
+    }
 
 
-      r.insertAdjacentHTML(
-        "afterbegin",
-        cardHTML(v)
+    r.insertAdjacentHTML(
+      "afterbegin",
+      cardHTML(v)
+    );
+
+
+    r.scrollTo({
+      left:0,
+      behavior:"smooth"
+    });
+
+
+    until=
+      Date.now()+8000;
+
+
+    document.getElementById(
+      "rn"
+    ).value="";
+
+    document.getElementById(
+      "re"
+    ).value="";
+
+    tx.value="";
+
+
+    document.getElementById(
+      "rcn"
+    ).textContent=
+      "0/200";
+
+
+    rate=5;
+
+    paint();
+
+    closeM();
+
+
+    var ts=
+      document.getElementById(
+        "ts"
       );
 
 
-      r.scrollTo({
-        left:0,
-        behavior:"smooth"
-      });
+    ts.textContent=
+      rt("thanks");
+
+    ts.classList.add(
+      "on"
+    );
 
 
-      until=
-        Date.now()+8000;
+    setTimeout(
+      function(){
 
+        ts.classList.remove(
+          "on"
+        );
 
-      document.getElementById("rn")
-        .value="";
+      },
+      3200
+    );
 
-      document.getElementById("re")
-        .value="";
-
-      tx.value="";
-
-      document.getElementById("rcn")
-        .textContent="0/200";
-
-      rate=5;
-
-      paint();
-
-      closeM();
-
-
-      var ts=
-        document.getElementById("ts");
-
-      ts.textContent=
-        rt("thanks");
-
-      ts.classList.add("on");
-
-
-      setTimeout(
-        function(){
-          ts.classList.remove("on");
-        },
-        3200
-      );
-
-    };
+  };
 
 
   document.addEventListener(
@@ -1825,10 +2644,14 @@ var LINKS={
     function(e){
 
       if(
-        (e.key==="Enter"||
-         e.key===" ")&&
+        (
+          e.key==="Enter"||
+          e.key===" "
+        )&&
         e.target.matches&&
-        e.target.matches(".soc a")
+        e.target.matches(
+          ".soc a"
+        )
       ){
 
         e.preventDefault();
@@ -1850,11 +2673,17 @@ var LINKS={
 
     []
       .forEach.call(
-        document.querySelectorAll("svg.fire"),
+        document.querySelectorAll(
+          "svg.fire"
+        ),
         function(x){
 
-          if(x.pauseAnimations){
+          if(
+            x.pauseAnimations
+          ){
+
             x.pauseAnimations();
+
           }
 
         }
@@ -1872,11 +2701,15 @@ var LINKS={
 (function(){
 
   var h=
-    document.querySelector("header");
+    document.querySelector(
+      "header"
+    );
 
-  var last=scrollY;
+  var last=
+    scrollY;
 
   var tm;
+
 
   if(!h)return;
 
@@ -1885,9 +2718,11 @@ var LINKS={
     "scroll",
     function(){
 
-      var y=scrollY;
+      var y=
+        scrollY;
 
-      var d=y-last;
+      var d=
+        y-last;
 
       last=y;
 
@@ -1897,31 +2732,52 @@ var LINKS={
         Math.abs(d)>2
       ){
 
-        h.classList.add("hid");
+        h.classList.add(
+          "hid"
+        );
+
 
         var am=
-          document.getElementById("am");
+          document.getElementById(
+            "am"
+          );
+
 
         if(am){
-          am.classList.remove("on");
+
+          am.classList.remove(
+            "on"
+          );
+
         }
 
+      }else if(
+        y<=80
+      ){
+
+        h.classList.remove(
+          "hid"
+        );
+
       }
-      else if(y<=80){
-
-        h.classList.remove("hid");
-
-      }
 
 
-      clearTimeout(tm);
-
-      tm=setTimeout(
-        function(){
-          h.classList.remove("hid");
-        },
-        500
+      clearTimeout(
+        tm
       );
+
+
+      tm=
+        setTimeout(
+          function(){
+
+            h.classList.remove(
+              "hid"
+            );
+
+          },
+          500
+        );
 
     },
     {passive:true}
@@ -1931,413 +2787,184 @@ var LINKS={
 
 
 /* =========================================================
-   FINAL UI FIXES
-   These do NOT change the existing main design.
+   FINAL FIXES
 ========================================================= */
 
 (function(){
 
-  function addFinalStyles(){
-
-    if(
-      document.getElementById(
-        "wb-final-fixes"
-      )
-    )return;
+  "use strict";
 
 
-    var s=
-      document.createElement("style");
+  /* -------------------------------------------------------
+     1. Remove any accidental literal undefined
+  ------------------------------------------------------- */
 
-    s.id="wb-final-fixes";
-
-    s.textContent=`
-
-/* =====================================================
-   BADGE DUPLICATE FIX
-===================================================== */
-
-.card .tag::before,
-.card .tag::after{
-  content:none !important;
-}
-
-.card .tag{
-  white-space:nowrap;
-}
-
-
-/* =====================================================
-   DESKTOP — WRITE REVIEW RIGHT SIDE
-===================================================== */
-
-@media(min-width:900px){
-
-  .rv .sh{
-    position:relative;
-  }
-
-  .rv .sh .wb-review-right{
-    margin-left:auto !important;
-    display:flex !important;
-    align-items:center;
-  }
-
-  .rv .sh .wb-review-right .rvb{
-    margin:0 !important;
-  }
-
-}
-
-
-/* =====================================================
-   MOBILE
-   Keep existing review layout
-===================================================== */
-
-@media(max-width:899px){
-
-  .rv .sh .wb-review-right{
-    margin-top:8px;
-  }
-
-  /*
-     Mobile social icons:
-     একটু ছোট, কিন্তু খুব ছোট নয়
-  */
-
-  .follow .soc a{
-    width:32px !important;
-    height:32px !important;
-    min-width:32px !important;
-    min-height:32px !important;
-  }
-
-  .follow .soc a svg{
-    width:17px !important;
-    height:17px !important;
-  }
-
-  footer .r .soc a{
-    width:28px !important;
-    height:28px !important;
-    min-width:28px !important;
-    min-height:28px !important;
-  }
-
-  footer .r .soc a svg{
-    width:15px !important;
-    height:15px !important;
-  }
-
-}
-
-
-/* =====================================================
-   TOTAL PDF COUNTER
-   Professional smooth animation
-===================================================== */
-
-.wb-total-pdf-added{
-  transition:
-    transform .25s ease,
-    box-shadow .25s ease;
-}
-
-.wb-total-pdf-added.wb-counter-update{
-  transform:scale(1.035);
-}
-
-`;
-
-    document.head.appendChild(s);
-
-  }
-
-
-  if(
-    document.readyState==="loading"
+  function cleanUndefined(
+    root
   ){
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      addFinalStyles
-    );
-
-  }else{
-
-    addFinalStyles();
-
-  }
-
-})();
+    root=
+      root||
+      document.body;
 
 
-/* =========================================================
-   MOVE TOTAL PDF SOLD BEFORE FOLLOW US
-========================================================= */
-
-(function(){
-
-  function fixBottomOrder(){
-
-    var counter=
-      document.querySelector(
-        ".wb-total-pdf-section"
+    var walker=
+      document.createTreeWalker(
+        root,
+        NodeFilter.SHOW_TEXT
       );
 
-    var follow=
-      document.querySelector(
-        ".follow"
-      );
 
-    if(
-      counter&&
-      follow&&
-      follow.parentNode
+    var nodes=[];
+
+    var n;
+
+
+    while(
+      n=walker.nextNode()
     ){
 
-      /*
-         Required order:
-
-         Reviews
-         ↓
-         Total PDF Sold
-         ↓
-         Follow Us
-         ↓
-         Footer
-      */
-
-      follow.parentNode.insertBefore(
-        counter,
-        follow
-      );
-
-    }
-
-  }
-
-
-  if(
-    document.readyState==="loading"
-  ){
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      fixBottomOrder
-    );
-
-  }else{
-
-    fixBottomOrder();
-
-  }
-
-})();
-
-
-/* =========================================================
-   SUPABASE GLOBAL PDF SOLD COUNTER
-========================================================= */
-
-(function(){
-
-  var SUPABASE_URL=
-    "https://xitiwikhzvfyeqdxspqk.supabase.co";
-
-  var SUPABASE_KEY=
-    "sb_publishable_PzuDMCMLsQRnpbuob8uhEQ_xQ20Y75D";
-
-  var client=null;
-
-  var loading=null;
-
-
-  function showTotal(total){
-
-    var n=Number(total);
-
-    if(!Number.isFinite(n)){
-      return;
-    }
-
-
-    document
-      .querySelectorAll(
-        ".wb-total-pdf-added"
-      )
-      .forEach(function(el){
-
-        var old=
-          el.textContent;
-
-        var value=
-          "Total PDF Sold : "+
-          n.toLocaleString("en-IN");
-
-        if(old!==value){
-
-          el.textContent=value;
-
-          el.classList.remove(
-            "wb-counter-update"
-          );
-
-          void el.offsetWidth;
-
-          el.classList.add(
-            "wb-counter-update"
-          );
-
-          setTimeout(
-            function(){
-              el.classList.remove(
-                "wb-counter-update"
-              );
-            },
-            300
-          );
-
-        }
-
-      });
-
-  }
-
-
-  function loadSupabase(){
-
-    if(
-      window.supabase&&
-      typeof window.supabase.createClient===
-      "function"
-    ){
-
-      client=
-        window.supabase.createClient(
-          SUPABASE_URL,
-          SUPABASE_KEY
-        );
-
-      return Promise.resolve(client);
+      nodes.push(n);
 
     }
 
 
-    if(loading){
-      return loading;
-    }
+    nodes.forEach(
+      function(x){
 
+        if(
+          /\bundefined\b/.test(
+            x.nodeValue
+          )
+        ){
 
-    loading=
-      new Promise(
-        function(resolve,reject){
-
-          var sc=
-            document.createElement("script");
-
-          sc.src=
-            "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-
-          sc.async=true;
-
-
-          sc.onload=function(){
-
-            if(
-              window.supabase&&
-              typeof window.supabase.createClient===
-              "function"
-            ){
-
-              client=
-                window.supabase.createClient(
-                  SUPABASE_URL,
-                  SUPABASE_KEY
-                );
-
-              resolve(client);
-
-            }else{
-
-              reject(
-                new Error(
-                  "Supabase library unavailable"
-                )
-              );
-
-            }
-
-          };
-
-
-          sc.onerror=function(){
-
-            reject(
-              new Error(
-                "Supabase library failed to load"
-              )
+          x.nodeValue=
+            x.nodeValue.replace(
+              /\bundefined\b/g,
+              ""
             );
 
-          };
+        }
+
+      }
+    );
+
+  }
 
 
-          document.head.appendChild(sc);
+  cleanUndefined(
+    document.body
+  );
+
+
+  new MutationObserver(
+    function(){
+
+      cleanUndefined(
+        document.body
+      );
+
+    }
+  ).observe(
+    document.body,
+    {
+      subtree:true,
+      childList:true,
+      characterData:true
+    }
+  );
+
+
+  /* -------------------------------------------------------
+     2. Ensure language never outputs undefined
+  ------------------------------------------------------- */
+
+  apply=function(){
+
+    NODES.forEach(
+      function(x){
+
+        var a=
+          DX[x[1]]||
+          [];
+
+        var v=
+          a[IDX[LG]];
+
+
+        if(
+          v===undefined||
+          v===null||
+          v===""
+        ){
+
+          v=x[1];
 
         }
+
+
+        x[0].nodeValue=
+          x[2].replace(
+            "§",
+            v
+          );
+
+      }
+    );
+
+  };
+
+
+  apply();
+
+
+  /* -------------------------------------------------------
+     3. Desktop Write Review → right side
+  ------------------------------------------------------- */
+
+  function reviewButtonPosition(){
+
+    var rv=
+      document.querySelector(
+        ".rv"
+      );
+
+    var sh=
+      rv &&
+      rv.querySelector(
+        ".sh"
+      );
+
+    var holder=
+      rv &&
+      rv.querySelector(
+        ".rvf"
       );
 
 
-    return loading;
+    if(
+      !rv||
+      !sh||
+      !holder
+    ){
 
-  }
+      return;
 
-
-  async function loadTotal(){
-
-    try{
-
-      var db=
-        await loadSupabase();
+    }
 
 
-      var result=
-        await db
-          .from("pdf_sales_counter")
-          .select("total_sold")
-          .eq("id",1)
-          .single();
+    if(
+      innerWidth>=900
+    ){
 
+      holder.classList.add(
+        "wb-review-desktop-right"
+      );
 
-      if(result.error){
+    }else{
 
-        console.error(
-          "WBExamPDF counter load error:",
-          result.error
-        );
-
-        return;
-
-      }
-
-
-      if(
-        result.data&&
-        typeof result.data.total_sold!=="undefined"
-      ){
-
-        showTotal(
-          result.data.total_sold
-        );
-
-      }
-
-    }catch(error){
-
-      console.error(
-        "WBExamPDF counter error:",
-        error
+      holder.classList.remove(
+        "wb-review-desktop-right"
       );
 
     }
@@ -2345,104 +2972,20 @@ var LINKS={
   }
 
 
-  async function incrementGlobalCounter(){
-
-    try{
-
-      var db=
-        await loadSupabase();
+  reviewButtonPosition();
 
 
-      var result=
-        await db.rpc(
-          "increment_pdf_sales"
-        );
+  window.addEventListener(
+    "resize",
+    reviewButtonPosition
+  );
 
 
-      if(result.error){
+  /* -------------------------------------------------------
+     4. Total PDF Sold before Follow Us
+  ------------------------------------------------------- */
 
-        console.error(
-          "WBExamPDF counter increment error:",
-          result.error
-        );
-
-        return;
-
-      }
-
-
-      if(
-        typeof result.data!=="undefined"
-      ){
-
-        showTotal(
-          result.data
-        );
-
-      }
-
-    }catch(error){
-
-      console.error(
-        "WBExamPDF counter increment error:",
-        error
-      );
-
-    }
-
-  }
-
-
-  /*
-     IMPORTANT:
-     Main cart handler calls this
-     ONLY when a new PDF is added.
-  */
-
-  window.wbIncrementPdfSold=
-    incrementGlobalCounter;
-
-
-  /*
-     Load current global number
-     when page opens.
-  */
-
-  if(
-    document.readyState==="loading"
-  ){
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      function(){
-
-        setTimeout(
-          loadTotal,
-          200
-        );
-
-      }
-    );
-
-  }else{
-
-    setTimeout(
-      loadTotal,
-      200
-    );
-
-  }
-
-})();
-
-
-/* =========================================================
-   FINAL ORDER CHECK
-========================================================= */
-
-(function(){
-
-  function finalOrder(){
+  function fixBottomOrder(){
 
     var counter=
       document.querySelector(
@@ -2462,7 +3005,8 @@ var LINKS={
 
     if(
       counter&&
-      follow
+      follow&&
+      follow.parentNode
     ){
 
       follow.parentNode.insertBefore(
@@ -2475,7 +3019,8 @@ var LINKS={
 
     if(
       follow&&
-      footer
+      footer&&
+      footer.parentNode
     ){
 
       footer.parentNode.insertBefore(
@@ -2488,29 +3033,378 @@ var LINKS={
   }
 
 
-  if(
-    document.readyState==="loading"
-  ){
+  fixBottomOrder();
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      function(){
 
-        setTimeout(
-          finalOrder,
-          100
-        );
+  /* -------------------------------------------------------
+     5. CSS
+  ------------------------------------------------------- */
 
-      }
+  var style=
+    document.createElement(
+      "style"
     );
 
-  }else{
 
-    setTimeout(
-      finalOrder,
-      100
-    );
+  style.id=
+    "wb-final-fix-style";
+
+
+  style.textContent=`
+
+/* ==========================================
+   BADGE
+   The badge is already inside card images.
+   Hide HTML duplicate badge.
+========================================== */
+
+.card .tag{
+  display:none !important;
+}
+
+
+/* ==========================================
+   DESKTOP — WRITE REVIEW RIGHT
+========================================== */
+
+@media(min-width:900px){
+
+  .rv{
+    position:relative;
+  }
+
+  .rvf.wb-review-desktop-right{
+
+    position:absolute;
+
+    right:10px;
+
+    top:10px;
+
+    margin:0 !important;
+
+    display:flex !important;
+
+    justify-content:flex-end !important;
 
   }
 
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:899px){
+
+  /*
+     Mobile social icons slightly smaller
+  */
+
+  .follow .soc a{
+
+    width:32px !important;
+
+    height:32px !important;
+
+    min-width:32px !important;
+
+    min-height:32px !important;
+
+    border-radius:10px !important;
+
+  }
+
+
+  .follow .soc svg{
+
+    width:17px !important;
+
+    height:17px !important;
+
+  }
+
+
+  /*
+     Mobile copyright:
+     show only the copyright line.
+  */
+
+  footer{
+
+    display:block !important;
+
+    padding:
+      8px
+      10px
+      86px !important;
+
+    text-align:center !important;
+
+  }
+
+
+  footer>.logo,
+  footer>nav,
+  footer>.r{
+
+    display:none !important;
+
+  }
+
+
+  footer>div:last-child{
+
+    display:block !important;
+
+    width:100% !important;
+
+    font-size:10px !important;
+
+    line-height:1.4 !important;
+
+    color:#cfe0ff !important;
+
+  }
+
+
+  /*
+     Mobile PDF card:
+     original/larger size
+  */
+
+  .pdf-row-wrap .row{
+
+    gap:10px !important;
+
+    padding:
+      0
+      22px
+      4px
+      0 !important;
+
+    overflow-x:auto !important;
+
+    scrollbar-width:none;
+
+  }
+
+
+  .pdf-row-wrap .row::-webkit-scrollbar{
+
+    display:none;
+
+  }
+
+
+  .pdf-row-wrap .card{
+
+    flex:
+      0 0 236px !important;
+
+    min-width:
+      236px !important;
+
+    width:
+      236px !important;
+
+    padding:
+      7px !important;
+
+    border-radius:
+      12px !important;
+
+  }
+
+
+  .pdf-row-wrap .card .im{
+
+    aspect-ratio:
+      232/95 !important;
+
+    border-radius:
+      8px !important;
+
+  }
+
+
+  .pdf-row-wrap .card h3{
+
+    font-size:
+      17px !important;
+
+    line-height:
+      1.15 !important;
+
+    margin:
+      8px 2px 0 !important;
+
+    display:block !important;
+
+    overflow:visible !important;
+
+  }
+
+
+  .pdf-row-wrap .card h3 small{
+
+    font-size:
+      15px !important;
+
+  }
+
+
+  .pdf-row-wrap .card p{
+
+    font-size:
+      14px !important;
+
+    line-height:
+      1.3 !important;
+
+    margin:
+      4px 2px 6px !important;
+
+    display:block !important;
+
+    overflow:visible !important;
+
+  }
+
+
+  .pdf-row-wrap .pr{
+
+    gap:
+      5px !important;
+
+  }
+
+
+  .pdf-row-wrap .pr div{
+
+    font-size:
+      14px !important;
+
+  }
+
+
+  .pdf-row-wrap .pr div span{
+
+    font-size:
+      11px !important;
+
+  }
+
+
+  .pdf-row-wrap .pr s{
+
+    font-size:
+      10px !important;
+
+  }
+
+
+  .pdf-row-wrap .pr em{
+
+    font-size:
+      10px !important;
+
+  }
+
+
+  .pdf-row-wrap .buy{
+
+    margin:
+      7px 0 !important;
+
+    padding:
+      6px !important;
+
+    font-size:
+      14px !important;
+
+    border-radius:
+      7px !important;
+
+  }
+
+
+  .pdf-row-wrap .mt{
+
+    font-size:
+      11px !important;
+
+    min-height:
+      21px !important;
+
+  }
+
+
+  .pdf-row-wrap .mt button{
+
+    padding:
+      3px 7px !important;
+
+    font-size:
+      11px !important;
+
+  }
+
+
+  .pdf-row-wrap .ft{
+
+    font-size:
+      10px !important;
+
+    gap:
+      4px !important;
+
+  }
+
+
+  .pdf-row-wrap .ft svg{
+
+    font-size:
+      16px !important;
+
+  }
+
+}
+
+
+/* ==========================================
+   COUNTER ANIMATION
+========================================== */
+
+.wb-total-pdf-added.wb-counter-update{
+
+  transform:
+    scale(1.035);
+
+  transition:
+    transform .25s ease;
+
+}
+
+`;
+
+
+  document.head.appendChild(
+    style
+  );
+
+
+  cleanUndefined(
+    document.body
+  );
+
+
 })();
+
+
+/* =========================================================
+   INITIAL GLOBAL COUNTER LOAD
+========================================================= */
+
+loadSold();
