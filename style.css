@@ -296,3 +296,88 @@ footer>div:last-child{grid-row:3}
   }
 
 }
+/* =========================================================
+   TOTAL PDF — SHIMMER + GLOW ANIMATION
+   ========================================================= */
+
+.wb-total-pdf-added{
+  position:relative;
+  overflow:hidden;
+
+  animation:wbPdfPulse 2.4s ease-in-out infinite;
+
+  box-shadow:
+    0 4px 12px rgba(6,21,58,.20),
+    inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+
+/* Moving light effect */
+
+.wb-total-pdf-added::after{
+  content:"";
+  position:absolute;
+
+  top:0;
+  left:-120%;
+
+  width:70%;
+  height:100%;
+
+  background:linear-gradient(
+    110deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(255,255,255,.10) 45%,
+    rgba(255,255,255,.55) 50%,
+    rgba(255,255,255,.10) 55%,
+    transparent 65%,
+    transparent 100%
+  );
+
+  transform:skewX(-20deg);
+
+  animation:wbPdfShimmer 2.8s ease-in-out infinite;
+
+  pointer-events:none;
+}
+
+
+/* Gentle attention pulse */
+
+@keyframes wbPdfPulse{
+
+  0%,100%{
+    transform:scale(1);
+
+    box-shadow:
+      0 4px 12px rgba(6,21,58,.20),
+      inset 0 1px 0 rgba(255,255,255,.12);
+  }
+
+  50%{
+    transform:scale(1.035);
+
+    box-shadow:
+      0 6px 24px rgba(61,120,224,.45),
+      0 0 14px rgba(61,120,224,.25),
+      inset 0 1px 0 rgba(255,255,255,.18);
+  }
+
+}
+
+
+/* Shimmer moves across the text box */
+
+@keyframes wbPdfShimmer{
+
+  0%{
+    left:-120%;
+  }
+
+  45%,
+  100%{
+    left:140%;
+  }
+
+}
