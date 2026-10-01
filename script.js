@@ -157,7 +157,7 @@ var DX={};
 জনপ্রিয় সাজিডিজ~~Popular Suggested~लोकप्रिय सुझाव
 PDF প্যাকেজ~~PDF Package~PDF पैकेज
 চলতি ও আসন্ন পরীক্ষার জন্য~~For current & upcoming exams~चालू और आगामी परीक्षाओं के लिए
-LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time Offer~Limited Time Offer
+LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time Offer
 অফার শেষ হতে বাকি:~~Offer ends in:~ऑफर खत्म होने में:
 দিন~~Days~दिन
 ঘণ্টা~~Hours~घंटे
@@ -169,7 +169,7 @@ LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time 
 (গুরুত্বপূর্ণ বিষয়)~~(Important topics)~(महत्वपूर्ण विषय)
 (অতিরিক্ত / সাধারণ বিষয়)~~(Extra / General topics)~(अतिरिक्त / सामान्य विषय)
 চলমান পরীক্ষার PDF~~Running Exam PDF~चालू परीक्षा की PDF
-(Currently Running Exams)~~ ~
+(Currently Running Exams)~~ ~ 
 যে পরীক্ষাগুলো চলছে, তাদের PDF এখনই সংগ্রহ করুন~~Get PDFs for the exams running now~जो परीक्षाएँ चल रही हैं, उनकी PDF अभी पाएँ
 সব দেখুন →~~View all →~सब देखें →
 অনলিম্র PDF প্যাকেজ~আসন্ন PDF প্যাকেজ~Upcoming PDF Package~आगामी PDF पैकेज
@@ -185,16 +185,15 @@ LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time 
 মাই কার্ট~~My Cart~मेरा कार्ट
 প্রোফাইল~~Profile~प्रोफ़ाइल
 লগইন~~Login~लॉगिन
-নতুন? রেজিস্টার করুন~~New here? Register~नए हैं? Register
+নতুন? রেজিস্টার করুন~~New here? Register~नए हैं? रजिस्टर करें
 জরুরি বিষয় আগে, সময় বাঁচান~~Urgent topics first, save time~ज़रूरी विषय पहले, समय बचाएँ
 নমুনা দেখে, তারপর কিনুন~~Preview a sample, then buy~पहले नमूना देखें, फिर खरीदें
 সীমিত সময়ের জন্য ৭০% পর্যন্ত ছাড়~~Up to 70% off for a limited time~सीमित समय के लिए 70% तक की छूट
-Follow Us~ফলো করুন~Follow Us~फ़ॉलो करें`
-.split("\n")
-.forEach(function(l){
+Follow Us~ফলো করুন~Follow Us~फ़ॉलो करें`.split("\n").forEach(function(l){
   var p=l.split("~");
   DX[p[0]]=[p[1]||p[0],p[2],p[3]];
 });
+
 
 var Y={
   buy:['এখনই কিনুন →','BUY NOW →','अभी खरीदें →'],
@@ -249,12 +248,6 @@ function likes(){
   }
 }
 
-
-/* =========================================================
-   PDF CARD
-   LOVE BUTTON → ADD TO CART
-   ========================================================= */
-
 card=function(d,id){
 
   var lk=likes()[id],
@@ -265,97 +258,53 @@ card=function(d,id){
     return '<div class="'+x[0]+'"><span>'+x[1]+'</span><s>'+rp(x[2])+'</s>'+rp(x[3])+'<em>70% '+tr('off')+'</em></div>';
   }).join('');
 
-  return '<div class="card">'+
-
-    '<div class="im">'+
-      '<img src="'+I[d[1]]+'" alt="">'+
-      '<span class="tag" style="background:'+col[d[0]]+'">'+
-        (soon?'<svg class="i spin"><use href="#t"/></svg>':'')+
-        d[0]+
-      '</span>'+
-    '</div>'+
-
-    '<h3>'+
-      d[2]+
-      '<small>'+d[3]+'</small>'+
-    '</h3>'+
-
-    '<p>'+
-      (id[0]=='a'?DS[DK[+id.slice(1)]][IDX[LG]]:'')+
-    '</p>'+
-
-    '<div class="pr">'+pr+'</div>'+
-
-    '<a class="buy" data-link="buy" data-exam="'+d[2]+'">'+
-      tr('buy')+
-    '</a>'+
-
-    '<div class="mt">'+
-
-      (sd>0?
-        '<span><svg class="i"><use href="#w"/></svg> '+sd+' '+tr('sold')+'</span>'
-        :''
-      )+
-
-      '<span class="ac">'+
-
-        '<button class="lk'+(lk?' on':'')+'" data-id="'+id+'">'+
-          '<svg class="i"><use href="#c"/></svg>'+
-          '<b>'+(lk?'Added to Cart':'Add to Cart')+'</b>'+
-        '</button>'+
-
-        '<button class="sb" data-n="'+d[2]+'">'+
-          '<svg class="i"><use href="#sh"/></svg>'+
-          tr('share')+
-        '</button>'+
-
-      '</span>'+
-
-    '</div>'+
-
-    '<div class="ft">'+
-
-      '<div data-link="sample" data-exam="'+d[2]+'">'+
-        '<svg class="i"><use href="#e"/></svg>'+
-        '<span>'+tr('sample')+'<br>'+tr('pg')+'</span>'+
-      '</div>'+
-
-      '<div>'+
-        '<svg class="i"><use href="#l"/></svg>'+
-        '<span>'+tr('pw1')+'<br>'+tr('pw2')+'</span>'+
-      '</div>'+
-
-    '</div>'+
-
-  '</div>';
+  return '<div class="card"><div class="im"><img src="'+I[d[1]]+'" alt=""><span class="tag" style="background:'+col[d[0]]+'">'+
+    (soon?'<svg class="i spin"><use href="#t"/></svg>':'')+
+    d[0]+'</span></div><h3>'+d[2]+'<small>'+d[3]+'</small></h3><p>'+
+    (id[0]=='a'?DS[DK[+id.slice(1)]][IDX[LG]]:'')+
+    '</p><div class="pr">'+pr+'</div><a class="buy" data-link="buy" data-exam="'+d[2]+'">'+
+    tr('buy')+
+    '</a><div class="mt">'+
+    (sd>0?'<span><svg class="i"><use href="#w"/></svg> '+sd+' '+tr('sold')+'</span>':'')+
+    '<span class="ac"><button class="lk'+
+    (lk?' on':'')+
+    '" data-id="'+id+'" aria-label="'+
+    (lk?'Added to cart':'Add to cart')+
+    '" title="'+
+    (lk?'Added to cart':'Add to cart')+
+    '"><svg class="i"><use href="#hr"/></svg><b>'+
+    (lk?1:'')+
+    '</b></button><button class="sb" data-n="'+d[2]+'"><svg class="i"><use href="#sh"/></svg>'+
+    tr('share')+
+    '</button></span></div><div class="ft"><div data-link="sample" data-exam="'+d[2]+'"><svg class="i"><use href="#e"/></svg><span>'+
+    tr('sample')+
+    '<br>'+
+    tr('pg')+
+    '</span></div><div><svg class="i"><use href="#l"/></svg><span>'+
+    tr('pw1')+
+    '<br>'+
+    tr('pw2')+
+    '</span></div></div></div>';
 };
 
-
 function sec(a,p){
-  return a
-    .map(function(d,i){
-      return [d,p+i];
-    })
-    .sort(function(x,y){
-      return (y[0][5]||0)-(x[0][5]||0);
-    })
-    .map(function(z){
-      return card(z[0],z[1]);
-    })
-    .join('');
+  return a.map(function(d,i){
+    return [d,p+i];
+  }).sort(function(x,y){
+    return (y[0][5]||0)-(x[0][5]||0);
+  }).map(function(z){
+    return card(z[0],z[1]);
+  }).join('');
 }
-
 
 function render(){
 
   if(!document.getElementById('r1'))return;
 
   document.getElementById('r1').innerHTML=sec(C1,'a');
-
   document.getElementById('r2').innerHTML=sec(C2,'b');
 
 }
-
 
 var NODES=[];
 
@@ -364,17 +313,14 @@ function scan(){
   var w=document.createTreeWalker(
     document.body,
     NodeFilter.SHOW_TEXT
-  ),n;
+  ),
+  n;
 
   while(n=w.nextNode()){
 
     var p=n.parentNode.nodeName;
 
-    if(
-      p=='SCRIPT'||
-      p=='STYLE'||
-      p=='OPTION'
-    )continue;
+    if(p=='SCRIPT'||p=='STYLE'||p=='OPTION')continue;
 
     var k=n.nodeValue.trim();
 
@@ -387,67 +333,228 @@ function scan(){
   }
 }
 
-
 function apply(){
 
   NODES.forEach(function(x){
-
     x[0].nodeValue=
       x[2].replace(
         '§',
         DX[x[1]][IDX[LG]]
       );
-
   });
 
 }
 
-
 function setLang(l){
 
   LG=l;
-
   stor('lang',l);
 
   document.getElementById('lg').value=l;
-
   document.documentElement.lang=l;
 
   apply();
-
   render();
 
 }
 
-
 scan();
-
 render();
 
+setupPdfRows();
+
+window.addEventListener(
+  'resize',
+  function(){
+    if(innerWidth<900)
+      setupPdfRows();
+  }
+);
+
 document.getElementById('lg').value=LG;
-
 document.documentElement.lang=LG;
-
 apply();
-
 
 var lp=document.getElementById('lp');
 
-if(
-  lp &&
-  IS_HOME &&
-  !stor('langChosen')
-)
+if(lp&&IS_HOME&&!stor('langChosen'))
   lp.classList.add('on');
-
 
 document.getElementById('lg').onchange=function(){
 
   stor('langChosen','1');
-
   setLang(this.value);
 
 };
+
+
+/* =========================================================
+   MOBILE PDF CAROUSEL + CART
+   ========================================================= */
+
+function carts(){
+
+  try{
+
+    var raw=stor('cart');
+
+    if(raw)
+      return JSON.parse(raw);
+
+    var old=likes();
+
+    if(Object.keys(old).length){
+
+      stor(
+        'cart',
+        JSON.stringify(old)
+      );
+
+      return old;
+    }
+
+    return {};
+
+  }catch(e){
+
+    return {};
+
+  }
+
+}
+
+function cartCount(){
+
+  var C=carts(),
+      n=Object.keys(C).length;
+
+  document
+    .querySelectorAll('[data-link=cart] em')
+    .forEach(function(e){
+
+      e.textContent=n;
+
+    });
+
+  return n;
+
+}
+
+function setupPdfRows(){
+
+  if(innerWidth>=900)return;
+
+  document
+    .querySelectorAll('.sec .row')
+    .forEach(function(row){
+
+      if(
+        row.parentElement.classList.contains(
+          'pdf-row-wrap'
+        )
+      )return;
+
+      var wrap=document.createElement('div');
+
+      wrap.className='pdf-row-wrap';
+
+      row.parentNode.insertBefore(
+        wrap,
+        row
+      );
+
+      wrap.appendChild(row);
+
+      var l=document.createElement('button'),
+          r=document.createElement('button');
+
+      l.className='pdf-arrow left';
+      r.className='pdf-arrow right';
+
+      l.type=r.type='button';
+
+      l.innerHTML='‹';
+      r.innerHTML='›';
+
+      l.setAttribute(
+        'aria-label',
+        'Previous PDF'
+      );
+
+      r.setAttribute(
+        'aria-label',
+        'Next PDF'
+      );
+
+      wrap.appendChild(l);
+      wrap.appendChild(r);
+
+      l.addEventListener(
+        'click',
+        function(){
+
+          row.scrollBy({
+            left:-(row.clientWidth*.92),
+            behavior:'smooth'
+          });
+
+        }
+      );
+
+      r.addEventListener(
+        'click',
+        function(){
+
+          row.scrollBy({
+            left:row.clientWidth*.92,
+            behavior:'smooth'
+          });
+
+        }
+      );
+
+    });
+
+  if(!window.__pdfIO){
+
+    window.__pdfIO=
+      new IntersectionObserver(
+        function(es){
+
+          es.forEach(function(e){
+
+            e.target.classList.toggle(
+              'pdf-active',
+              e.isIntersecting &&
+              e.intersectionRatio>.22
+            );
+
+          });
+
+        },
+        {
+          threshold:[.22]
+        }
+      );
+
+    document
+      .querySelectorAll('.sec')
+      .forEach(function(sec){
+
+        if(
+          sec.querySelector(
+            '.pdf-row-wrap'
+          )
+        )
+          window.__pdfIO.observe(sec);
+
+      });
+
+  }
+
+}
+
+cartCount();
 
 
 var lx=document.getElementById('lx');
@@ -462,127 +569,138 @@ if(lx)
   };
 
 
-/* =========================================================
-   BUTTON CLICK
-   ADD TO CART
-   ========================================================= */
+document.addEventListener(
+  'click',
+  function(e){
 
-document.addEventListener('click',function(e){
+    var b=e.target.closest('button');
 
-  var b=e.target.closest('button');
+    if(!b)return;
 
-  if(!b)return;
+    if(b.dataset.l){
 
+      stor('langChosen','1');
 
-  if(b.dataset.l){
+      setLang(b.dataset.l);
 
-    stor('langChosen','1');
-
-    setLang(b.dataset.l);
-
-    lp.classList.remove('on');
-
-  }
-
-
-  else if(b.classList.contains('lk')){
-
-    var L=likes();
-
-
-    if(L[b.dataset.id])
-      delete L[b.dataset.id];
-
-    else
-      L[b.dataset.id]=1;
-
-
-    stor(
-      'likes',
-      JSON.stringify(L)
-    );
-
-
-    b.classList.toggle(
-      'on',
-      !!L[b.dataset.id]
-    );
-
-
-    /*
-      Add / Remove text
-    */
-
-    b.querySelector('b').textContent=
-      L[b.dataset.id]
-        ? 'Added to Cart'
-        : 'Add to Cart';
-
-  }
-
-
-  else if(b.classList.contains('sb')){
-
-    var u=location.href.split('#')[0],
-        x=b.dataset.n+' – WBExamPDF';
-
-    if(navigator.share)
-
-      navigator.share({
-        title:x,
-        url:u
-      }).catch(function(){});
-
-    else
-
-      window.open(
-        'https://wa.me/?text='+
-        encodeURIComponent(x+' '+u),
-        '_blank'
-      );
-
-  }
-
-});
-
-
-new MutationObserver(function(ms){
-
-  ms.forEach(function(m){
-
-    var e=
-      m.target.nodeType==3
-        ?m.target.parentNode
-        :m.target;
-
-    if(
-      e &&
-      e.classList &&
-      e.classList.contains('n')
-    ){
-
-      e.classList.remove('fl');
-
-      void e.offsetWidth;
-
-      e.classList.add('fl');
+      lp.classList.remove('on');
 
     }
 
-  });
+    else if(b.classList.contains('lk')){
+
+      var L=likes(),
+          C=carts(),
+          id=b.dataset.id;
+
+      if(L[id]){
+
+        delete L[id];
+        delete C[id];
+
+      }else{
+
+        L[id]=1;
+        C[id]=1;
+
+      }
+
+      stor(
+        'likes',
+        JSON.stringify(L)
+      );
+
+      stor(
+        'cart',
+        JSON.stringify(C)
+      );
+
+      b.classList.toggle(
+        'on',
+        !!L[id]
+      );
+
+      b.querySelector('b').textContent=
+        L[id]?1:'';
+
+      b.setAttribute(
+        'aria-label',
+        L[id]?'Added to cart':'Add to cart'
+      );
+
+      b.title=
+        L[id]?'Added to cart':'Add to cart';
+
+      cartCount();
+
+    }
+
+    else if(b.classList.contains('sb')){
+
+      var u=location.href.split('#')[0],
+          x=b.dataset.n+' – WBExamPDF';
+
+      if(navigator.share)
+
+        navigator
+          .share({
+            title:x,
+            url:u
+          })
+          .catch(function(){});
+
+      else
+
+        window.open(
+          'https://wa.me/?text='+
+          encodeURIComponent(x+' '+u),
+          '_blank'
+        );
+
+    }
+
+  }
+);
 
 
-  if(t<3600)
+new MutationObserver(
+  function(ms){
 
-    document
-      .querySelectorAll('.tim,.box')
-      .forEach(function(x){
+    ms.forEach(function(m){
 
-        x.classList.add('hot');
+      var e=
+        m.target.nodeType==3
+          ?m.target.parentNode
+          :m.target;
 
-      });
+      if(
+        e &&
+        e.classList &&
+        e.classList.contains('n')
+      ){
 
-}).observe(
+        e.classList.remove('fl');
+
+        void e.offsetWidth;
+
+        e.classList.add('fl');
+
+      }
+
+    });
+
+    if(t<3600)
+
+      document
+        .querySelectorAll('.tim,.box')
+        .forEach(function(x){
+
+          x.classList.add('hot');
+
+        });
+
+  }
+).observe(
   document.body,
   {
     subtree:true,
@@ -593,7 +711,7 @@ new MutationObserver(function(ms){
 
 
 /* =========================================================
-   PROFILE / SLIDER
+   ACCOUNT / MENU / SLIDER
    ========================================================= */
 
 (function(){
@@ -632,71 +750,66 @@ new MutationObserver(function(ms){
 
   }
 
+  document.addEventListener(
+    'click',
+    function(e){
 
-  document.addEventListener('click',function(e){
+      var p=e.target.closest('.pf,.pfb');
 
-    var p=e.target.closest('.pf,.pfb');
+      if(p){
 
-    if(p){
+        e.preventDefault();
+
+        tog(
+          p,
+          !!p.closest('.bn')
+        );
+
+        return;
+
+      }
+
+      if(!e.target.closest('#am'))
+        am.classList.remove('on');
+
+      var a=e.target.closest('[data-link]');
+
+      if(!a)return;
 
       e.preventDefault();
 
-      tog(
-        p,
-        !!p.closest('.bn')
-      );
+      var u=LINKS[a.dataset.link]||'';
 
-      return;
+      if(!u)return;
 
-    }
-
-
-    if(!e.target.closest('#am'))
       am.classList.remove('on');
 
+      if(
+        /^(youtube|facebook|instagram)$/.test(
+          a.dataset.link
+        )
+      ){
 
-    var a=e.target.closest('[data-link]');
+        window.open(
+          u,
+          '_blank',
+          'noopener'
+        );
 
-    if(!a)return;
+        return;
 
-    e.preventDefault();
+      }
 
-
-    var u=LINKS[a.dataset.link]||'';
-
-    if(!u)return;
-
-
-    am.classList.remove('on');
-
-
-    if(
-      /^(youtube|facebook|instagram)$/.test(
-        a.dataset.link
-      )
-    ){
-
-      window.open(
-        u,
-        '_blank',
-        'noopener'
-      );
-
-      return;
+      location.href=
+        u.replace(
+          '{exam}',
+          encodeURIComponent(
+            a.dataset.exam||''
+          )
+        );
 
     }
-
-
-    location.href=
-      u.replace(
-        '{exam}',
-        encodeURIComponent(
-          a.dataset.exam||''
-        )
-      );
-
-  });
-
+  );
 
   document.addEventListener(
     'keydown',
@@ -708,17 +821,14 @@ new MutationObserver(function(ms){
     }
   );
 
-
   if(!document.getElementById('trk'))
     return;
-
 
   var trk=document.getElementById('trk'),
       dots=document.getElementById('dots'),
       n=trk.children.length,
       i=0,
       tm;
-
 
   function go(k){
 
@@ -739,7 +849,6 @@ new MutationObserver(function(ms){
 
   }
 
-
   function start(){
 
     clearInterval(tm);
@@ -753,13 +862,15 @@ new MutationObserver(function(ms){
 
   }
 
-
-  for(var k=0;k<n;k++){
+  for(
+    var k=0;
+    k<n;
+    k++
+  ){
 
     (function(k){
 
-      var d=
-        document.createElement('button');
+      var d=document.createElement('button');
 
       d.setAttribute(
         'aria-label',
@@ -769,7 +880,6 @@ new MutationObserver(function(ms){
       d.onclick=function(){
 
         go(k);
-
         start();
 
       };
@@ -780,27 +890,26 @@ new MutationObserver(function(ms){
 
   }
 
-
   var sl=document.getElementById('sl'),
       sx=0;
-
 
   sl.onmouseenter=function(){
     clearInterval(tm);
   };
 
-
   sl.onmouseleave=start;
-
 
   sl.addEventListener(
     'touchstart',
     function(e){
-      sx=e.touches[0].clientX;
-    },
-    {passive:true}
-  );
 
+      sx=e.touches[0].clientX;
+
+    },
+    {
+      passive:true
+    }
+  );
 
   sl.addEventListener(
     'touchend',
@@ -822,9 +931,7 @@ new MutationObserver(function(ms){
     }
   );
 
-
   go(0);
-
   start();
 
 })();
@@ -838,7 +945,6 @@ new MutationObserver(function(ms){
 
   if(!document.getElementById('rr'))
     return;
-
 
   var RT={
     title:[
@@ -893,11 +999,9 @@ new MutationObserver(function(ms){
     ]
   };
 
-
   function rt(k){
     return RT[k][IDX[LG]];
   }
-
 
   function rtApply(){
 
@@ -911,7 +1015,6 @@ new MutationObserver(function(ms){
       }
     );
 
-
     [].forEach.call(
       document.querySelectorAll('[data-ph]'),
       function(e){
@@ -924,40 +1027,34 @@ new MutationObserver(function(ms){
 
   }
 
-
   var _sl=setLang;
-
 
   setLang=function(l){
 
     _sl(l);
-
     rtApply();
 
   };
 
-
   rtApply();
 
+
+  /* Reviews carousel */
 
   var r=document.getElementById('rr'),
       hold=false,
       until=0;
-
 
   function step(){
 
     if(
       hold ||
       Date.now()<until
-    )
-      return;
-
+    )return;
 
     var c=r.firstElementChild;
 
     if(!c)return;
-
 
     if(
       r.scrollLeft+r.clientWidth>=
@@ -978,12 +1075,10 @@ new MutationObserver(function(ms){
 
   }
 
-
   setInterval(
     step,
     3000
   );
-
 
   r.addEventListener(
     'mouseenter',
@@ -992,7 +1087,6 @@ new MutationObserver(function(ms){
     }
   );
 
-
   r.addEventListener(
     'mouseleave',
     function(){
@@ -1000,26 +1094,27 @@ new MutationObserver(function(ms){
     }
   );
 
+  ['touchstart','pointerdown','wheel']
+    .forEach(function(e){
 
-  [
-    'touchstart',
-    'pointerdown',
-    'wheel'
-  ].forEach(function(e){
+      r.addEventListener(
+        e,
+        function(){
 
-    r.addEventListener(
-      e,
-      function(){
-        until=Date.now()+6000;
-      },
-      {passive:true}
-    );
+          until=Date.now()+6000;
 
-  });
+        },
+        {
+          passive:true
+        }
+      );
 
+    });
+
+
+  /* User reviews */
 
   var REVIEW_POST='';
-
 
   function esc(x){
 
@@ -1040,7 +1135,6 @@ new MutationObserver(function(ms){
 
   }
 
-
   function mine(){
 
     try{
@@ -1057,34 +1151,28 @@ new MutationObserver(function(ms){
 
   }
 
-
   function cardHTML(v){
 
     var st=
       '★'.repeat(v.s)+
       '☆'.repeat(5-v.s);
 
-    return '<div class="rc mine">'+
-      '<div class="av">'+
-        esc(
-          v.n.trim()
-           .charAt(0)
-           .toUpperCase()
-        )+
-      '</div>'+
-      '<div>'+
-        '<b>'+esc(v.n)+'</b>'+
-        '<span class="st">'+st+'</span>'+
-        '<q>“'+esc(v.t)+'”</q>'+
-        '<small>'+
-          (v.e?esc(v.e)+' | ':'')+
-          rt('just')+
-        '</small>'+
-      '</div>'+
-    '</div>';
+    return '<div class="rc mine"><div class="av">'+
+      esc(
+        v.n.trim().charAt(0).toUpperCase()
+      )+
+      '</div><div><b>'+
+      esc(v.n)+
+      '</b><span class="st">'+
+      st+
+      '</span><q>“'+
+      esc(v.t)+
+      '”</q><small>'+
+      (v.e?esc(v.e)+' | ':'')+
+      rt('just')+
+      '</small></div></div>';
 
   }
-
 
   mine()
     .slice()
@@ -1104,7 +1192,6 @@ new MutationObserver(function(ms){
       rate=5,
       tx=document.getElementById('rtx');
 
-
   function paint(){
 
     [].forEach.call(
@@ -1119,9 +1206,7 @@ new MutationObserver(function(ms){
 
   }
 
-
   paint();
-
 
   rs.addEventListener(
     'click',
@@ -1138,7 +1223,6 @@ new MutationObserver(function(ms){
     }
   );
 
-
   function openM(){
 
     rm.classList.add('on');
@@ -1149,13 +1233,14 @@ new MutationObserver(function(ms){
 
     setTimeout(
       function(){
+
         document.getElementById('rn').focus();
+
       },
       50
     );
 
   }
-
 
   function closeM(){
 
@@ -1165,11 +1250,9 @@ new MutationObserver(function(ms){
 
   }
 
-
   document.getElementById('rvb').onclick=openM;
 
   document.getElementById('rmx').onclick=closeM;
-
 
   rm.addEventListener(
     'click',
@@ -1181,7 +1264,6 @@ new MutationObserver(function(ms){
     }
   );
 
-
   document.addEventListener(
     'keydown',
     function(e){
@@ -1191,7 +1273,6 @@ new MutationObserver(function(ms){
 
     }
   );
-
 
   tx.addEventListener(
     'input',
@@ -1203,30 +1284,27 @@ new MutationObserver(function(ms){
     }
   );
 
-
   document.getElementById('rsb').onclick=function(){
 
     var n=
       document.getElementById('rn')
-      .value.trim();
+        .value.trim();
 
     var e=
       document.getElementById('re')
-      .value.trim();
+        .value.trim();
 
     var t=
       tx.value.trim();
 
-
     if(!n||t.length<10){
 
-      document.getElementById('rer').textContent=
-        rt('err');
+      document.getElementById('rer')
+        .textContent=rt('err');
 
       return;
 
     }
-
 
     var v={
       n:n,
@@ -1236,11 +1314,9 @@ new MutationObserver(function(ms){
       d:Date.now()
     };
 
-
     var L=mine();
 
     L.push(v);
-
 
     try{
 
@@ -1252,7 +1328,6 @@ new MutationObserver(function(ms){
       );
 
     }catch(x){}
-
 
     if(REVIEW_POST){
 
@@ -1274,29 +1349,24 @@ new MutationObserver(function(ms){
 
     }
 
-
     r.insertAdjacentHTML(
       'afterbegin',
       cardHTML(v)
     );
-
 
     r.scrollTo({
       left:0,
       behavior:'smooth'
     });
 
-
     until=Date.now()+8000;
 
-
     document.getElementById('rn').value='';
-
     document.getElementById('re').value='';
-
     tx.value='';
 
-    document.getElementById('rcn').textContent='0/200';
+    document.getElementById('rcn')
+      .textContent='0/200';
 
     rate=5;
 
@@ -1304,13 +1374,11 @@ new MutationObserver(function(ms){
 
     closeM();
 
-
     var ts=document.getElementById('ts');
 
     ts.textContent=rt('thanks');
 
     ts.classList.add('on');
-
 
     setTimeout(
       function(){
@@ -1321,6 +1389,8 @@ new MutationObserver(function(ms){
 
   };
 
+
+  /* keyboard access */
 
   document.addEventListener(
     'keydown',
@@ -1333,7 +1403,6 @@ new MutationObserver(function(ms){
       ){
 
         e.preventDefault();
-
         e.target.click();
 
       }
@@ -1341,6 +1410,8 @@ new MutationObserver(function(ms){
     }
   );
 
+
+  /* reduced motion */
 
   if(
     window.matchMedia &&
@@ -1353,8 +1424,8 @@ new MutationObserver(function(ms){
       document.querySelectorAll('svg.fire'),
       function(x){
 
-        x.pauseAnimations &&
-        x.pauseAnimations();
+        if(x.pauseAnimations)
+          x.pauseAnimations();
 
       }
     );
@@ -1363,7 +1434,7 @@ new MutationObserver(function(ms){
 
 
 /* =========================================================
-   HEADER AUTO HIDE
+   HEADER SCROLL
    ========================================================= */
 
 (function(){
@@ -1374,7 +1445,6 @@ new MutationObserver(function(ms){
 
   if(!h)return;
 
-
   addEventListener(
     'scroll',
     function(){
@@ -1384,7 +1454,6 @@ new MutationObserver(function(ms){
 
       last=y;
 
-
       if(
         y>80 &&
         Math.abs(d)>2
@@ -1392,450 +1461,34 @@ new MutationObserver(function(ms){
 
         h.classList.add('hid');
 
-        var am=document.getElementById('am');
+        var am=
+          document.getElementById('am');
 
         if(am)
           am.classList.remove('on');
 
       }
 
-      else if(y<=80)
+      else if(y<=80){
 
         h.classList.remove('hid');
 
+      }
 
       clearTimeout(tm);
 
-
       tm=setTimeout(
         function(){
+
           h.classList.remove('hid');
+
         },
         500
       );
 
     },
-    {passive:true}
-  );
-
-})();
-
-
-/* =========================================================
-   WBExamPDF — MOBILE PDF ARROW + CART
-   ========================================================= */
-
-(function(){
-
-  var st=document.createElement('style');
-
-
-  st.textContent=`
-
-    @media (max-width: 899px){
-
-      .wb-pdf-mobile-wrap{
-        position:relative !important;
-        width:100% !important;
-      }
-
-      .wb-pdf-arrow{
-        position:absolute !important;
-        top:50% !important;
-        transform:translateY(-50%) !important;
-
-        width:26px !important;
-        height:26px !important;
-
-        padding:0 !important;
-        margin:0 !important;
-
-        border:1px solid rgba(6,21,58,.25) !important;
-        border-radius:50% !important;
-
-        background:rgba(255,255,255,.95) !important;
-        color:#06153a !important;
-
-        font-family:Arial,sans-serif !important;
-        font-size:20px !important;
-        font-weight:700 !important;
-        line-height:24px !important;
-
-        display:none !important;
-
-        align-items:center !important;
-        justify-content:center !important;
-
-        z-index:999 !important;
-
-        box-shadow:0 1px 5px rgba(0,0,0,.18) !important;
-      }
-
-      .wb-pdf-arrow.left{
-        left:2px !important;
-      }
-
-      .wb-pdf-arrow.right{
-        right:2px !important;
-      }
-
-      .wb-pdf-mobile-wrap.wb-pdf-visible
-      .wb-pdf-arrow{
-        display:flex !important;
-
-        animation:
-          wbPdfArrowBlink
-          1.6s
-          ease-in-out
-          infinite !important;
-      }
-
-      @keyframes wbPdfArrowBlink{
-
-        0%{
-          opacity:.25;
-        }
-
-        50%{
-          opacity:1;
-        }
-
-        100%{
-          opacity:.25;
-        }
-
-      }
-
-    }
-
-  `;
-
-
-  document.head.appendChild(st);
-
-
-  /* CART COUNT */
-
-  function updateCartCount(){
-
-    var data={};
-
-
-    try{
-
-      data=JSON.parse(
-        localStorage.getItem('likes')||'{}'
-      );
-
-    }catch(e){
-
-      data={};
-
-    }
-
-
-    var count=0;
-
-
-    Object.keys(data).forEach(function(key){
-
-      if(data[key])
-        count++;
-
-    });
-
-
-    document
-      .querySelectorAll(
-        '[data-link="cart"] em'
-      )
-      .forEach(function(el){
-
-        el.textContent=count;
-
-      });
-
-  }
-
-
-  /* CREATE ARROWS */
-
-  function addPDFArrows(){
-
-    if(window.innerWidth>=900)
-      return;
-
-
-    ['r1','r2'].forEach(function(id){
-
-      var row=document.getElementById(id);
-
-      if(!row)return;
-
-
-      if(
-        row.parentElement &&
-        row.parentElement.classList.contains(
-          'wb-pdf-mobile-wrap'
-        )
-      )
-        return;
-
-
-      var wrap=
-        document.createElement('div');
-
-      wrap.className=
-        'wb-pdf-mobile-wrap';
-
-
-      row.parentNode.insertBefore(
-        wrap,
-        row
-      );
-
-
-      wrap.appendChild(row);
-
-
-      var left=
-        document.createElement('button');
-
-      left.type='button';
-
-      left.className=
-        'wb-pdf-arrow left';
-
-      left.textContent='‹';
-
-      left.setAttribute(
-        'aria-label',
-        'Previous PDF'
-      );
-
-
-      var right=
-        document.createElement('button');
-
-      right.type='button';
-
-      right.className=
-        'wb-pdf-arrow right';
-
-      right.textContent='›';
-
-      right.setAttribute(
-        'aria-label',
-        'Next PDF'
-      );
-
-
-      wrap.appendChild(left);
-
-      wrap.appendChild(right);
-
-
-      left.addEventListener(
-        'click',
-        function(e){
-
-          e.preventDefault();
-
-          e.stopPropagation();
-
-
-          row.scrollBy({
-
-            left:-row.clientWidth,
-
-            behavior:'smooth'
-
-          });
-
-        }
-      );
-
-
-      right.addEventListener(
-        'click',
-        function(e){
-
-          e.preventDefault();
-
-          e.stopPropagation();
-
-
-          row.scrollBy({
-
-            left:row.clientWidth,
-
-            behavior:'smooth'
-
-          });
-
-        }
-      );
-
-    });
-
-
-    observePDFSections();
-
-  }
-
-
-  var observer=null;
-
-
-  function observePDFSections(){
-
-    if(window.innerWidth>=900)
-      return;
-
-
-    if(!window.IntersectionObserver){
-
-      document
-        .querySelectorAll(
-          '.wb-pdf-mobile-wrap'
-        )
-        .forEach(function(el){
-
-          el.classList.add(
-            'wb-pdf-visible'
-          );
-
-        });
-
-      return;
-
-    }
-
-
-    if(!observer){
-
-      observer=
-        new IntersectionObserver(
-
-          function(entries){
-
-            entries.forEach(
-              function(entry){
-
-                if(entry.isIntersecting)
-
-                  entry.target.classList.add(
-                    'wb-pdf-visible'
-                  );
-
-                else
-
-                  entry.target.classList.remove(
-                    'wb-pdf-visible'
-                  );
-
-              }
-            );
-
-          },
-
-          {
-            threshold:0.05
-          }
-
-        );
-
-    }
-
-
-    document
-      .querySelectorAll(
-        '.wb-pdf-mobile-wrap'
-      )
-      .forEach(function(el){
-
-        observer.observe(el);
-
-      });
-
-  }
-
-
-  document.addEventListener(
-    'click',
-    function(e){
-
-      var heart=
-        e.target.closest &&
-        e.target.closest('.lk');
-
-
-      if(!heart)return;
-
-
-      setTimeout(
-        updateCartCount,
-        100
-      );
-
-    }
-  );
-
-
-  function initPDFMobile(){
-
-    addPDFArrows();
-
-    updateCartCount();
-
-  }
-
-
-  if(
-    document.readyState===
-    'loading'
-  ){
-
-    document.addEventListener(
-      'DOMContentLoaded',
-      function(){
-
-        setTimeout(
-          initPDFMobile,
-          300
-        );
-
-      }
-    );
-
-  }else{
-
-    setTimeout(
-      initPDFMobile,
-      300
-    );
-
-  }
-
-
-  setTimeout(
-    initPDFMobile,
-    1000
-  );
-
-
-  window.addEventListener(
-    'resize',
-    function(){
-
-      if(window.innerWidth<900){
-
-        addPDFArrows();
-
-        observePDFSections();
-
-      }
-
+    {
+      passive:true
     }
   );
 
@@ -1843,53 +1496,36 @@ new MutationObserver(function(ms){
 
 
 /* =========================================================
-   WBExamPDF — GLOBAL SUPABASE PDF SOLD COUNTER
-   Starting Count = 1,257
+   WBExamPDF — GLOBAL SUPABASE PDF ADDED COUNTER
+   Starting Count = 1,250
    Add to Cart = +1
-   Remove = NO decrease
+   Remove from Cart = NO decrease
    ========================================================= */
 
 (function(){
 
-  /* =======================================================
-     SUPABASE SETTINGS
-     ======================================================= */
-
-  var SUPABASE_URL=
+  var SUPABASE_URL =
     'https://xitiwikhzvfyeqdxspqk.supabase.co';
 
-
-  /*
-    এখানে তোমার Supabase Publishable / Anon Key বসাবে।
-
-    Service Role / Secret Key কখনো এখানে বসাবে না।
-  */
-
-  var SUPABASE_KEY=
+  var SUPABASE_KEY =
     'sb_publishable_PzuDMCMLsQRnpbuob8uhEQ_xQ20Y75D';
-
-
-  /* =======================================================
-     CHECK SUPABASE LIBRARY
-     ======================================================= */
 
   if(
     !window.supabase ||
-    typeof window.supabase.createClient!=='function'
+    typeof window.supabase.createClient !== 'function'
   ){
 
     console.error(
-      'WBExamPDF: Supabase JS library পাওয়া যায়নি। index.html-এ Supabase script যোগ করুন।'
+      'WBExamPDF: Supabase JS library পাওয়া যায়নি।'
     );
 
     return;
 
   }
 
-
   if(
     !SUPABASE_KEY ||
-    SUPABASE_KEY===
+    SUPABASE_KEY ===
     'PASTE_YOUR_SUPABASE_KEY_HERE'
   ){
 
@@ -1901,17 +1537,12 @@ new MutationObserver(function(ms){
 
   }
 
-
-  var supabaseClient=
+  var supabaseClient =
     window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
 
-
-  /* =======================================================
-     SHOW GLOBAL TOTAL
-     ======================================================= */
 
   function showTotal(total){
 
@@ -1921,8 +1552,8 @@ new MutationObserver(function(ms){
       )
       .forEach(function(el){
 
-        el.textContent=
-          'Total PDF Sold : '+
+        el.textContent =
+          'Total PDF Added counting : ' +
           Number(total)
             .toLocaleString('en-IN');
 
@@ -1931,21 +1562,16 @@ new MutationObserver(function(ms){
   }
 
 
-  /* =======================================================
-     LOAD GLOBAL TOTAL
-     ======================================================= */
-
   async function loadTotal(){
 
     try{
 
-      var result=
+      var result =
         await supabaseClient
           .from('pdf_sales_counter')
           .select('total_sold')
           .eq('id',1)
           .single();
-
 
       if(result.error){
 
@@ -1958,10 +1584,10 @@ new MutationObserver(function(ms){
 
       }
 
-
       if(
         result.data &&
-        typeof result.data.total_sold!=='undefined'
+        typeof result.data.total_sold !==
+        'undefined'
       ){
 
         showTotal(
@@ -1982,20 +1608,15 @@ new MutationObserver(function(ms){
   }
 
 
-  /* =======================================================
-     ADD +1 TO GLOBAL COUNTER
-     ======================================================= */
-
   async function incrementGlobalCounter(){
 
     try{
 
-      var result=
+      var result =
         await supabaseClient
           .rpc(
             'increment_pdf_sales'
           );
-
 
       if(result.error){
 
@@ -2008,15 +1629,9 @@ new MutationObserver(function(ms){
 
       }
 
-
-      /*
-        RPC নতুন total return করবে।
-      */
-
       showTotal(
         result.data
       );
-
 
     }catch(error){
 
@@ -2030,39 +1645,19 @@ new MutationObserver(function(ms){
   }
 
 
-  /* =======================================================
-     WATCH ADD TO CART
-     ======================================================= */
-
   document.addEventListener(
     'click',
     function(e){
 
-      var cartButton=
+      var cartButton =
         e.target.closest &&
         e.target.closest('.lk');
-
 
       if(!cartButton)
         return;
 
-
-      /*
-        মূল Add to Cart code আগে
-        .on class change করবে।
-
-        তাই delay দিয়ে check করছি।
-      */
-
       setTimeout(
         function(){
-
-          /*
-            শুধু Add হলে +1
-
-            Remove করলে .on থাকবে না,
-            তাই counter বাড়বে না।
-          */
 
           if(
             cartButton.classList.contains('on')
@@ -2080,12 +1675,8 @@ new MutationObserver(function(ms){
   );
 
 
-  /* =======================================================
-     INITIAL GLOBAL TOTAL
-     ======================================================= */
-
   if(
-    document.readyState===
+    document.readyState ===
     'loading'
   ){
 
