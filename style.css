@@ -191,14 +191,108 @@ footer>div:last-child{grid-row:3}
   .bn a{font-size:9px}
   .bn svg{font-size:24px}
 }
+/* =========================================================
+   TOTAL PDF ADDED
+   ========================================================= */
+
 .wb-total-pdf-section{
   width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:14px 10px 18px;
   text-align:center;
-  padding:18px 10px 22px;
 }
 
 .wb-total-pdf-added{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-height:42px;
+  padding:8px 20px;
+
+  background:linear-gradient(
+    135deg,
+    #06153a,
+    #0b2a6b
+  );
+
+  border:1px solid #3d78e0;
+  border-radius:12px;
+
+  color:#fff;
+
+  font-family:'Hind Siliguri',system-ui,sans-serif;
   font-size:15px;
   font-weight:700;
-  color:#06153a;
+  line-height:1.2;
+
+  letter-spacing:.1px;
+
+  box-shadow:
+    0 4px 12px rgba(6,21,58,.20),
+    inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+
+/* =========================
+   DESKTOP
+   ========================= */
+
+@media(min-width:900px){
+
+  .wb-total-pdf-section{
+    padding:16px 18px 22px;
+  }
+
+  .wb-total-pdf-added{
+    min-height:44px;
+    padding:9px 24px;
+    font-size:16px;
+    border-radius:13px;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media(max-width:899px){
+
+  .wb-total-pdf-section{
+    padding:12px 10px 16px;
+  }
+
+  .wb-total-pdf-added{
+    width:auto;
+    max-width:calc(100% - 10px);
+    min-height:40px;
+    padding:8px 16px;
+    font-size:14px;
+    border-radius:11px;
+  }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+   ========================= */
+
+@media(max-width:379px){
+
+  .wb-total-pdf-section{
+    padding:10px 8px 14px;
+  }
+
+  .wb-total-pdf-added{
+    max-width:100%;
+    padding:7px 12px;
+    font-size:13px;
+    border-radius:10px;
+  }
+
 }
