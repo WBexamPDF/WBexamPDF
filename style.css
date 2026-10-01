@@ -279,3 +279,108 @@ footer>div:last-child{grid-row:3}
   #r1{overflow:hidden;display:flex;gap:10px;scroll-behavior:smooth}
   #r1 .card{flex:0 0 calc((100% - 30px) / 4);min-width:0}
 }
+/* FINAL MOBILE PDF OVERRIDE — keep original card size/design; only add arrows + swipe */
+@media(max-width:899px){
+  .pdf-row-wrap .row{
+    gap:10px;
+    padding:0 22px 4px 0;
+    scroll-padding-left:0;
+    scrollbar-width:none;
+    overflow-x:auto;
+  }
+
+  .pdf-row-wrap .row::-webkit-scrollbar{
+    display:none;
+  }
+
+  .pdf-row-wrap .card{
+    flex:0 0 236px;
+    min-width:236px;
+    width:236px;
+    padding:7px;
+    border-radius:12px;
+  }
+
+  .pdf-row-wrap .card .im{
+    aspect-ratio:232/95;
+    border-radius:8px;
+  }
+
+  .pdf-row-wrap .card h3{
+    font-size:17px;
+    line-height:1.15;
+    margin:8px 2px 0;
+    display:block;
+    overflow:visible;
+  }
+
+  .pdf-row-wrap .card h3 small{
+    font-size:15px;
+    line-height:normal;
+  }
+
+  .pdf-row-wrap .card p{
+    font-size:14px;
+    line-height:1.3;
+    margin:4px 2px 6px;
+    display:block;
+    overflow:visible;
+  }
+
+  .pdf-row-wrap .pr{
+    gap:5px;
+  }
+
+  .pdf-row-wrap .pr div{
+    font-size:14px;
+    line-height:normal;
+  }
+
+  .pdf-row-wrap .pr div span{
+    font-size:11px;
+  }
+
+  .pdf-row-wrap .pr s{
+    font-size:10px;
+  }
+
+  .pdf-row-wrap .pr em{
+    font-size:10px;
+  }
+
+  .pdf-row-wrap .buy{
+    margin:7px 0;
+    padding:6px;
+    font-size:14px;
+    border-radius:7px;
+  }
+
+  .pdf-row-wrap .mt{
+    font-size:11px;
+    margin:0 2px 5px;
+    min-height:21px;
+  }
+
+  .pdf-row-wrap .mt button{
+    padding:3px 7px;
+    font-size:11px;
+    border-radius:13px;
+  }
+
+  .pdf-row-wrap .mt button svg{
+    font-size:16px;
+  }
+
+  .pdf-row-wrap .ft{
+    font-size:10px;
+    gap:4px;
+  }
+
+  .pdf-row-wrap .ft div{
+    gap:4px;
+  }
+
+  .pdf-row-wrap .ft svg{
+    font-size:16px;
+  }
+}
