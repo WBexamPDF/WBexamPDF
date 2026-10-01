@@ -100,7 +100,9 @@ setInterval(function(){
 },1000);
 
 
-/* ===== LINKS ===== */
+/* =====================================================
+   LINKS
+===================================================== */
 
 var LINKS={
   youtube:'',
@@ -125,6 +127,8 @@ var LINKS={
   sample:''
 };
 
+
+/* buy/sample-এ {exam} লিখলে পরীক্ষার নাম বসে যাবে */
 var IS_HOME=document.body.hasAttribute('data-home'),
     IDX={bn:0,en:1,hi:2};
 
@@ -157,7 +161,7 @@ var DX={};
 জনপ্রিয় সাজিডিজ~~Popular Suggested~लोकप्रिय सुझाव
 PDF প্যাকেজ~~PDF Package~PDF पैकेज
 চলতি ও আসন্ন পরীক্ষার জন্য~~For current & upcoming exams~चालू और आगामी परीक्षाओं के लिए
-LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time Offer
+LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time Offer~सीमित समय का ऑफर
 অফার শেষ হতে বাকি:~~Offer ends in:~ऑफर खत्म होने में:
 দিন~~Days~दिन
 ঘণ্টা~~Hours~घंटे
@@ -189,11 +193,12 @@ LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time 
 জরুরি বিষয় আগে, সময় বাঁচান~~Urgent topics first, save time~ज़रूरी विषय पहले, समय बचाएँ
 নমুনা দেখে, তারপর কিনুন~~Preview a sample, then buy~पहले नमूना देखें, फिर खरीदें
 সীমিত সময়ের জন্য ৭০% পর্যন্ত ছাড়~~Up to 70% off for a limited time~सीमित समय के लिए 70% तक की छूट
-Follow Us~ফলো করুন~Follow Us~फ़ॉलो करें`.split("\n").forEach(function(l){
+Follow Us~ফলো করুন~Follow Us~फ़ॉलो करें`
+.split("\n")
+.forEach(function(l){
   var p=l.split("~");
   DX[p[0]]=[p[1]||p[0],p[2],p[3]];
 });
-
 
 var Y={
   buy:['এখনই কিনুন →','BUY NOW →','अभी खरीदें →'],
@@ -248,6 +253,11 @@ function likes(){
   }
 }
 
+
+/* =====================================================
+   PDF CARD
+===================================================== */
+
 card=function(d,id){
 
   var lk=likes()[id],
@@ -260,459 +270,434 @@ card=function(d,id){
 
   return '<div class="card"><div class="im"><img src="'+I[d[1]]+'" alt=""><span class="tag" style="background:'+col[d[0]]+'">'+
     (soon?'<svg class="i spin"><use href="#t"/></svg>':'')+
-    d[0]+'</span></div><h3>'+d[2]+'<small>'+d[3]+'</small></h3><p>'+
-    (id[0]=='a'?DS[DK[+id.slice(1)]][IDX[LG]]:'')+
-    '</p><div class="pr">'+pr+'</div><a class="buy" data-link="buy" data-exam="'+d[2]+'">'+
-    tr('buy')+
-    '</a><div class="mt">'+
-    (sd>0?'<span><svg class="i"><use href="#w"/></svg> '+sd+' '+tr('sold')+'</span>':'')+
-    '<span class="ac"><button class="lk'+
-    (lk?' on':'')+
-    '" data-id="'+id+'" aria-label="'+
-    (lk?'Added to cart':'Add to cart')+
-    '" title="'+
-    (lk?'Added to cart':'Add to cart')+
-    '"><svg class="i"><use href="#hr"/></svg><b>'+
-    (lk?1:'')+
-    '</b></button><button class="sb" data-n="'+d[2]+'"><svg class="i"><use href="#sh"/></svg>'+
-    tr('share')+
-    '</button></span></div><div class="ft"><div data-link="sample" data-exam="'+d[2]+'"><svg class="i"><use href="#e"/></svg><span>'+
-    tr('sample')+
-    '<br>'+
-    tr('pg')+
-    '</span></div><div><svg class="i"><use href="#l"/></svg><span>'+
-    tr('pw1')+
-    '<br>'+
-    tr('pw2')+
-    '</span></div></div></div>';
+    d[0]+
+    '</span></div>'+
+    '<h3>'+d[2]+'<small>'+d[3]+'</small></h3>'+
+    '<p>'+(id[0]=='a'?DS[DK[+id.slice(1)]][IDX[LG]]:'')+'</p>'+
+    '<div class="pr">'+pr+'</div>'+
+    '<a class="buy" data-link="buy" data-exam="'+d[2]+'">'+tr('buy')+'</a>'+
+    '<div class="mt">'+
+      (sd>0?'<span><svg class="i"><use href="#w"/></svg> '+sd+' '+tr('sold')+'</span>':'')+
+      '<span class="ac">'+
+        '<button class="lk'+(lk?' on':'')+'" data-id="'+id+'" aria-label="'+(lk?'Added to cart':'Add to cart')+'" title="'+(lk?'Added to cart':'Add to cart')+'">'+
+          '<svg class="i"><use href="#c"/></svg><b>'+(lk?1:'')+'</b>'+
+        '</button>'+
+        '<button class="sb" data-n="'+d[2]+'"><svg class="i"><use href="#sh"/></svg>'+tr('share')+'</button>'+
+      '</span>'+
+    '</div>'+
+    '<div class="ft">'+
+      '<div data-link="sample" data-exam="'+d[2]+'"><svg class="i"><use href="#e"/></svg><span>'+tr('sample')+'<br>'+tr('pg')+'</span></div>'+
+      '<div><svg class="i"><use href="#l"/></svg><span>'+tr('pw1')+'<br>'+tr('pw2')+'</span></div>'+
+    '</div>'+
+  '</div>';
 };
+
+
+/* =====================================================
+   SECTION DATA
+===================================================== */
 
 function sec(a,p){
   return a.map(function(d,i){
     return [d,p+i];
-  }).sort(function(x,y){
+  })
+  .sort(function(x,y){
     return (y[0][5]||0)-(x[0][5]||0);
-  }).map(function(z){
+  })
+  .map(function(z){
     return card(z[0],z[1]);
-  }).join('');
+  })
+  .join('');
 }
 
-function render(){
+function renderPDFs(){
+  var r1=document.getElementById('r1'),
+      r2=document.getElementById('r2');
 
-  if(!document.getElementById('r1'))return;
-
-  document.getElementById('r1').innerHTML=sec(C1,'a');
-  document.getElementById('r2').innerHTML=sec(C2,'b');
-
+  if(r1)r1.innerHTML=sec(C1,'a');
+  if(r2)r2.innerHTML=sec(C2,'b');
 }
 
-var NODES=[];
 
-function scan(){
-
-  var w=document.createTreeWalker(
-    document.body,
-    NodeFilter.SHOW_TEXT
-  ),
-  n;
-
-  while(n=w.nextNode()){
-
-    var p=n.parentNode.nodeName;
-
-    if(p=='SCRIPT'||p=='STYLE'||p=='OPTION')continue;
-
-    var k=n.nodeValue.trim();
-
-    if(DX[k])
-      NODES.push([
-        n,
-        k,
-        n.nodeValue.replace(k,'§')
-      ]);
-  }
-}
-
-function apply(){
-
-  NODES.forEach(function(x){
-    x[0].nodeValue=
-      x[2].replace(
-        '§',
-        DX[x[1]][IDX[LG]]
-      );
-  });
-
-}
+/* =====================================================
+   LANGUAGE
+===================================================== */
 
 function setLang(l){
 
+  if(!IDX.hasOwnProperty(l))return;
+
   LG=l;
-  stor('lang',l);
+  stor('lang',LG);
 
-  document.getElementById('lg').value=l;
-  document.documentElement.lang=l;
+  document.querySelectorAll('[data-link]').forEach(function(el){
 
-  apply();
-  render();
+    var key=el.dataset.link;
+
+    if(DX[key]){
+      if(el.children.length===0){
+        el.textContent=DX[key][IDX[LG]];
+      }
+    }
+  });
+
+  document.querySelectorAll('[data-l]').forEach(function(b){
+    b.classList.toggle('on',b.dataset.l===LG);
+  });
+
+  var lg=document.getElementById('lg');
+
+  if(lg)lg.value=LG;
+
+  renderPDFs();
+  cartCount();
+}
+
+document.addEventListener('change',function(e){
+
+  if(e.target.id==='lg'){
+    setLang(e.target.value);
+  }
+
+});
+
+
+/* =====================================================
+   LANGUAGE POPUP
+===================================================== */
+
+(function(){
+
+  var lp=document.getElementById('lp'),
+      lx=document.getElementById('lx');
+
+  if(!lp)return;
+
+  document.querySelectorAll('[data-l]').forEach(function(b){
+
+    b.addEventListener('click',function(){
+      setLang(b.dataset.l);
+      lp.classList.remove('on');
+    });
+
+  });
+
+  if(lx){
+    lx.addEventListener('click',function(){
+      lp.classList.remove('on');
+      stor('langSkipped','1');
+    });
+  }
+
+  if(!stor('langSkipped') && !stor('lang')){
+    setTimeout(function(){
+      lp.classList.add('on');
+    },500);
+  }
+
+})();
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+function cartItems(){
+
+  try{
+    return JSON.parse(stor('cart')||'[]');
+  }catch(e){
+    return [];
+  }
 
 }
 
-scan();
-render();
-
-setupPdfRows();
-
-window.addEventListener(
-  'resize',
-  function(){
-    if(innerWidth<900)
-      setupPdfRows();
-  }
-);
-
-document.getElementById('lg').value=LG;
-document.documentElement.lang=LG;
-apply();
-
-var lp=document.getElementById('lp');
-
-if(lp&&IS_HOME&&!stor('langChosen'))
-  lp.classList.add('on');
-
-document.getElementById('lg').onchange=function(){
-
-  stor('langChosen','1');
-  setLang(this.value);
-
-};
-
-
-/* =========================================================
-   MOBILE PDF CAROUSEL + CART
-   ========================================================= */
-
-function carts(){
-
-  try{
-
-    var raw=stor('cart');
-
-    if(raw)
-      return JSON.parse(raw);
-
-    var old=likes();
-
-    if(Object.keys(old).length){
-
-      stor(
-        'cart',
-        JSON.stringify(old)
-      );
-
-      return old;
-    }
-
-    return {};
-
-  }catch(e){
-
-    return {};
-
-  }
-
+function saveCart(a){
+  stor('cart',JSON.stringify(a));
 }
 
 function cartCount(){
 
-  var C=carts(),
-      n=Object.keys(C).length;
+  var a=cartItems();
 
-  document
-    .querySelectorAll('[data-link=cart] em')
-    .forEach(function(e){
+  document.querySelectorAll('[data-link="cart"] em').forEach(function(el){
+    el.textContent=a.length;
+  });
 
-      e.textContent=n;
-
-    });
-
-  return n;
-
-}
-
-function setupPdfRows(){
-
-  if(innerWidth>=900)return;
-
-  document
-    .querySelectorAll('.sec .row')
-    .forEach(function(row){
-
-      if(
-        row.parentElement.classList.contains(
-          'pdf-row-wrap'
-        )
-      )return;
-
-      var wrap=document.createElement('div');
-
-      wrap.className='pdf-row-wrap';
-
-      row.parentNode.insertBefore(
-        wrap,
-        row
-      );
-
-      wrap.appendChild(row);
-
-      var l=document.createElement('button'),
-          r=document.createElement('button');
-
-      l.className='pdf-arrow left';
-      r.className='pdf-arrow right';
-
-      l.type=r.type='button';
-
-      l.innerHTML='‹';
-      r.innerHTML='›';
-
-      l.setAttribute(
-        'aria-label',
-        'Previous PDF'
-      );
-
-      r.setAttribute(
-        'aria-label',
-        'Next PDF'
-      );
-
-      wrap.appendChild(l);
-      wrap.appendChild(r);
-
-      l.addEventListener(
-        'click',
-        function(){
-
-          row.scrollBy({
-            left:-(row.clientWidth*.92),
-            behavior:'smooth'
-          });
-
-        }
-      );
-
-      r.addEventListener(
-        'click',
-        function(){
-
-          row.scrollBy({
-            left:row.clientWidth*.92,
-            behavior:'smooth'
-          });
-
-        }
-      );
-
-    });
-
-  if(!window.__pdfIO){
-
-    window.__pdfIO=
-      new IntersectionObserver(
-        function(es){
-
-          es.forEach(function(e){
-
-            e.target.classList.toggle(
-              'pdf-active',
-              e.isIntersecting &&
-              e.intersectionRatio>.22
-            );
-
-          });
-
-        },
-        {
-          threshold:[.22]
-        }
-      );
-
-    document
-      .querySelectorAll('.sec')
-      .forEach(function(sec){
-
-        if(
-          sec.querySelector(
-            '.pdf-row-wrap'
-          )
-        )
-          window.__pdfIO.observe(sec);
-
-      });
-
-  }
+  document.querySelectorAll('.bn [data-link="cart"] em').forEach(function(el){
+    el.textContent=a.length;
+  });
 
 }
 
 cartCount();
 
 
-var lx=document.getElementById('lx');
+/* =====================================================
+   CART CLICK
+===================================================== */
 
-if(lx)
-  lx.onclick=function(){
+document.addEventListener('click',function(e){
 
-    stor('langChosen','1');
+  var b=e.target.closest&&e.target.closest('.lk');
 
-    lp.classList.remove('on');
+  if(!b)return;
 
-  };
+  var id=b.dataset.id,
+      a=cartItems(),
+      pos=a.indexOf(id);
+
+  if(pos===-1){
+
+    a.push(id);
+    saveCart(a);
+
+    var l=likes();
+    l[id]=1;
+    stor('likes',JSON.stringify(l));
+
+    b.classList.add('on');
+    b.querySelector('b').textContent='1';
+    b.setAttribute('aria-label','Added to cart');
+    b.title='Added to cart';
+
+  }else{
+
+    a.splice(pos,1);
+    saveCart(a);
+
+    var l2=likes();
+    delete l2[id];
+    stor('likes',JSON.stringify(l2));
+
+    b.classList.remove('on');
+    b.querySelector('b').textContent='';
+    b.setAttribute('aria-label','Add to cart');
+    b.title='Add to cart';
+  }
+
+  cartCount();
+
+});
 
 
-document.addEventListener(
-  'click',
-  function(e){
+/* =====================================================
+   RUNNING / UPCOMING PDF ROW
+   Desktop = 4 cards
+   Desktop auto-slide = 4 sec
+   Mobile = 2 compact cards
+   Mobile auto-slide = 2 sec
+===================================================== */
 
-    var b=e.target.closest('button');
+function setupPdfRows(){
 
-    if(!b)return;
+  var mobile=innerWidth<900;
 
-    if(b.dataset.l){
+  document.querySelectorAll('.sec .row').forEach(function(row){
 
-      stor('langChosen','1');
+    var isRunning=row.id==='r1';
 
-      setLang(b.dataset.l);
+    if(mobile){
 
-      lp.classList.remove('on');
+      if(!row.parentElement.classList.contains('pdf-row-wrap')){
 
-    }
+        var wrap=document.createElement('div');
 
-    else if(b.classList.contains('lk')){
+        wrap.className='pdf-row-wrap';
 
-      var L=likes(),
-          C=carts(),
-          id=b.dataset.id;
+        row.parentNode.insertBefore(wrap,row);
+        wrap.appendChild(row);
 
-      if(L[id]){
+        var l=document.createElement('button'),
+            r=document.createElement('button');
 
-        delete L[id];
-        delete C[id];
+        l.className='pdf-arrow left';
+        r.className='pdf-arrow right';
 
-      }else{
+        l.type='button';
+        r.type='button';
 
-        L[id]=1;
-        C[id]=1;
+        l.innerHTML='‹';
+        r.innerHTML='›';
+
+        l.setAttribute('aria-label','Previous PDF');
+        r.setAttribute('aria-label','Next PDF');
+
+        wrap.appendChild(l);
+        wrap.appendChild(r);
+
+        l.addEventListener('click',function(){
+
+          row.scrollBy({
+            left:-(row.clientWidth*.96),
+            behavior:'smooth'
+          });
+
+        });
+
+        r.addEventListener('click',function(){
+
+          row.scrollBy({
+            left:row.clientWidth*.96,
+            behavior:'smooth'
+          });
+
+        });
 
       }
 
-      stor(
-        'likes',
-        JSON.stringify(L)
-      );
-
-      stor(
-        'cart',
-        JSON.stringify(C)
-      );
-
-      b.classList.toggle(
-        'on',
-        !!L[id]
-      );
-
-      b.querySelector('b').textContent=
-        L[id]?1:'';
-
-      b.setAttribute(
-        'aria-label',
-        L[id]?'Added to cart':'Add to cart'
-      );
-
-      b.title=
-        L[id]?'Added to cart':'Add to cart';
-
-      cartCount();
-
     }
 
-    else if(b.classList.contains('sb')){
 
-      var u=location.href.split('#')[0],
-          x=b.dataset.n+' – WBExamPDF';
+    /* =================================================
+       RUNNING PDF AUTO SLIDER
+    ================================================= */
 
-      if(navigator.share)
+    if(isRunning && !row.dataset.autoSlide){
 
-        navigator
-          .share({
-            title:x,
-            url:u
-          })
-          .catch(function(){});
+      row.dataset.autoSlide='1';
 
-      else
+      var timer=null;
 
-        window.open(
-          'https://wa.me/?text='+
-          encodeURIComponent(x+' '+u),
-          '_blank'
+      function nextRunning(){
+
+        if(!document.body.contains(row))return;
+
+        var max=row.scrollWidth-row.clientWidth;
+
+        if(max<=2)return;
+
+        var step=row.clientWidth;
+
+        var next=row.scrollLeft+step;
+
+        if(next>=max-2)next=0;
+
+        row.scrollTo({
+          left:next,
+          behavior:'smooth'
+        });
+
+      }
+
+      function startAuto(){
+
+        clearInterval(timer);
+
+        timer=setInterval(
+          nextRunning,
+          mobile?2000:4000
         );
 
+      }
+
+      row.addEventListener('mouseenter',function(){
+
+        if(!mobile)clearInterval(timer);
+
+      });
+
+      row.addEventListener('mouseleave',function(){
+
+        if(!mobile)startAuto();
+
+      });
+
+      row.addEventListener('touchstart',function(){
+
+        clearInterval(timer);
+
+      },{
+        passive:true
+      });
+
+      row.addEventListener('touchend',function(){
+
+        setTimeout(startAuto,900);
+
+      },{
+        passive:true
+      });
+
+      startAuto();
+
     }
 
-  }
-);
+  });
 
 
-new MutationObserver(
-  function(ms){
+  /* =================================================
+     MOBILE ARROW VISIBILITY
+  ================================================= */
 
-    ms.forEach(function(m){
+  if(mobile && !window.__pdfIO){
 
-      var e=
-        m.target.nodeType==3
-          ?m.target.parentNode
-          :m.target;
+    window.__pdfIO=new IntersectionObserver(function(es){
 
-      if(
-        e &&
-        e.classList &&
-        e.classList.contains('n')
-      ){
+      es.forEach(function(e){
 
-        e.classList.remove('fl');
+        e.target.classList.toggle(
+          'pdf-active',
+          e.isIntersecting && e.intersectionRatio>.22
+        );
 
-        void e.offsetWidth;
+      });
 
-        e.classList.add('fl');
+    },{
+      threshold:[.22]
+    });
 
+
+    document.querySelectorAll('.sec').forEach(function(sec){
+
+      if(sec.querySelector('.pdf-row-wrap')){
+        window.__pdfIO.observe(sec);
       }
 
     });
 
-    if(t<3600)
+  }
 
-      document
-        .querySelectorAll('.tim,.box')
-        .forEach(function(x){
+}
 
-          x.classList.add('hot');
+setupPdfRows();
 
-        });
+
+/* =====================================================
+   SHARE BUTTON
+===================================================== */
+
+document.addEventListener('click',function(e){
+
+  var b=e.target.closest&&e.target.closest('.sb');
+
+  if(!b)return;
+
+  var u=location.href.split('#')[0],
+      x=b.dataset.n+' – WBExamPDF';
+
+  if(navigator.share){
+
+    navigator.share({
+      title:x,
+      url:u
+    }).catch(function(){});
+
+  }else{
+
+    window.open(
+      'https://wa.me/?text='+encodeURIComponent(x+' '+u),
+      '_blank'
+    );
 
   }
-).observe(
-  document.body,
-  {
-    subtree:true,
-    childList:true,
-    characterData:true
-  }
-);
+
+});
 
 
-/* =========================================================
-   ACCOUNT / MENU / SLIDER
-   ========================================================= */
+/* =====================================================
+   LINK HANDLER
+===================================================== */
 
 (function(){
 
@@ -723,106 +708,98 @@ new MutationObserver(
     if(am.classList.contains('on')){
 
       am.classList.remove('on');
-
       return;
 
     }
 
     var r=el.getBoundingClientRect();
 
-    am.style.right=
-      Math.max(
-        8,
-        innerWidth-r.right-4
-      )+'px';
+    am.style.right=Math.max(
+      8,
+      innerWidth-r.right-4
+    )+'px';
 
-    am.style.top=
-      up
-        ?'auto'
-        :(r.bottom+8)+'px';
+    am.style.top=up
+      ?'auto'
+      :(r.bottom+8)+'px';
 
-    am.style.bottom=
-      up
-        ?(innerHeight-r.top+8)+'px'
-        :'auto';
+    am.style.bottom=up
+      ?(innerHeight-r.top+8)+'px'
+      :'auto';
 
     am.classList.add('on');
 
   }
 
-  document.addEventListener(
-    'click',
-    function(e){
+  document.addEventListener('click',function(e){
 
-      var p=e.target.closest('.pf,.pfb');
+    var p=e.target.closest('.pf,.pfb');
 
-      if(p){
-
-        e.preventDefault();
-
-        tog(
-          p,
-          !!p.closest('.bn')
-        );
-
-        return;
-
-      }
-
-      if(!e.target.closest('#am'))
-        am.classList.remove('on');
-
-      var a=e.target.closest('[data-link]');
-
-      if(!a)return;
+    if(p){
 
       e.preventDefault();
+      tog(p,!!p.closest('.bn'));
+      return;
 
-      var u=LINKS[a.dataset.link]||'';
+    }
 
-      if(!u)return;
-
+    if(!e.target.closest('#am')){
       am.classList.remove('on');
+    }
 
-      if(
-        /^(youtube|facebook|instagram)$/.test(
-          a.dataset.link
-        )
-      ){
+    var a=e.target.closest('[data-link]');
 
-        window.open(
-          u,
-          '_blank',
-          'noopener'
-        );
+    if(!a)return;
 
-        return;
+    e.preventDefault();
 
-      }
+    var u=LINKS[a.dataset.link]||'';
 
-      location.href=
-        u.replace(
-          '{exam}',
-          encodeURIComponent(
-            a.dataset.exam||''
-          )
-        );
+    if(!u)return;
+
+    am.classList.remove('on');
+
+    if(
+      /^(youtube|facebook|instagram)$/.test(
+        a.dataset.link
+      )
+    ){
+
+      window.open(
+        u,
+        '_blank',
+        'noopener'
+      );
+
+      return;
 
     }
-  );
 
-  document.addEventListener(
-    'keydown',
-    function(e){
+    location.href=u.replace(
+      '{exam}',
+      encodeURIComponent(a.dataset.exam||'')
+    );
 
-      if(e.key=='Escape')
-        am.classList.remove('on');
+  });
 
+  document.addEventListener('keydown',function(e){
+
+    if(e.key=='Escape'){
+      am.classList.remove('on');
     }
-  );
 
-  if(!document.getElementById('trk'))
-    return;
+  });
+
+})();
+
+
+/* =====================================================
+   HERO SLIDER
+===================================================== */
+
+(function(){
+
+  if(!document.getElementById('trk'))return;
 
   var trk=document.getElementById('trk'),
       dots=document.getElementById('dots'),
@@ -840,10 +817,7 @@ new MutationObserver(
     [].forEach.call(
       dots.children,
       function(x,j){
-
-        x.className=
-          j==i?'on':'';
-
+        x.className=j==i?'on':'';
       }
     );
 
@@ -853,20 +827,13 @@ new MutationObserver(
 
     clearInterval(tm);
 
-    tm=setInterval(
-      function(){
-        go(i+1);
-      },
-      3000
-    );
+    tm=setInterval(function(){
+      go(i+1);
+    },3000);
 
   }
 
-  for(
-    var k=0;
-    k<n;
-    k++
-  ){
+  for(var k=0;k<n;k++){
 
     (function(k){
 
@@ -902,21 +869,16 @@ new MutationObserver(
   sl.addEventListener(
     'touchstart',
     function(e){
-
       sx=e.touches[0].clientX;
-
     },
-    {
-      passive:true
-    }
+    {passive:true}
   );
 
   sl.addEventListener(
     'touchend',
     function(e){
 
-      var dx=
-        e.changedTouches[0].clientX-sx;
+      var dx=e.changedTouches[0].clientX-sx;
 
       if(Math.abs(dx)>40){
 
@@ -937,14 +899,13 @@ new MutationObserver(
 })();
 
 
-/* =========================================================
+/* =====================================================
    REVIEWS
-   ========================================================= */
+===================================================== */
 
 (function(){
 
-  if(!document.getElementById('rr'))
-    return;
+  if(!document.getElementById('rr'))return;
 
   var RT={
     title:[
@@ -952,46 +913,55 @@ new MutationObserver(
       'Write your review',
       'अपना रिव्यू लिखें'
     ],
+
     open:[
       'রিভিউ লিখুন',
       'Write a review',
       'रिव्यू लिखें'
     ],
+
     rate:[
       'আপনার রেটিং',
       'Your rating',
       'आपकी रेटिंग'
     ],
+
     submit:[
       'রিভিউ জমা দিন',
       'Submit review',
       'रिव्यू जमा करें'
     ],
+
     name:[
       'আপনার নাম',
       'Your name',
       'आपका नाम'
     ],
+
     exam:[
       'কোন পরীক্ষার জন্য নিয়েছেন? (ঐচ্ছিক)',
       'Which exam did you prepare for? (optional)',
       'किस परीक्षा के लिए लिया? (वैकल्पिक)'
     ],
+
     text:[
       'আপনার অভিজ্ঞতা লিখুন...',
       'Share your experience...',
       'अपना अनुभव लिखें...'
     ],
+
     err:[
       'নাম ও রিভিউ (কমপক্ষে ১০ অক্ষর) লিখুন',
       'Please enter your name and a review (min 10 characters)',
       'नाम और रिव्यू (कम से कम 10 अक्षर) लिखें'
     ],
+
     thanks:[
       'ধন্যবাদ! আপনার রিভিউ যোগ হয়েছে',
       'Thank you! Your review has been added',
       'धन्यवाद! आपका रिव्यू जुड़ गया'
     ],
+
     just:[
       'এইমাত্র',
       'Just now',
@@ -1008,20 +978,14 @@ new MutationObserver(
     [].forEach.call(
       document.querySelectorAll('[data-rt]'),
       function(e){
-
-        e.textContent=
-          rt(e.dataset.rt);
-
+        e.textContent=rt(e.dataset.rt);
       }
     );
 
     [].forEach.call(
       document.querySelectorAll('[data-ph]'),
       function(e){
-
-        e.placeholder=
-          rt(e.dataset.ph);
-
+        e.placeholder=rt(e.dataset.ph);
       }
     );
 
@@ -1039,7 +1003,7 @@ new MutationObserver(
   rtApply();
 
 
-  /* Reviews carousel */
+  /* reviews carousel */
 
   var r=document.getElementById('rr'),
       hold=false,
@@ -1047,38 +1011,34 @@ new MutationObserver(
 
   function step(){
 
-    if(
-      hold ||
-      Date.now()<until
-    )return;
+    if(hold||Date.now()<until)return;
 
     var c=r.firstElementChild;
 
     if(!c)return;
 
     if(
-      r.scrollLeft+r.clientWidth>=
-      r.scrollWidth-6
-    )
+      r.scrollLeft+r.clientWidth
+      >=r.scrollWidth-6
+    ){
 
       r.scrollTo({
         left:0,
         behavior:'smooth'
       });
 
-    else
+    }else{
 
       r.scrollBy({
         left:c.offsetWidth+10,
         behavior:'smooth'
       });
 
+    }
+
   }
 
-  setInterval(
-    step,
-    3000
-  );
+  setInterval(step,3000);
 
   r.addEventListener(
     'mouseenter',
@@ -1094,25 +1054,26 @@ new MutationObserver(
     }
   );
 
-  ['touchstart','pointerdown','wheel']
-    .forEach(function(e){
+  [
+    'touchstart',
+    'pointerdown',
+    'wheel'
+  ].forEach(function(e){
 
-      r.addEventListener(
-        e,
-        function(){
+    r.addEventListener(
+      e,
+      function(){
+        until=Date.now()+6000;
+      },
+      {passive:true}
+    );
 
-          until=Date.now()+6000;
-
-        },
-        {
-          passive:true
-        }
-      );
-
-    });
+  });
 
 
-  /* User reviews */
+  /* =================================================
+     USER REVIEWS
+  ================================================= */
 
   var REVIEW_POST='';
 
@@ -1138,15 +1099,11 @@ new MutationObserver(
   function mine(){
 
     try{
-
       return JSON.parse(
         stor('myReviews')||'[]'
       );
-
     }catch(e){
-
       return [];
-
     }
 
   }
@@ -1158,9 +1115,7 @@ new MutationObserver(
       '☆'.repeat(5-v.s);
 
     return '<div class="rc mine"><div class="av">'+
-      esc(
-        v.n.trim().charAt(0).toUpperCase()
-      )+
+      esc(v.n.trim().charAt(0).toUpperCase())+
       '</div><div><b>'+
       esc(v.n)+
       '</b><span class="st">'+
@@ -1178,12 +1133,10 @@ new MutationObserver(
     .slice()
     .reverse()
     .forEach(function(v){
-
       r.insertAdjacentHTML(
         'afterbegin',
         cardHTML(v)
       );
-
     });
 
 
@@ -1197,10 +1150,7 @@ new MutationObserver(
     [].forEach.call(
       rs.children,
       function(b,i){
-
-        b.className=
-          i<rate?'on':'';
-
+        b.className=i<rate?'on':'';
       }
     );
 
@@ -1223,6 +1173,7 @@ new MutationObserver(
     }
   );
 
+
   function openM(){
 
     rm.classList.add('on');
@@ -1231,16 +1182,14 @@ new MutationObserver(
 
     document.getElementById('rer').textContent='';
 
-    setTimeout(
-      function(){
+    setTimeout(function(){
 
-        document.getElementById('rn').focus();
+      document.getElementById('rn').focus();
 
-      },
-      50
-    );
+    },50);
 
   }
+
 
   function closeM(){
 
@@ -1250,6 +1199,7 @@ new MutationObserver(
 
   }
 
+
   document.getElementById('rvb').onclick=openM;
 
   document.getElementById('rmx').onclick=closeM;
@@ -1258,8 +1208,7 @@ new MutationObserver(
     'click',
     function(e){
 
-      if(e.target===rm)
-        closeM();
+      if(e.target===rm)closeM();
 
     }
   );
@@ -1268,11 +1217,11 @@ new MutationObserver(
     'keydown',
     function(e){
 
-      if(e.key=='Escape')
-        closeM();
+      if(e.key=='Escape')closeM();
 
     }
   );
+
 
   tx.addEventListener(
     'input',
@@ -1284,23 +1233,24 @@ new MutationObserver(
     }
   );
 
+
   document.getElementById('rsb').onclick=function(){
 
     var n=
       document.getElementById('rn')
-        .value.trim();
+      .value.trim();
 
     var e=
       document.getElementById('re')
-        .value.trim();
+      .value.trim();
 
     var t=
       tx.value.trim();
 
     if(!n||t.length<10){
 
-      document.getElementById('rer')
-        .textContent=rt('err');
+      document.getElementById('rer').textContent=
+        rt('err');
 
       return;
 
@@ -1329,6 +1279,7 @@ new MutationObserver(
 
     }catch(x){}
 
+
     if(REVIEW_POST){
 
       try{
@@ -1339,7 +1290,7 @@ new MutationObserver(
             method:'POST',
             headers:{
               'Content-Type':
-                'application/json'
+              'application/json'
             },
             body:JSON.stringify(v)
           }
@@ -1348,6 +1299,7 @@ new MutationObserver(
       }catch(x){}
 
     }
+
 
     r.insertAdjacentHTML(
       'afterbegin',
@@ -1365,8 +1317,8 @@ new MutationObserver(
     document.getElementById('re').value='';
     tx.value='';
 
-    document.getElementById('rcn')
-      .textContent='0/200';
+    document.getElementById('rcn').textContent=
+      '0/200';
 
     rate=5;
 
@@ -1380,17 +1332,14 @@ new MutationObserver(
 
     ts.classList.add('on');
 
-    setTimeout(
-      function(){
-        ts.classList.remove('on');
-      },
-      3200
-    );
+    setTimeout(function(){
+      ts.classList.remove('on');
+    },3200);
 
   };
 
 
-  /* keyboard access */
+  /* keyboard access for social icons */
 
   document.addEventListener(
     'keydown',
@@ -1418,24 +1367,26 @@ new MutationObserver(
     matchMedia(
       '(prefers-reduced-motion:reduce)'
     ).matches
-  )
+  ){
 
     [].forEach.call(
       document.querySelectorAll('svg.fire'),
       function(x){
 
-        if(x.pauseAnimations)
-          x.pauseAnimations();
+        x.pauseAnimations &&
+        x.pauseAnimations();
 
       }
     );
 
+  }
+
 })();
 
 
-/* =========================================================
+/* =====================================================
    HEADER SCROLL
-   ========================================================= */
+===================================================== */
 
 (function(){
 
@@ -1454,22 +1405,15 @@ new MutationObserver(
 
       last=y;
 
-      if(
-        y>80 &&
-        Math.abs(d)>2
-      ){
+      if(y>80&&Math.abs(d)>2){
 
         h.classList.add('hid');
 
-        var am=
-          document.getElementById('am');
+        var am=document.getElementById('am');
 
-        if(am)
-          am.classList.remove('on');
+        if(am)am.classList.remove('on');
 
-      }
-
-      else if(y<=80){
+      }else if(y<=80){
 
         h.classList.remove('hid');
 
@@ -1479,99 +1423,95 @@ new MutationObserver(
 
       tm=setTimeout(
         function(){
-
           h.classList.remove('hid');
-
         },
         500
       );
 
     },
-    {
-      passive:true
-    }
+    {passive:true}
   );
 
 })();
 
 
 /* =========================================================
-   WBExamPDF — GLOBAL SUPABASE PDF ADDED COUNTER
+   WBExamPDF — GLOBAL SUPABASE PDF SOLD COUNTER
+
    Starting Count = 1,250
    Add to Cart = +1
-   Remove from Cart = NO decrease
-   ========================================================= */
+   Remove = NO decrease
+   Re-add = +1
+========================================================= */
 
 (function(){
 
-  var SUPABASE_URL =
+  var SUPABASE_URL=
     'https://xitiwikhzvfyeqdxspqk.supabase.co';
 
-  var SUPABASE_KEY =
+  var SUPABASE_KEY=
     'sb_publishable_PzuDMCMLsQRnpbuob8uhEQ_xQ20Y75D';
+
+
+  /* =================================================
+     CHECK SUPABASE
+  ================================================= */
 
   if(
     !window.supabase ||
-    typeof window.supabase.createClient !== 'function'
+    typeof window.supabase.createClient!=='function'
   ){
 
     console.error(
-      'WBExamPDF: Supabase JS library পাওয়া যায়নি।'
+      'WBExamPDF: Supabase JS library পাওয়া যায়নি। index.html-এ Supabase script যোগ করুন।'
     );
 
     return;
 
   }
 
-  if(
-    !SUPABASE_KEY ||
-    SUPABASE_KEY ===
-    'PASTE_YOUR_SUPABASE_KEY_HERE'
-  ){
 
-    console.error(
-      'WBExamPDF: Supabase key বসানো হয়নি।'
-    );
-
-    return;
-
-  }
-
-  var supabaseClient =
+  var supabaseClient=
     window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
 
 
+  /* =================================================
+     SHOW TOTAL
+  ================================================= */
+
   function showTotal(total){
 
     document
-      .querySelectorAll(
-        '.wb-total-pdf-added'
-      )
+      .querySelectorAll('.wb-total-pdf-added')
       .forEach(function(el){
 
-        el.textContent =
-          'Total PDF Added counting : ' +
-          Number(total)
-            .toLocaleString('en-IN');
+        el.textContent=
+          'Total PDF Sold : '+
+          Number(total).toLocaleString('en-IN');
 
       });
 
   }
 
 
+  /* =================================================
+     LOAD CURRENT TOTAL
+  ================================================= */
+
   async function loadTotal(){
 
     try{
 
-      var result =
+      var result=
         await supabaseClient
           .from('pdf_sales_counter')
           .select('total_sold')
           .eq('id',1)
           .single();
+
 
       if(result.error){
 
@@ -1584,10 +1524,10 @@ new MutationObserver(
 
       }
 
+
       if(
         result.data &&
-        typeof result.data.total_sold !==
-        'undefined'
+        typeof result.data.total_sold!=='undefined'
       ){
 
         showTotal(
@@ -1608,15 +1548,18 @@ new MutationObserver(
   }
 
 
+  /* =================================================
+     INCREMENT GLOBAL COUNTER
+  ================================================= */
+
   async function incrementGlobalCounter(){
 
     try{
 
-      var result =
+      var result=
         await supabaseClient
-          .rpc(
-            'increment_pdf_sales'
-          );
+          .rpc('increment_pdf_sales');
+
 
       if(result.error){
 
@@ -1628,6 +1571,7 @@ new MutationObserver(
         return;
 
       }
+
 
       showTotal(
         result.data
@@ -1645,16 +1589,25 @@ new MutationObserver(
   }
 
 
+  /* =================================================
+     CART CLICK → GLOBAL +1
+
+     Only when button becomes ACTIVE.
+
+     Remove করলে +1 হবে না.
+     আবার Add করলে +1 হবে.
+  ================================================= */
+
   document.addEventListener(
     'click',
     function(e){
 
-      var cartButton =
+      var cartButton=
         e.target.closest &&
         e.target.closest('.lk');
 
-      if(!cartButton)
-        return;
+      if(!cartButton)return;
+
 
       setTimeout(
         function(){
@@ -1675,9 +1628,12 @@ new MutationObserver(
   );
 
 
+  /* =================================================
+     INITIAL LOAD
+  ================================================= */
+
   if(
-    document.readyState ===
-    'loading'
+    document.readyState==='loading'
   ){
 
     document.addEventListener(
