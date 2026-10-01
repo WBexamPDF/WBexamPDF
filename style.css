@@ -172,3 +172,23 @@ footer>div:last-child{grid-column:1/-1;grid-row:2}
 footer>nav{grid-column:1/-1;grid-row:2}
 footer>div:last-child{grid-row:3}
 }
+/* mobile-only responsive navigation: desktop design remains unchanged */
+@media(max-width:899px){
+  body{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+  .bn{padding-left:0;padding-right:0}
+  .bn a{min-width:0;flex:1 1 0;font-size:clamp(9px,2.8vw,14px);line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px}
+  .bn svg{font-size:clamp(24px,7vw,30px);margin-bottom:1px}
+  .bn em{left:58%;top:-3px}
+  .sec,.rv,.strip{max-width:100%;min-width:0}
+  .sh{min-width:0}.sh>div{min-width:0}.sh h2,.sh p{overflow-wrap:anywhere}
+  .sh a{font-size:12px}
+  .strip{min-width:0}.strip h3{font-size:clamp(17px,5vw,22px)}.strip .cta{font-size:clamp(16px,5vw,21px);padding:7px 14px}
+  .hero{min-width:0}.slider{width:100%}.ttl{min-width:0}.ttl h1{font-size:clamp(34px,11vw,44px)}
+  .pri{min-width:0}.pri div{min-width:min(150px,100%);max-width:100%}
+  .card{min-width:0}
+}
+@media(max-width:379px){
+  .bn a{font-size:9px}
+  .bn svg{font-size:24px}
+}
+
