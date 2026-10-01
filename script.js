@@ -162,3 +162,255 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
  else if(y<=80)h.classList.remove('hid');
  clearTimeout(tm);tm=setTimeout(function(){h.classList.remove('hid')},500)},{passive:true});
 })();
+/* ===== MOBILE-ONLY REQUESTED FEATURES =====
+   No desktop layout/code changes. */
+
+(function(){
+
+  function getLikes(){
+    try{
+      return JSON.parse(stor('likes') || '{}');
+    }catch(e){
+      return {};
+    }
+  }
+
+  function getCart(){
+    try{
+      return JSON.parse(stor('cart') || '{}');
+    }catch(e){
+      return {};
+    }
+  }
+
+  function syncCart(){
+
+    var L = getLikes();
+    var C = getCart();
+
+    Object.keys(C).forEach(function(id){
+      if(!L[id]) delete C[id];
+    });
+
+    Object.keys(L).forEach(function(id){
+      if(L[id]) C[id] = 1;
+    });
+
+    stor('cart', JSON.stringify(C));
+
+    var count = Object.keys(C).length;
+
+    document.querySelectorAll('.bn a[data-link="cart"] em').forEach(function(el){
+      el.textContent = count;
+    });
+  }
+
+
+  function setupPdfMobile(){
+
+    if(window.innerWidth >= 900){
+      syncCart();
+      return;
+    }
+
+    ['r1','r2'].forEach(function(id){
+
+      var row = document.getElementById(id);
+
+      if(!row) return;
+
+      var wrap = row.parentElement;
+
+      if(!wrap.classList.contains('pdf-mobile-row')){
+
+        wrap = document.createElement('div');
+
+        wrap.className = 'pdf-mobile-row';
+
+        row.parentNode.insertBefore(wrap,row);
+
+        wrap.appendChild(row);
+      }
+
+
+      if(!wrap.querySelector('.pdf-mobile-prev')){
+
+        var prev = document.createElement('button');
+        var next = document.createElement('button');
+
+        prev.type = 'button';
+        next.type = 'button';
+
+        prev.className = 'pdf-mobile-prev';
+        next.className = 'pdf-mobile-next';
+
+        prev.innerHTML = '‹';
+        next.innerHTML = '›';
+
+        prev.setAttribute('aria-label','Previous PDF');
+        next.setAttribute('aria-label','Next PDF');
+
+        wrap.appendChild(prev);
+        wrap.appendChild(next);
+
+
+        prev.addEventListener('click',function(){
+
+          row.scrollBy({
+            left:-row.clientWidth,
+            behavior:'smooth'
+          });
+
+        });
+
+
+        next.addEventListener('click',function(){
+
+          row.scrollBy({
+            left:row.clientWidth,
+            behavior:'smooth'
+          });
+
+        });
+
+      }
+
+    });
+
+
+    if(!window.__wbPdfSectionObserver){
+
+      window.__wbPdfSectionObserver =
+      new IntersectionObserver(function(entries){
+
+        entries.forEach(function(entry){
+
+          entry.target.classList.toggle(
+            'pdf-mobile-visible',
+            entry.isIntersecting &&
+            entry.intersectionRatio > .18
+          );
+
+        });
+
+      },{
+        threshold:[.18]
+      });
+
+    }
+
+
+    document.querySelectorAll('.pdf-mobile-row').forEach(function(w){
+
+      window.__wbPdfSectionObserver.observe(w);
+
+    });
+
+
+    syncCart();
+
+  }
+
+
+  /* MOBILE ONLY CSS
+     Desktop design is not changed. */
+
+  var style = document.createElement('style');
+
+  style.id = 'wb-mobile-pdf-requested-only';
+
+  style.textContent =
+  '@media(max-width:899px){' +
+
+    '.pdf-mobile-row{' +
+      'position:relative;' +
+      'overflow:visible;' +
+    '}' +
+
+    '.pdf-mobile-row .row{' +
+      'width:100%;' +
+      'box-sizing:border-box;' +
+      'scroll-behavior:smooth;' +
+      'scrollbar-width:none;' +
+    '}' +
+
+    '.pdf-mobile-row .row::-webkit-scrollbar{' +
+      'display:none;' +
+    '}' +
+
+    /* TWO FULL PDF CARDS */
+    '.pdf-mobile-row .card{' +
+      'flex:0 0 calc((100% - 10px)/2);' +
+      'min-width:0;' +
+      'box-sizing:border-box;' +
+    '}' +
+
+    /* SMALL ARROWS */
+    '.pdf-mobile-prev,.pdf-mobile-next{' +
+      'position:absolute;' +
+      'top:50%;' +
+      'transform:translateY(-50%);' +
+      'z-index:8;' +
+      'width:19px;' +
+      'height:19px;' +
+      'padding:0;' +
+      'border:1px solid rgba(6,21,58,.25);' +
+      'border-radius:50%;' +
+      'background:rgba(255,255,255,.92);' +
+      'color:#06153a;' +
+      'font:bold 16px/17px Arial;' +
+      'display:none;' +
+      'align-items:center;' +
+      'justify-content:center;' +
+      'box-shadow:0 1px 5px rgba(0,0,0,.16);' +
+    '}' +
+
+    '.pdf-mobile-prev{' +
+      'left:-3px;' +
+    '}' +
+
+    '.pdf-mobile-next{' +
+      'right:-3px;' +
+    '}' +
+
+    /* SHOW + BLINK ONLY WHEN PDF SECTION IS ON SCREEN */
+    '.pdf-mobile-visible .pdf-mobile-prev,' +
+    '.pdf-mobile-visible .pdf-mobile-next{' +
+      'display:flex;' +
+      'animation:wbPdfArrowBlink 1.8s ease-in-out infinite;' +
+    '}' +
+
+    '@keyframes wbPdfArrowBlink{' +
+      '0%,100%{opacity:.25}' +
+      '50%{opacity:1}' +
+    '}' +
+
+  '}';
+
+
+  document.head.appendChild(style);
+
+
+  /* HEART = CART
+     Existing heart design stays exactly the same. */
+
+  document.addEventListener('click',function(e){
+
+    var heart =
+      e.target.closest &&
+      e.target.closest('button.lk');
+
+    if(heart){
+
+      setTimeout(syncCart,0);
+
+    }
+
+  });
+
+
+  setupPdfMobile();
+
+  window.addEventListener('resize',setupPdfMobile);
+
+})();
