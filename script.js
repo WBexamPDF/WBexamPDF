@@ -648,6 +648,7 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
     var saved = localStorage.getItem(STORAGE_KEY);
 
     if (saved === null) {
+
       localStorage.setItem(
         STORAGE_KEY,
         START_COUNT
@@ -656,15 +657,17 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
       return START_COUNT;
     }
 
-    return parseInt(saved, 10) || START_COUNT;
+    var total = parseInt(saved, 10);
+
+    return isNaN(total) ? START_COUNT : total;
   }
 
 
-  function setTotalAdded(count) {
+  function saveTotal(count) {
 
     localStorage.setItem(
       STORAGE_KEY,
-      count
+      String(count)
     );
 
     updateDisplay();
@@ -681,7 +684,7 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
         el.textContent =
           'Total PDF Added counting : ' +
-          total.toLocaleString();
+          total.toLocaleString('en-IN');
 
       });
 
@@ -689,7 +692,8 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
 
   /*
-    Heart / Add to Cart click
+    Add to Cart / Heart click
+    শুধুমাত্র ON হলে +1 হবে।
   */
 
   document.addEventListener(
@@ -706,15 +710,29 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
 
       /*
-        Original Heart function আগে চলবে।
-        তারপর প্রতিবার click = +1
+        Original heart function আগে চলতে দিচ্ছি।
       */
 
-      var total = getTotalAdded();
+      setTimeout(function () {
 
-      total++;
+        /*
+          Click-এর পরে button-এর নতুন অবস্থাটা দেখছি।
+          .on থাকলে বুঝব PDF Add হয়েছে।
+        */
 
-      setTotalAdded(total);
+        if (
+          heart.classList.contains('on')
+        ) {
+
+          var total = getTotalAdded();
+
+          total++;
+
+          saveTotal(total);
+
+        }
+
+      }, 50);
 
     }
   );
@@ -724,7 +742,19 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
     Page load
   */
 
-  updateDisplay();
+  if (
+    document.readyState === 'loading'
+  ) {
 
+    document.addEventListener(
+      'DOMContentLoaded',
+      updateDisplay
+    );
+
+  } else {
+
+    updateDisplay();
+
+  }
 
 })();
