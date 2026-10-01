@@ -1,13 +1,10 @@
 /* WBExamPDF — script.js
    FINAL VERSION
-   - PDF image badges are NOT duplicated
-   - Badge area gets subtle image animation
-   - Mobile copyright stays just above fixed bottom menu
-   - Cart + Supabase PDF Sold Counter
+   Original functionality + final fixes
 */
 
 /* =========================================================
-   BASIC DATA
+   ORIGINAL DATA
 ========================================================= */
 
 var I={
@@ -40,79 +37,19 @@ var L={
 };
 
 var C1=[
-  [
-    "Live",
-    "c1",
-    "WBPSC 2025",
-    "(Prelims + Mains)",
-    "বাংলা, ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"
-  ],
-  [
-    "Most Popular",
-    "c2",
-    "RRB NTPC 2025",
-    "(Graduate & Under Graduate)",
-    "পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"
-  ],
-  [
-    "New",
-    "c3",
-    "SSC GD 2025",
-    "(Constable)",
-    "বাংলা, পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"
-  ],
-  [
-    "Offer Ending Soon",
-    "c4",
-    "West Bengal Police",
-    "(Constable & SI)",
-    "বাংলা, অঙ্ক, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"
-  ],
-  [
-    "Trending",
-    "c2",
-    "Railway Group D 2025",
-    "(Level 1)",
-    "পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"
-  ],
-  [
-    "Trending",
-    "c1",
-    "WBPSC 2025",
-    "(Prelims + Mains)",
-    "ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"
-  ]
+  ["Live","c1","WBPSC 2025","(Prelims + Mains)","বাংলা, ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],
+  ["Most Popular","c2","RRB NTPC 2025","(Graduate & Under Graduate)","পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],
+  ["New","c3","SSC GD 2025","(Constable)","বাংলা, পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],
+  ["Offer Ending Soon","c4","West Bengal Police","(Constable & SI)","বাংলা, অঙ্ক, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],
+  ["Trending","c2","Railway Group D 2025","(Level 1)","পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],
+  ["Trending","c1","WBPSC 2025","(Prelims + Mains)","ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"]
 ];
 
 var C2=[
-  [
-    "Trending",
-    "c1",
-    "WBPSC 2025",
-    "(প্রিলিমস + প্রধানস)",
-    ""
-  ],
-  [
-    "Most Popular",
-    "c3",
-    "SSC CHSL 2025",
-    "(Tier 1 + Tier 2)",
-    ""
-  ],
-  [
-    "New",
-    "c2",
-    "Railway RRB NTPC",
-    "(CBT 1 + CBT 2)",
-    ""
-  ],
-  [
-    "Offer Ending Soon",
-    "c4",
-    "WB Police Constable",
-    "(Prelims + Mains)",
-    ""
-  ]
+  ["Trending","c1","WBPSC 2025","(প্রিলিমস + প্রধানস)",""],
+  ["Most Popular","c3","SSC CHSL 2025","(Tier 1 + Tier 2)",""],
+  ["New","c2","Railway RRB NTPC","(CBT 1 + CBT 2)",""],
+  ["Offer Ending Soon","c4","WB Police Constable","(Prelims + Mains)",""]
 ];
 
 var col={
@@ -125,10 +62,7 @@ var col={
 
 
 /* =========================================================
-   FIRST CARD TEMPLATE
-   IMPORTANT:
-   NO HTML BADGE HERE
-   BADGES ARE ALREADY INSIDE JPG IMAGES
+   BASIC CARD
 ========================================================= */
 
 function card(d){
@@ -136,39 +70,59 @@ function card(d){
   return '<div class="card">'+
     '<div class="im">'+
       '<img src="'+I[d[1]]+'" alt="">'+
+      '<span class="tag" style="background:'+col[d[0]]+'">'+
+        d[0]+
+      '</span>'+
     '</div>'+
+
     '<h3>'+
       d[2]+
       '<small>'+d[3]+'</small>'+
     '</h3>'+
-    (d[4]?'<p>'+d[4]+'</p>':'<p></p>')+
+
+    (d[4]
+      ?'<p>'+d[4]+'</p>'
+      :'<p></p>'
+    )+
+
     '<div class="pr">'+
       '<div class="a"><span>★ 100%</span>₹1000</div>'+
       '<div class="b"><span>★ 50%</span>₹500</div>'+
       '<div class="c"><span>★ 20%</span>₹100</div>'+
     '</div>'+
+
     '<a class="buy">BUY NOW →</a>'+
+
     '<div class="ft">'+
       '<div data-link="sample" data-exam="'+d[2]+'">'+
         '<svg class="i"><use href="#e"/></svg>'+
         '<span>Sample Preview<br>(2-3 Page)</span>'+
       '</div>'+
+
       '<div>'+
         '<svg class="i"><use href="#l"/></svg>'+
         '<span>PDF + Unique<br>Password</span>'+
       '</div>'+
     '</div>'+
+
   '</div>';
+
 }
 
-if(document.getElementById('r1')){
-  document.getElementById('r1').innerHTML=C1.map(card).join('');
-  document.getElementById('r2').innerHTML=C2.map(card).join('');
+
+if(document.getElementById("r1")){
+
+  document.getElementById("r1").innerHTML=
+    C1.map(card).join("");
+
+  document.getElementById("r2").innerHTML=
+    C2.map(card).join("");
+
 }
 
 
 /* =========================================================
-   REVIEWS
+   ORIGINAL REVIEWS
 ========================================================= */
 
 var R=[
@@ -194,9 +148,10 @@ var R=[
   ]
 ];
 
-if(document.getElementById('rr')){
 
-  document.getElementById('rr').innerHTML=
+if(document.getElementById("rr")){
+
+  document.getElementById("rr").innerHTML=
     R.map(function(r,i){
 
       return '<div class="rc">'+
@@ -209,7 +164,8 @@ if(document.getElementById('rr')){
         '</div>'+
       '</div>';
 
-    }).join('');
+    }).join("");
+
 }
 
 
@@ -234,26 +190,28 @@ setInterval(function(){
     t%60
   ];
 
-  document.querySelectorAll('.cd .n').forEach(function(n,k){
+  document
+    .querySelectorAll(".cd .n")
+    .forEach(function(n,k){
 
-    var x=
-      String(v[k%4]).padStart(2,'0');
+      var x=
+        String(v[k%4]).padStart(2,"0");
 
-    var o=
-      n.dataset.v||
-      n.textContent;
+      var o=
+        n.dataset.v||
+        n.textContent;
 
-    if(n.dataset.v===x)return;
+      if(n.dataset.v===x)return;
 
-    n.dataset.v=x;
+      n.dataset.v=x;
 
-    n.innerHTML=
-      '<span class="ro">'+
-        '<span>'+x+'</span>'+
-        '<span>'+o+'</span>'+
-      '</span>';
+      n.innerHTML=
+        '<span class="ro">'+
+          '<span>'+x+'</span>'+
+          '<span>'+o+'</span>'+
+        '</span>';
 
-  });
+    });
 
 },1000);
 
@@ -263,26 +221,26 @@ setInterval(function(){
 ========================================================= */
 
 var LINKS={
-  youtube:'',
-  facebook:'',
-  instagram:'',
-  home:'',
-  upcoming:'',
-  bestselling:'',
-  college:'',
-  school:'',
-  courses:'',
-  pdfpackage:'',
-  notifications:'',
-  cart:'',
-  search:'',
-  login:'',
-  register:'',
-  allRunning:'',
-  allUpcoming:'',
-  allReviews:'',
-  buy:'',
-  sample:''
+  youtube:"",
+  facebook:"",
+  instagram:"",
+  home:"",
+  upcoming:"",
+  bestselling:"",
+  college:"",
+  school:"",
+  courses:"",
+  pdfpackage:"",
+  notifications:"",
+  cart:"",
+  search:"",
+  login:"",
+  register:"",
+  allRunning:"",
+  allUpcoming:"",
+  allReviews:"",
+  buy:"",
+  sample:""
 };
 
 
@@ -291,13 +249,14 @@ var LINKS={
 ========================================================= */
 
 var IS_HOME=
-  document.body.hasAttribute('data-home');
+  document.body.hasAttribute("data-home");
 
 var IDX={
   bn:0,
   en:1,
   hi:2
 };
+
 
 function stor(k,v){
 
@@ -316,21 +275,20 @@ function stor(k,v){
 
 }
 
+
 var LG=
-  stor('lang')||
-  'bn';
+  stor("lang")||
+  "bn";
 
-if(!IDX.hasOwnProperty(LG))
-  LG='bn';
+if(!IDX.hasOwnProperty(LG)){
+  LG="bn";
+}
 
-
-/* =========================================================
-   TRANSLATION DATA
-========================================================= */
 
 var DX={};
 
-`পড়ুন স্মার্ট, জিতুন নিশ্চিত~~Read smart, win for sure~स्मार्ट पढ़ें, पक्का जीतें
+`
+পড়ুন স্মার্ট, জিতুন নিশ্চিত~~Read smart, win for sure~स्मार्ट पढ़ें, पक्का जीतें
 হোম~~Home~होम
 সামনের পরীক্ষার PDF~~Upcoming Exam PDF~आगामी परीक्षा की PDF
 সবচেয়ে বেশি বিক্রির PDF লিস্ট~~Best-selling PDF List~सबसे ज़्यादा बिकने वाली PDF
@@ -356,10 +314,10 @@ LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time 
 (গুরুত্বপূর্ণ বিষয়)~~(Important topics)~(महत्वपूर्ण विषय)
 (অতিরিক্ত / সাধারণ বিষয়)~~(Extra / General topics)~(अतिरिक्त / सामान्य विषय)
 চলমান পরীক্ষার PDF~~Running Exam PDF~चालू परीक्षा की PDF
-(Currently Running Exams)~~ ~ 
+(Currently Running Exams)~~Currently Running Exams~Aktuell laufende Prüfungen
 যে পরীক্ষাগুলো চলছে, তাদের PDF এখনই সংগ্রহ করুন~~Get PDFs for the exams running now~जो परीक्षाएँ चल रही हैं, उनकी PDF अभी पाएँ
 সব দেখুন →~~View all →~सब देखें →
-অনলিম্র PDF প্যাকেজ~আসন্ন PDF প্যাকেজ~Upcoming PDF Package~आगामी PDF पैकेज
+আসন্ন PDF প্যাকেজ~~Upcoming PDF Package~आगामी PDF पैकेज
 চলতি ও আসন্ন পরীক্ষার জন্য Priority-wise PDF~~For current & upcoming exams: Priority-wise PDF~चालू और आगामी परीक्षाओं के लिए Priority-wise PDF
 এই অফারটি সীমিত সময়ের জন্য~~This offer is for a limited time~यह ऑफर सीमित समय के लिए है
 এখনই PDF কিনুন →~~Buy PDF now →~अभी PDF खरीदें →
@@ -376,16 +334,18 @@ LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time 
 জরুরি বিষয় আগে, সময় বাঁচান~~Urgent topics first, save time~ज़रूरी विषय पहले, समय बचाएँ
 নমুনা দেখে, তারপর কিনুন~~Preview a sample, then buy~पहले नमूना देखें, फिर खरीदें
 সীমিত সময়ের জন্য ৭০% পর্যন্ত ছাড়~~Up to 70% off for a limited time~सीमित समय के लिए 70% तक की छूट
-Follow Us~ফলো করুন~Follow Us~फ़ॉलो करें`
+Follow Us~~Follow Us~फ़ॉलो करें
+`
 .split("\n")
 .forEach(function(l){
 
-  var p=l.split("~");
+  var p=
+    l.split("~");
 
   DX[p[0]]=[
     p[1]||p[0],
-    p[2],
-    p[3]
+    p[2]||p[1]||p[0],
+    p[3]||p[2]||p[1]||p[0]
   ];
 
 });
@@ -393,115 +353,111 @@ Follow Us~ফলো করুন~Follow Us~फ़ॉलो करें`
 
 var Y={
   buy:[
-    'এখনই কিনুন →',
-    'BUY NOW →',
-    'अभी खरीदें →'
+    "এখনই কিনুন →",
+    "BUY NOW →",
+    "अभी खरीदें →"
   ],
+
   sample:[
-    'নমুনা দেখুন',
-    'Sample Preview',
-    'नमूना देखें'
+    "নমুনা দেখুন",
+    "Sample Preview",
+    "नमूना देखें"
   ],
+
   pg:[
-    '(২-৩ পৃষ্ঠা)',
-    '(2-3 Page)',
-    '(2-3 पृष्ठ)'
+    "(২-৩ পৃষ্ঠা)",
+    "(2-3 Page)",
+    "(2-3 पृष्ठ)"
   ],
+
   pw1:[
-    'PDF + ইউনিক',
-    'PDF + Unique',
-    'PDF + यूनिक'
+    "PDF + ইউনিক",
+    "PDF + Unique",
+    "PDF + यूनिक"
   ],
+
   pw2:[
-    'পাসওয়ার্ড',
-    'Password',
-    'पासवर्ड'
+    "পাসওয়ার্ড",
+    "Password",
+    "पासवर्ड"
   ],
+
   off:[
-    'ছাড়',
-    'OFF',
-    'छूट'
+    "ছাড়",
+    "OFF",
+    "छूट"
   ],
+
   sold:[
-    'জন কিনেছেন',
-    'bought',
-    'ने खरीदा'
+    "জন কিনেছেন",
+    "bought",
+    "ने खरीदा"
   ],
+
   share:[
-    'শেয়ার',
-    'Share',
-    'शेयर'
+    "শেয়ার",
+    "Share",
+    "शेयर"
   ]
+
 };
 
+
 function tr(k){
+
   return Y[k][IDX[LG]];
+
 }
 
 
-/* =========================================================
-   PDF DESCRIPTION
-========================================================= */
-
 var DS={
-
   a:[
-    'বাংলা, ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি',
-    'Complete preparation with Bengali, History, Geography, Constitution, Economy & Current Affairs',
-    'बंगाली, इतिहास, भूगोल, संविधान, अर्थशास्त्र और करेंट अफेयर्स के साथ पूरी तैयारी'
+    "বাংলা, ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি",
+    "Complete preparation with Bengali, History, Geography, Constitution, Economy & Current Affairs",
+    "बंगाली, इतिहास, भूगोल, संविधान, अर्थशास्त्र और करेंट अफेयर्स के साथ पूरी तैयारी"
   ],
 
   b:[
-    'পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি',
-    'Complete preparation with Arithmetic, Reasoning, GK & Current Affairs',
-    'अंकगणित, रीज़निंग, सामान्य ज्ञान और करेंट अफेयर्स के साथ पूरी तैयारी'
+    "পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি",
+    "Complete preparation with Arithmetic, Reasoning, GK & Current Affairs",
+    "अंकगणित, रीज़निंग, सामान्य ज्ञान और करेंट अफेयर्स के साथ पूरी तैयारी"
   ],
 
   c:[
-    'বাংলা, অঙ্ক, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি',
-    'Complete preparation with Bengali, Maths, Reasoning, GK & Current Affairs',
-    'बंगाली, गणित, रीज़निंग, सामान्य ज्ञान और करेंट अफेयर्स के साथ पूरी तैयारी'
+    "বাংলা, অঙ্ক, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি",
+    "Complete preparation with Bengali, Maths, Reasoning, GK & Current Affairs",
+    "बंगाली, गणित, रीज़निंग, सामान्य ज्ञान और करेंट अफेयर्स के साथ पूरी तैयारी"
   ]
-
 };
 
+
 var DK=[
-  'a',
-  'b',
-  'c',
-  'c',
-  'b',
-  'a'
+  "a",
+  "b",
+  "c",
+  "c",
+  "b",
+  "a"
 ];
+
 
 var TI=[
-  [
-    'a',
-    '★ 100%',
-    3333,
-    1000
-  ],
-  [
-    'b',
-    '★ 50%',
-    1667,
-    500
-  ],
-  [
-    'c',
-    '★ 20%',
-    333,
-    100
-  ]
+  ["a","★ 100%",3333,1000],
+  ["b","★ 50%",1667,500],
+  ["c","★ 20%",333,100]
 ];
 
+
 function rp(n){
-  return '₹'+n.toLocaleString('en-IN');
+
+  return "₹"+
+    n.toLocaleString("en-IN");
+
 }
 
 
 /* =========================================================
-   OLD LIKES / CART
+   CART
 ========================================================= */
 
 function likes(){
@@ -509,8 +465,7 @@ function likes(){
   try{
 
     return JSON.parse(
-      stor('likes')||
-      '{}'
+      stor("likes")||"{}"
     );
 
   }catch(e){
@@ -522,20 +477,129 @@ function likes(){
 }
 
 
+function carts(){
+
+  try{
+
+    var x=
+      JSON.parse(
+        stor("wb_pdf_cart")||"{}"
+      );
+
+    if(
+      x &&
+      typeof x==="object"
+    ){
+      return x;
+    }
+
+  }catch(e){}
+
+  return {};
+
+}
+
+
+function saveCart(x){
+
+  stor(
+    "wb_pdf_cart",
+    JSON.stringify(x)
+  );
+
+}
+
+
+/* Migrate old cart once */
+
+(function(){
+
+  var c=carts();
+
+  if(
+    Object.keys(c).length===0
+  ){
+
+    try{
+
+      var old=
+        JSON.parse(
+          stor("likes")||"{}"
+        );
+
+      if(
+        old &&
+        typeof old==="object" &&
+        Object.keys(old).length
+      ){
+
+        saveCart(old);
+
+      }
+
+    }catch(e){}
+
+  }
+
+})();
+
+
+function cartCount(){
+
+  var n=
+    Object.keys(carts()).length;
+
+  document
+    .querySelectorAll(
+      '[data-link="cart"] em'
+    )
+    .forEach(function(e){
+
+      e.textContent=n;
+
+    });
+
+  return n;
+
+}
+
+
 /* =========================================================
    FINAL PDF CARD
    IMPORTANT:
-   NO .tag HTML
-   Because badge text already exists inside JPG
+   Image already contains badge.
+   Therefore HTML does NOT create second badge.
 ========================================================= */
 
-card=function(d,id){
+function finalCard(d,id){
 
-  var lk=
-    likes()[id];
+  var C=carts();
+
+  var added=
+    !!C[id];
 
   var sd=
     d[5]||0;
+
+  var desc="";
+
+  if(
+    id &&
+    id.charAt(0)==="a" &&
+    DS[DK[+id.slice(1)]]
+  ){
+
+    desc=
+      DS[
+        DK[+id.slice(1)]
+      ][IDX[LG]]
+      ||
+      DS[
+        DK[+id.slice(1)]
+      ][0];
+
+  }
+
 
   var pr=
     TI.map(function(x){
@@ -544,10 +608,10 @@ card=function(d,id){
         '<span>'+x[1]+'</span>'+
         '<s>'+rp(x[2])+'</s>'+
         rp(x[3])+
-        '<em>70% '+tr('off')+'</em>'+
+        '<em>70% '+tr("off")+'</em>'+
       '</div>';
 
-    }).join('');
+    }).join("");
 
 
   return '<div class="card">'+
@@ -561,43 +625,44 @@ card=function(d,id){
       '<small>'+d[3]+'</small>'+
     '</h3>'+
 
-    '<p>'+
-      (id[0]=='a'
-        ?DS[DK[+id.slice(1)]][IDX[LG]]
-        :''
-      )+
-    '</p>'+
+    '<p>'+desc+'</p>'+
 
     '<div class="pr">'+
       pr+
     '</div>'+
 
     '<a class="buy" data-link="buy" data-exam="'+d[2]+'">'+
-      tr('buy')+
+      tr("buy")+
     '</a>'+
 
     '<div class="mt">'+
 
-      (
-        sd>0
-        ?
-        '<span>'+
+      (sd>0
+        ?'<span>'+
           '<svg class="i"><use href="#w"/></svg> '+
-          sd+' '+tr('sold')+
+          sd+" "+tr("sold")+
         '</span>'
-        :
-        ''
+        :""
       )+
 
       '<span class="ac">'+
 
-        '<button class="lk'+
-          (lk?' on':'')+
-          '" data-id="'+id+'"'+
-          ' aria-label="'+
-            (lk?'Added to cart':'Add to cart')+
-          '" title="'+
-            (lk?'Added to cart':'Add to cart')+
+        '<button type="button" '+
+          'class="lk'+
+            (added?" on":"")+
+          '" '+
+          'data-id="'+id+'" '+
+          'aria-label="'+
+            (added
+              ?"Remove from cart"
+              :"Add to cart"
+            )+
+          '" '+
+          'title="'+
+            (added
+              ?"Remove from cart"
+              :"Add to cart"
+            )+
           '">'+
 
           '<svg class="i">'+
@@ -605,16 +670,21 @@ card=function(d,id){
           '</svg>'+
 
           '<b>'+
-            (lk?1:'')+
+            (added?"1":"")+
           '</b>'+
 
         '</button>'+
 
-        '<button class="sb" data-n="'+d[2]+'">'+
+        '<button type="button" '+
+          'class="sb" '+
+          'data-n="'+d[2]+'">'+
+
           '<svg class="i">'+
             '<use href="#sh"/>'+
           '</svg>'+
-          tr('share')+
+
+          tr("share")+
+
         '</button>'+
 
       '</span>'+
@@ -626,18 +696,18 @@ card=function(d,id){
       '<div data-link="sample" data-exam="'+d[2]+'">'+
         '<svg class="i"><use href="#e"/></svg>'+
         '<span>'+
-          tr('sample')+
+          tr("sample")+
           '<br>'+
-          tr('pg')+
+          tr("pg")+
         '</span>'+
       '</div>'+
 
       '<div>'+
         '<svg class="i"><use href="#l"/></svg>'+
         '<span>'+
-          tr('pw1')+
+          tr("pw1")+
           '<br>'+
-          tr('pw2')+
+          tr("pw2")+
         '</span>'+
       '</div>'+
 
@@ -645,7 +715,7 @@ card=function(d,id){
 
   '</div>';
 
-};
+}
 
 
 function sec(a,p){
@@ -671,36 +741,40 @@ function sec(a,p){
     })
     .map(function(z){
 
-      return card(
+      return finalCard(
         z[0],
         z[1]
       );
 
     })
-    .join('');
+    .join("");
 
 }
 
 
 function render(){
 
-  if(!document.getElementById('r1'))
+  if(
+    !document.getElementById("r1")
+  ){
     return;
+  }
 
-  document.getElementById('r1').innerHTML=
-    sec(C1,'a');
+  document.getElementById("r1").innerHTML=
+    sec(C1,"a");
 
-  document.getElementById('r2').innerHTML=
-    sec(C2,'b');
+  document.getElementById("r2").innerHTML=
+    sec(C2,"b");
 
 }
 
 
 /* =========================================================
-   LANGUAGE SCAN
+   LANGUAGE TEXT SCAN
 ========================================================= */
 
 var NODES=[];
+
 
 function scan(){
 
@@ -712,30 +786,36 @@ function scan(){
 
   var n;
 
-  while(n=w.nextNode()){
+  while(
+    n=w.nextNode()
+  ){
 
     var p=
       n.parentNode.nodeName;
 
     if(
-      p=='SCRIPT'||
-      p=='STYLE'||
-      p=='OPTION'
-    )
+      p==="SCRIPT"||
+      p==="STYLE"||
+      p==="OPTION"
+    ){
       continue;
+    }
 
     var k=
       n.nodeValue.trim();
 
-    if(DX[k])
+    if(DX[k]){
+
       NODES.push([
         n,
         k,
         n.nodeValue.replace(
           k,
-          '§'
+          "§"
         )
       ]);
+
+    }
 
   }
 
@@ -746,10 +826,27 @@ function apply(){
 
   NODES.forEach(function(x){
 
+    var a=
+      DX[x[1]]||
+      [];
+
+    var v=
+      a[IDX[LG]];
+
+    if(
+      v===undefined||
+      v===null||
+      v===""
+    ){
+
+      v=x[1];
+
+    }
+
     x[0].nodeValue=
       x[2].replace(
-        '§',
-        DX[x[1]][IDX[LG]]
+        "§",
+        v
       );
 
   });
@@ -762,17 +859,21 @@ function setLang(l){
   LG=l;
 
   stor(
-    'lang',
+    "lang",
     l
   );
 
-  document.getElementById('lg').value=l;
+  document.getElementById(
+    "lg"
+  ).value=l;
 
   document.documentElement.lang=l;
 
   apply();
 
   render();
+
+  cartCount();
 
 }
 
@@ -781,117 +882,48 @@ scan();
 
 render();
 
-setupPdfRows();
-
-window.addEventListener(
-  'resize',
-  function(){
-
-    if(innerWidth<900)
-      setupPdfRows();
-
-  }
-);
-
-document.getElementById('lg').value=LG;
+cartCount();
 
 document.documentElement.lang=LG;
+
+document.getElementById("lg").value=LG;
 
 apply();
 
 
 var lp=
-  document.getElementById('lp');
+  document.getElementById("lp");
+
 
 if(
-  lp&&
-  IS_HOME&&
-  !stor('langChosen')
-)
-  lp.classList.add('on');
+  lp &&
+  IS_HOME &&
+  !stor("langChosen")
+){
 
-
-document.getElementById('lg').onchange=
-  function(){
-
-    stor(
-      'langChosen',
-      '1'
-    );
-
-    setLang(
-      this.value
-    );
-
-  };
-
-
-/* =========================================================
-   CART
-========================================================= */
-
-function carts(){
-
-  try{
-
-    var raw=
-      stor('cart');
-
-    if(raw)
-      return JSON.parse(raw);
-
-    var old=
-      likes();
-
-    if(
-      Object.keys(old).length
-    ){
-
-      stor(
-        'cart',
-        JSON.stringify(old)
-      );
-
-      return old;
-
-    }
-
-    return {};
-
-  }catch(e){
-
-    return {};
-
-  }
+  lp.classList.add("on");
 
 }
 
 
-function cartCount(){
+document.getElementById(
+  "lg"
+).onchange=function(){
 
-  var C=
-    carts();
+  stor(
+    "langChosen",
+    "1"
+  );
 
-  var n=
-    Object.keys(C).length;
+  setLang(
+    this.value
+  );
 
-  document
-    .querySelectorAll(
-      '[data-link=cart] em'
-    )
-    .forEach(function(e){
-
-      e.textContent=n;
-
-    });
-
-  return n;
-
-}
+};
 
 
 /* =========================================================
-   RUNNING PDF CAROUSEL
+   MOBILE PDF ROW
 ========================================================= */
 
 function setupPdfRows(){
@@ -901,106 +933,101 @@ function setupPdfRows(){
 
   document
     .querySelectorAll(
-      '.sec .row'
+      ".sec .row"
     )
     .forEach(function(row){
 
       var isRunning=
-        row.id==='r1';
+        row.id==="r1";
 
-
-      /* MOBILE WRAPPER + ARROWS */
 
       if(
-        mobile&&
+        mobile &&
         !row.parentElement.classList.contains(
-          'pdf-row-wrap'
+          "pdf-row-wrap"
         )
       ){
 
         var wrap=
           document.createElement(
-            'div'
+            "div"
           );
 
         wrap.className=
-          'pdf-row-wrap';
+          "pdf-row-wrap";
 
         row.parentNode.insertBefore(
           wrap,
           row
         );
 
-        wrap.appendChild(row);
-
-
-        var l=
-          document.createElement(
-            'button'
-          );
-
-        var r=
-          document.createElement(
-            'button'
-          );
-
-        l.className=
-          'pdf-arrow left';
-
-        r.className=
-          'pdf-arrow right';
-
-        l.type=
-          r.type=
-          'button';
-
-        l.innerHTML='‹';
-
-        r.innerHTML='›';
-
-        l.setAttribute(
-          'aria-label',
-          'Previous PDF'
+        wrap.appendChild(
+          row
         );
 
-        r.setAttribute(
-          'aria-label',
-          'Next PDF'
+
+        var left=
+          document.createElement(
+            "button"
+          );
+
+        var right=
+          document.createElement(
+            "button"
+          );
+
+        left.type="button";
+        right.type="button";
+
+        left.className=
+          "pdf-arrow left";
+
+        right.className=
+          "pdf-arrow right";
+
+        left.innerHTML="‹";
+        right.innerHTML="›";
+
+        left.setAttribute(
+          "aria-label",
+          "Previous PDF"
         );
 
-        wrap.appendChild(l);
+        right.setAttribute(
+          "aria-label",
+          "Next PDF"
+        );
 
-        wrap.appendChild(r);
+        wrap.appendChild(left);
+        wrap.appendChild(right);
 
 
-        l.addEventListener(
-          'click',
+        left.addEventListener(
+          "click",
           function(){
 
             row.scrollBy({
-              left:
-                -Math.max(
-                  220,
-                  row.clientWidth*.72
-                ),
-              behavior:'smooth'
+              left:-Math.max(
+                220,
+                row.clientWidth*.72
+              ),
+              behavior:"smooth"
             });
 
           }
         );
 
 
-        r.addEventListener(
-          'click',
+        right.addEventListener(
+          "click",
           function(){
 
             row.scrollBy({
-              left:
-                Math.max(
-                  220,
-                  row.clientWidth*.72
-                ),
-              behavior:'smooth'
+              left:Math.max(
+                220,
+                row.clientWidth*.72
+              ),
+              behavior:"smooth"
             });
 
           }
@@ -1009,53 +1036,42 @@ function setupPdfRows(){
       }
 
 
-      /* RUNNING PDF AUTO SLIDE */
-
       if(
-        isRunning&&
+        isRunning &&
         !row.dataset.autoSlide
       ){
 
-        row.dataset.autoSlide='1';
+        row.dataset.autoSlide="1";
 
         var timer=null;
 
 
         function nextRunning(){
 
-          if(
-            !document.body.contains(row)
-          )
-            return;
-
           var max=
             row.scrollWidth-
             row.clientWidth;
 
-          if(max<=2)
-            return;
-
+          if(max<=2)return;
 
           var step=
-            mobile
-            ?236
-            :row.clientWidth;
-
+            innerWidth<900
+              ?236
+              :row.clientWidth;
 
           var next=
             row.scrollLeft+
             step;
 
-
           if(
             next>=max-2
-          )
+          ){
             next=0;
-
+          }
 
           row.scrollTo({
             left:next,
-            behavior:'smooth'
+            behavior:"smooth"
           });
 
         }
@@ -1077,32 +1093,46 @@ function setupPdfRows(){
 
 
         row.addEventListener(
-          'mouseenter',
+          "mouseenter",
           function(){
 
-            if(innerWidth>=900)
-              clearInterval(timer);
+            if(
+              innerWidth>=900
+            ){
+
+              clearInterval(
+                timer
+              );
+
+            }
 
           }
         );
 
 
         row.addEventListener(
-          'mouseleave',
+          "mouseleave",
           function(){
 
-            if(innerWidth>=900)
+            if(
+              innerWidth>=900
+            ){
+
               startAuto();
 
+            }
+
           }
         );
 
 
         row.addEventListener(
-          'touchstart',
+          "touchstart",
           function(){
 
-            clearInterval(timer);
+            clearInterval(
+              timer
+            );
 
           },
           {passive:true}
@@ -1110,12 +1140,12 @@ function setupPdfRows(){
 
 
         row.addEventListener(
-          'touchend',
+          "touchend",
           function(){
 
             setTimeout(
               startAuto,
-              900
+              700
             );
 
           },
@@ -1130,20 +1160,20 @@ function setupPdfRows(){
     });
 
 
-  /* PDF SECTION VISIBILITY */
+  if(
+    !window.__wbPdfObserver
+  ){
 
-  if(!window.__pdfIO){
-
-    window.__pdfIO=
+    window.__wbPdfObserver=
       new IntersectionObserver(
-        function(es){
+        function(entries){
 
-          es.forEach(
+          entries.forEach(
             function(e){
 
               e.target.classList.toggle(
-                'pdf-active',
-                e.isIntersecting&&
+                "pdf-active",
+                e.isIntersecting &&
                 e.intersectionRatio>.22
               );
 
@@ -1158,15 +1188,20 @@ function setupPdfRows(){
 
 
     document
-      .querySelectorAll('.sec')
+      .querySelectorAll(".sec")
       .forEach(function(sec){
 
         if(
           sec.querySelector(
-            '.pdf-row-wrap'
+            "#r1"
           )
-        )
-          window.__pdfIO.observe(sec);
+        ){
+
+          window.__wbPdfObserver.observe(
+            sec
+          );
+
+        }
 
       });
 
@@ -1175,165 +1210,18 @@ function setupPdfRows(){
 }
 
 
-cartCount();
+setupPdfRows();
 
 
-/* =========================================================
-   LANGUAGE POPUP
-========================================================= */
+window.addEventListener(
+  "resize",
+  function(){
 
-var lx=
-  document.getElementById('lx');
-
-if(lx)
-
-  lx.onclick=
-    function(){
-
-      stor(
-        'langChosen',
-        '1'
-      );
-
-      lp.classList.remove('on');
-
-    };
-
-
-/* =========================================================
-   CLICK HANDLERS
-========================================================= */
-
-document.addEventListener(
-  'click',
-  function(e){
-
-    var b=
-      e.target.closest('button');
-
-    if(!b)
-      return;
-
-
-    if(b.dataset.l){
-
-      stor(
-        'langChosen',
-        '1'
-      );
-
-      setLang(
-        b.dataset.l
-      );
-
-      lp.classList.remove('on');
-
-    }
-
-
-    else if(
-      b.classList.contains('lk')
+    if(
+      innerWidth<900
     ){
 
-      var L=
-        likes();
-
-      var C=
-        carts();
-
-      var id=
-        b.dataset.id;
-
-
-      if(L[id]){
-
-        delete L[id];
-
-        delete C[id];
-
-      }else{
-
-        L[id]=1;
-
-        C[id]=1;
-
-      }
-
-
-      stor(
-        'likes',
-        JSON.stringify(L)
-      );
-
-      stor(
-        'cart',
-        JSON.stringify(C)
-      );
-
-
-      b.classList.toggle(
-        'on',
-        !!L[id]
-      );
-
-
-      b.querySelector('b').textContent=
-        L[id]
-        ?1
-        :'';
-
-
-      b.setAttribute(
-        'aria-label',
-        L[id]
-        ?'Added to cart'
-        :'Add to cart'
-      );
-
-
-      b.title=
-        L[id]
-        ?'Added to cart'
-        :'Add to cart';
-
-
-      cartCount();
-
-    }
-
-
-    else if(
-      b.classList.contains('sb')
-    ){
-
-      var u=
-        location.href.split('#')[0];
-
-      var x=
-        b.dataset.n+
-        ' – WBExamPDF';
-
-
-      if(navigator.share){
-
-        navigator.share({
-          title:x,
-          url:u
-        }).catch(
-          function(){}
-        );
-
-      }else{
-
-        window.open(
-          'https://wa.me/?text='+
-          encodeURIComponent(
-            x+' '+u
-          ),
-          '_blank'
-        );
-
-      }
+      setupPdfRows();
 
     }
 
@@ -1342,77 +1230,448 @@ document.addEventListener(
 
 
 /* =========================================================
-   TIMER ANIMATION
+   CART CLICK
+   ADD = +1
+   REMOVE = NO DECREASE
+   RE-ADD = +1
 ========================================================= */
 
-new MutationObserver(
-  function(ms){
+cartCount();
 
-    ms.forEach(
-      function(m){
 
-        var e=
-          m.target.nodeType==3
-          ?m.target.parentNode
-          :m.target;
+var lx=
+  document.getElementById("lx");
 
-        if(
-          e&&
-          e.classList&&
-          e.classList.contains('n')
-        ){
 
-          e.classList.remove('fl');
+if(lx){
 
-          void e.offsetWidth;
+  lx.onclick=function(){
 
-          e.classList.add('fl');
+    stor(
+      "langChosen",
+      "1"
+    );
 
-        }
+    lp.classList.remove(
+      "on"
+    );
+
+  };
+
+}
+
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+var SUPABASE_URL=
+  "https://xitiwikhzvfyeqdxspqk.supabase.co";
+
+var SUPABASE_KEY=
+  "sb_publishable_PzuDMCMLsQRnpbuob8uhEQ_xQ20Y75D";
+
+var sbClient=null;
+
+var sbLoading=null;
+
+
+function getSupabase(){
+
+  if(sbClient){
+
+    return Promise.resolve(
+      sbClient
+    );
+
+  }
+
+
+  if(
+    window.supabase &&
+    typeof window.supabase.createClient===
+      "function"
+  ){
+
+    sbClient=
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+    return Promise.resolve(
+      sbClient
+    );
+
+  }
+
+
+  if(sbLoading){
+
+    return sbLoading;
+
+  }
+
+
+  sbLoading=
+    new Promise(
+      function(resolve,reject){
+
+        var s=
+          document.createElement(
+            "script"
+          );
+
+        s.src=
+          "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+        s.async=true;
+
+
+        s.onload=function(){
+
+          if(
+            window.supabase &&
+            typeof window.supabase.createClient===
+              "function"
+          ){
+
+            sbClient=
+              window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+              );
+
+            resolve(
+              sbClient
+            );
+
+          }else{
+
+            reject(
+              new Error(
+                "Supabase unavailable"
+              )
+            );
+
+          }
+
+        };
+
+
+        s.onerror=function(){
+
+          reject(
+            new Error(
+              "Supabase load failed"
+            )
+          );
+
+        };
+
+
+        document.head.appendChild(
+          s
+        );
 
       }
     );
 
 
-    if(t<3600)
+  return sbLoading;
 
-      document
-        .querySelectorAll(
-          '.tim,.box'
-        )
-        .forEach(function(x){
+}
 
-          x.classList.add('hot');
 
-        });
+function showSold(total){
 
+  var n=
+    Number(total);
+
+  if(
+    !Number.isFinite(n)
+  ){
+    return;
   }
-).observe(
-  document.body,
-  {
-    subtree:true,
-    childList:true,
-    characterData:true
-  }
+
+
+  document
+    .querySelectorAll(
+      ".wb-total-pdf-added"
+    )
+    .forEach(function(el){
+
+      el.textContent=
+        "Total PDF Sold : "+
+        n.toLocaleString(
+          "en-IN"
+        );
+
+
+      el.classList.remove(
+        "wb-counter-update"
+      );
+
+      void el.offsetWidth;
+
+      el.classList.add(
+        "wb-counter-update"
+      );
+
+
+      setTimeout(
+        function(){
+
+          el.classList.remove(
+            "wb-counter-update"
+          );
+
+        },
+        350
+      );
+
+    });
+
+}
+
+
+function loadSold(){
+
+  getSupabase()
+    .then(function(db){
+
+      return db
+        .from("pdf_sales_counter")
+        .select("total_sold")
+        .eq("id",1)
+        .single();
+
+    })
+    .then(function(r){
+
+      if(
+        !r.error &&
+        r.data
+      ){
+
+        showSold(
+          r.data.total_sold
+        );
+
+      }
+
+    })
+    .catch(function(e){
+
+      console.error(
+        "PDF counter load:",
+        e
+      );
+
+    });
+
+}
+
+
+function incrementSold(){
+
+  getSupabase()
+    .then(function(db){
+
+      return db.rpc(
+        "increment_pdf_sales"
+      );
+
+    })
+    .then(function(r){
+
+      if(
+        r.error
+      ){
+
+        console.error(
+          "PDF counter increment:",
+          r.error
+        );
+
+        return;
+
+      }
+
+
+      var v=
+        r.data;
+
+
+      if(
+        Array.isArray(v) &&
+        v[0] &&
+        v[0].total_sold!==undefined
+      ){
+
+        v=
+          v[0].total_sold;
+
+      }
+
+
+      if(
+        v!==undefined &&
+        v!==null
+      ){
+
+        showSold(v);
+
+      }else{
+
+        loadSold();
+
+      }
+
+    })
+    .catch(function(e){
+
+      console.error(
+        "PDF counter increment:",
+        e
+      );
+
+    });
+
+}
+
+
+window.wbIncrementPdfSold=
+  incrementSold;
+
+
+/* =========================================================
+   CART EVENT
+   Capture phase stops old cart handler.
+========================================================= */
+
+document.addEventListener(
+  "click",
+  function(e){
+
+    var b=
+      e.target.closest(
+        "button.lk"
+      );
+
+    if(!b)return;
+
+
+    e.preventDefault();
+
+    e.stopImmediatePropagation();
+
+
+    var id=
+      b.dataset.id;
+
+    var C=
+      carts();
+
+    var wasAdded=
+      !!C[id];
+
+
+    if(wasAdded){
+
+      delete C[id];
+
+    }else{
+
+      C[id]=1;
+
+    }
+
+
+    saveCart(C);
+
+
+    b.classList.toggle(
+      "on",
+      !wasAdded
+    );
+
+
+    var count=
+      b.querySelector("b");
+
+    if(count){
+
+      count.textContent=
+        !wasAdded
+          ?"1"
+          :"";
+
+    }
+
+
+    b.setAttribute(
+      "aria-label",
+      !wasAdded
+        ?"Remove from cart"
+        :"Add to cart"
+    );
+
+
+    b.title=
+      !wasAdded
+        ?"Remove from cart"
+        :"Add to cart";
+
+
+    cartCount();
+
+
+    /*
+      ADD:
+      +1
+
+      REMOVE:
+      No decrease
+    */
+
+    if(!wasAdded){
+
+      incrementSold();
+
+    }
+
+  },
+  true
 );
 
 
 /* =========================================================
-   HEADER / MENU
+   HERO / ACCOUNT / LINKS
 ========================================================= */
 
 (function(){
 
   var am=
-    document.getElementById('am');
+    document.getElementById(
+      "am"
+    );
 
-  function tog(el,up){
+
+  function tog(
+    el,
+    up
+  ){
 
     if(
-      am.classList.contains('on')
+      am.classList.contains(
+        "on"
+      )
     ){
 
-      am.classList.remove('on');
+      am.classList.remove(
+        "on"
+      );
 
       return;
 
@@ -1426,37 +1685,37 @@ new MutationObserver(
     am.style.right=
       Math.max(
         8,
-        innerWidth-
-        r.right-
-        4
+        innerWidth-r.right-4
       )+
-      'px';
+      "px";
 
 
     am.style.top=
       up
-      ?'auto'
-      :(r.bottom+8)+'px';
+        ?"auto"
+        :(r.bottom+8)+"px";
 
 
     am.style.bottom=
       up
-      ?(innerHeight-r.top+8)+'px'
-      :'auto';
+        ?(innerHeight-r.top+8)+"px"
+        :"auto";
 
 
-    am.classList.add('on');
+    am.classList.add(
+      "on"
+    );
 
   }
 
 
   document.addEventListener(
-    'click',
+    "click",
     function(e){
 
       var p=
         e.target.closest(
-          '.pf,.pfb'
+          ".pf,.pfb"
         );
 
 
@@ -1466,7 +1725,7 @@ new MutationObserver(
 
         tog(
           p,
-          !!p.closest('.bn')
+          !!p.closest(".bn")
         );
 
         return;
@@ -1475,19 +1734,25 @@ new MutationObserver(
 
 
       if(
-        !e.target.closest('#am')
-      )
-        am.classList.remove('on');
+        !e.target.closest(
+          "#am"
+        )
+      ){
+
+        am.classList.remove(
+          "on"
+        );
+
+      }
 
 
       var a=
         e.target.closest(
-          '[data-link]'
+          "[data-link]"
         );
 
 
-      if(!a)
-        return;
+      if(!a)return;
 
 
       e.preventDefault();
@@ -1497,29 +1762,28 @@ new MutationObserver(
         LINKS[
           a.dataset.link
         ]||
-        '';
+        "";
 
 
-      if(!u)
-        return;
+      if(!u)return;
 
 
       am.classList.remove(
-        'on'
+        "on"
       );
 
 
       if(
         /^(youtube|facebook|instagram)$/
-        .test(
-          a.dataset.link
-        )
+          .test(
+            a.dataset.link
+          )
       ){
 
         window.open(
           u,
-          '_blank',
-          'noopener'
+          "_blank",
+          "noopener"
         );
 
         return;
@@ -1529,10 +1793,9 @@ new MutationObserver(
 
       location.href=
         u.replace(
-          '{exam}',
+          "{exam}",
           encodeURIComponent(
-            a.dataset.exam||
-            ''
+            a.dataset.exam||""
           )
         );
 
@@ -1541,27 +1804,41 @@ new MutationObserver(
 
 
   document.addEventListener(
-    'keydown',
+    "keydown",
     function(e){
 
-      if(e.key=='Escape')
-        am.classList.remove('on');
+      if(
+        e.key==="Escape"
+      ){
+
+        am.classList.remove(
+          "on"
+        );
+
+      }
 
     }
   );
 
 
   if(
-    !document.getElementById('trk')
-  )
+    !document.getElementById(
+      "trk"
+    )
+  ){
     return;
+  }
 
 
   var trk=
-    document.getElementById('trk');
+    document.getElementById(
+      "trk"
+    );
 
   var dots=
-    document.getElementById('dots');
+    document.getElementById(
+      "dots"
+    );
 
   var n=
     trk.children.length;
@@ -1577,9 +1854,9 @@ new MutationObserver(
       (k+n)%n;
 
     trk.style.transform=
-      'translateX(-'+
+      "translateX(-"+
       i*100+
-      '%)';
+      "%)";
 
 
     [].forEach.call(
@@ -1587,9 +1864,9 @@ new MutationObserver(
       function(x,j){
 
         x.className=
-          j==i
-          ?'on'
-          :'';
+          j===i
+            ?"on"
+            :"";
 
       }
     );
@@ -1599,7 +1876,9 @@ new MutationObserver(
 
   function start(){
 
-    clearInterval(tm);
+    clearInterval(
+      tm
+    );
 
     tm=
       setInterval(
@@ -1624,25 +1903,27 @@ new MutationObserver(
 
       var d=
         document.createElement(
-          'button'
+          "button"
         );
 
       d.setAttribute(
-        'aria-label',
-        'Slide '+(k+1)
+        "aria-label",
+        "Slide "+(k+1)
       );
 
-      d.onclick=
-        function(){
 
-          go(k);
+      d.onclick=function(){
 
-          start();
+        go(k);
 
-        };
+        start();
+
+      };
 
 
-      dots.appendChild(d);
+      dots.appendChild(
+        d
+      );
 
     })(k);
 
@@ -1650,65 +1931,70 @@ new MutationObserver(
 
 
   var sl=
-    document.getElementById('sl');
+    document.getElementById(
+      "sl"
+    );
 
   var sx=0;
 
 
-  sl.onmouseenter=
-    function(){
+  if(sl){
 
-      clearInterval(tm);
+    sl.onmouseenter=function(){
+
+      clearInterval(
+        tm
+      );
 
     };
 
 
-  sl.onmouseleave=
-    start;
+    sl.onmouseleave=
+      start;
 
 
-  sl.addEventListener(
-    'touchstart',
-    function(e){
+    sl.addEventListener(
+      "touchstart",
+      function(e){
 
-      sx=
-        e.touches[0].clientX;
+        sx=
+          e.touches[0].clientX;
 
-    },
-    {
-      passive:true
-    }
-  );
+      },
+      {passive:true}
+    );
 
 
-  sl.addEventListener(
-    'touchend',
-    function(e){
+    sl.addEventListener(
+      "touchend",
+      function(e){
 
-      var dx=
-        e.changedTouches[0].clientX-
-        sx;
+        var dx=
+          e.changedTouches[0].clientX-
+          sx;
 
 
-      if(
-        Math.abs(dx)>40
-      ){
+        if(
+          Math.abs(dx)>40
+        ){
 
-        go(
-          i+
-          (
-            dx<0
-            ?1
-            :-1
-          )
-        );
+          go(
+            i+
+            (
+              dx<0
+                ?1
+                :-1
+            )
+          );
 
-        start();
+          start();
+
+        }
 
       }
+    );
 
-    }
-  );
+  }
 
 
   go(0);
@@ -1725,71 +2011,73 @@ new MutationObserver(
 (function(){
 
   if(
-    !document.getElementById('rr')
-  )
+    !document.getElementById(
+      "rr"
+    )
+  ){
     return;
+  }
 
 
   var RT={
-
     title:[
-      'আপনার রিভিউ লিখুন',
-      'Write your review',
-      'अपना रिव्यू लिखें'
+      "আপনার রিভিউ লিখুন",
+      "Write your review",
+      "अपना रिव्यू लिखें"
     ],
 
     open:[
-      'রিভিউ লিখুন',
-      'Write a review',
-      'रिव्यू लिखें'
+      "রিভিউ লিখুন",
+      "Write a review",
+      "रिव्यू लिखें"
     ],
 
     rate:[
-      'আপনার রেটিং',
-      'Your rating',
-      'आपकी रेटिंग'
+      "আপনার রেটিং",
+      "Your rating",
+      "आपकी रेटिंग"
     ],
 
     submit:[
-      'রিভিউ জমা দিন',
-      'Submit review',
-      'रिव्यू जमा करें'
+      "রিভিউ জমা দিন",
+      "Submit review",
+      "रिव्यू जमा करें"
     ],
 
     name:[
-      'আপনার নাম',
-      'Your name',
-      'आपका नाम'
+      "আপনার নাম",
+      "Your name",
+      "आपका नाम"
     ],
 
     exam:[
-      'কোন পরীক্ষার জন্য নিয়েছেন? (ঐচ্ছিক)',
-      'Which exam did you prepare for? (optional)',
-      'किस परीक्षा के लिए लिया? (वैकल्पिक)'
+      "কোন পরীক্ষার জন্য নিয়েছেন? (ঐচ্ছিক)",
+      "Which exam did you prepare for? (optional)",
+      "किस परीक्षा के लिए लिया? (वैकल्पिक)"
     ],
 
     text:[
-      'আপনার অভিজ্ঞতা লিখুন...',
-      'Share your experience...',
-      'अपना अनुभव लिखें...'
+      "আপনার অভিজ্ঞতা লিখুন...",
+      "Share your experience...",
+      "अपना अनुभव साझा करें..."
     ],
 
     err:[
-      'নাম ও রিভিউ (কমপক্ষে ১০ অক্ষর) লিখুন',
-      'Please enter your name and a review (min 10 characters)',
-      'नाम और रिव्यू (कम से कम 10 अक्षर) लिखें'
+      "নাম ও রিভিউ (কমপক্ষে ১০ অক্ষর) লিখুন",
+      "Please enter your name and a review (min 10 characters)",
+      "नाम और रिव्यू (कम से कम 10 अक्षर) लिखें"
     ],
 
     thanks:[
-      'ধন্যবাদ! আপনার রিভিউ যোগ হয়েছে',
-      'Thank you! Your review has been added',
-      'धन्यवाद! आपका रिव्यू जुड़ गया'
+      "ধন্যবাদ! আপনার রিভিউ যোগ হয়েছে",
+      "Thank you! Your review has been added",
+      "धन्यवाद! आपका रिव्यू जुड़ गया"
     ],
 
     just:[
-      'এইমাত্র',
-      'Just now',
-      'अभी-अभी'
+      "এইমাত্র",
+      "Just now",
+      "अभी-अभी"
     ]
 
   };
@@ -1804,55 +2092,60 @@ new MutationObserver(
 
   function rtApply(){
 
-    [].forEach.call(
-      document.querySelectorAll(
-        '[data-rt]'
-      ),
-      function(e){
+    document
+      .querySelectorAll(
+        "[data-rt]"
+      )
+      .forEach(function(e){
 
         e.textContent=
-          rt(e.dataset.rt);
+          rt(
+            e.dataset.rt
+          );
 
-      }
-    );
+      });
 
 
-    [].forEach.call(
-      document.querySelectorAll(
-        '[data-ph]'
-      ),
-      function(e){
+    document
+      .querySelectorAll(
+        "[data-ph]"
+      )
+      .forEach(function(e){
 
         e.placeholder=
-          rt(e.dataset.ph);
+          rt(
+            e.dataset.ph
+          );
 
-      }
-    );
+      });
 
   }
 
 
-  var _sl=
+  var oldSetLang=
     setLang;
 
 
-  setLang=
-    function(l){
+  setLang=function(l){
 
-      _sl(l);
+    oldSetLang(l);
 
-      rtApply();
+    rtApply();
 
-    };
+  };
 
 
   rtApply();
 
 
-  /* REVIEW CAROUSEL */
+  /* =====================================================
+     REVIEW CAROUSEL
+  ===================================================== */
 
   var r=
-    document.getElementById('rr');
+    document.getElementById(
+      "rr"
+    );
 
   var hold=false;
 
@@ -1864,16 +2157,16 @@ new MutationObserver(
     if(
       hold||
       Date.now()<until
-    )
+    ){
       return;
+    }
 
 
     var c=
       r.firstElementChild;
 
 
-    if(!c)
-      return;
+    if(!c)return;
 
 
     if(
@@ -1884,7 +2177,7 @@ new MutationObserver(
 
       r.scrollTo({
         left:0,
-        behavior:'smooth'
+        behavior:"smooth"
       });
 
     }else{
@@ -1892,7 +2185,7 @@ new MutationObserver(
       r.scrollBy({
         left:
           c.offsetWidth+10,
-        behavior:'smooth'
+        behavior:"smooth"
       });
 
     }
@@ -1907,31 +2200,26 @@ new MutationObserver(
 
 
   r.addEventListener(
-    'mouseenter',
+    "mouseenter",
     function(){
-
       hold=true;
-
     }
   );
 
 
   r.addEventListener(
-    'mouseleave',
+    "mouseleave",
     function(){
-
       hold=false;
-
     }
   );
 
 
   [
-    'touchstart',
-    'pointerdown',
-    'wheel'
-  ]
-  .forEach(function(e){
+    "touchstart",
+    "pointerdown",
+    "wheel"
+  ].forEach(function(e){
 
     r.addEventListener(
       e,
@@ -1941,35 +2229,36 @@ new MutationObserver(
           Date.now()+6000;
 
       },
-      {
-        passive:true
-      }
+      {passive:true}
     );
 
   });
 
 
-  /* USER REVIEWS */
+  /* =====================================================
+     USER REVIEW FORM
+  ===================================================== */
 
-  var REVIEW_POST='';
+  var REVIEW_POST="";
 
 
   function esc(x){
 
-    return String(x).replace(
-      /[&<>"']/g,
-      function(c){
+    return String(x)
+      .replace(
+        /[&<>"']/g,
+        function(c){
 
-        return {
-          '&':'&amp;',
-          '<':'&lt;',
-          '>':'&gt;',
-          '"':'&quot;',
-          "'":'&#39;'
-        }[c];
+          return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#39;"
+          }[c];
 
-      }
-    );
+        }
+      );
 
   }
 
@@ -1979,8 +2268,7 @@ new MutationObserver(
     try{
 
       return JSON.parse(
-        stor('myReviews')||
-        '[]'
+        stor("myReviews")||"[]"
       );
 
     }catch(e){
@@ -1995,45 +2283,33 @@ new MutationObserver(
   function cardHTML(v){
 
     var st=
-      '★'.repeat(v.s)+
-      '☆'.repeat(5-v.s);
+      "★".repeat(v.s)+
+      "☆".repeat(5-v.s);
 
 
     return '<div class="rc mine">'+
 
       '<div class="av">'+
         esc(
-          v.n.trim()
+          v.n
+            .trim()
             .charAt(0)
             .toUpperCase()
         )+
       '</div>'+
 
       '<div>'+
-
-        '<b>'+
-          esc(v.n)+
-        '</b>'+
-
-        '<span class="st">'+
-          st+
-        '</span>'+
-
-        '<q>'+
-          '“'+
-          esc(v.t)+
-          '”'+
-        '</q>'+
-
+        '<b>'+esc(v.n)+'</b>'+
+        '<span class="st">'+st+'</span>'+
+        '<q>“'+esc(v.t)+'”</q>'+
         '<small>'+
           (
             v.e
-            ?esc(v.e)+' | '
-            :''
+              ?esc(v.e)+" | "
+              :""
           )+
-          rt('just')+
+          rt("just")+
         '</small>'+
-
       '</div>'+
 
     '</div>';
@@ -2047,7 +2323,7 @@ new MutationObserver(
     .forEach(function(v){
 
       r.insertAdjacentHTML(
-        'afterbegin',
+        "afterbegin",
         cardHTML(v)
       );
 
@@ -2055,30 +2331,37 @@ new MutationObserver(
 
 
   var rm=
-    document.getElementById('rm');
+    document.getElementById(
+      "rm"
+    );
 
   var rs=
-    document.getElementById('rs');
+    document.getElementById(
+      "rs"
+    );
 
   var rate=5;
 
   var tx=
-    document.getElementById('rtx');
+    document.getElementById(
+      "rtx"
+    );
 
 
   function paint(){
 
-    [].forEach.call(
-      rs.children,
-      function(b,i){
+    []
+      .forEach.call(
+        rs.children,
+        function(b,i){
 
-        b.className=
-          i<rate
-          ?'on'
-          :'';
+          b.className=
+            i<rate
+              ?"on"
+              :"";
 
-      }
-    );
+        }
+      );
 
   }
 
@@ -2087,14 +2370,15 @@ new MutationObserver(
 
 
   rs.addEventListener(
-    'click',
+    "click",
     function(e){
 
       var b=
-        e.target.closest('button');
+        e.target.closest(
+          "button"
+        );
 
-      if(!b)
-        return;
+      if(!b)return;
 
       rate=
         +b.dataset.s;
@@ -2107,21 +2391,23 @@ new MutationObserver(
 
   function openM(){
 
-    rm.classList.add('on');
+    rm.classList.add(
+      "on"
+    );
 
     document.body.style.overflow=
-      'hidden';
+      "hidden";
 
     document.getElementById(
-      'rer'
-    ).textContent='';
+      "rer"
+    ).textContent="";
 
 
     setTimeout(
       function(){
 
         document.getElementById(
-          'rn'
+          "rn"
         ).focus();
 
       },
@@ -2134,225 +2420,238 @@ new MutationObserver(
   function closeM(){
 
     rm.classList.remove(
-      'on'
+      "on"
     );
 
     document.body.style.overflow=
-      '';
+      "";
 
   }
 
 
   document.getElementById(
-    'rvb'
+    "rvb"
   ).onclick=
     openM;
 
 
   document.getElementById(
-    'rmx'
+    "rmx"
   ).onclick=
     closeM;
 
 
   rm.addEventListener(
-    'click',
+    "click",
     function(e){
 
-      if(e.target===rm)
+      if(
+        e.target===rm
+      ){
+
         closeM();
+
+      }
 
     }
   );
 
 
   document.addEventListener(
-    'keydown',
+    "keydown",
     function(e){
 
-      if(e.key=='Escape')
+      if(
+        e.key==="Escape"
+      ){
+
         closeM();
+
+      }
 
     }
   );
 
 
   tx.addEventListener(
-    'input',
+    "input",
     function(){
 
       document.getElementById(
-        'rcn'
+        "rcn"
       ).textContent=
         tx.value.length+
-        '/200';
+        "/200";
 
     }
   );
 
 
   document.getElementById(
-    'rsb'
-  ).onclick=
-    function(){
+    "rsb"
+  ).onclick=function(){
 
-      var n=
-        document.getElementById(
-          'rn'
-        ).value.trim();
+    var n=
+      document.getElementById(
+        "rn"
+      ).value.trim();
 
-      var e=
-        document.getElementById(
-          're'
-        ).value.trim();
+    var e=
+      document.getElementById(
+        "re"
+      ).value.trim();
 
-      var t=
-        tx.value.trim();
-
-
-      if(
-        !n||
-        t.length<10
-      ){
-
-        document.getElementById(
-          'rer'
-        ).textContent=
-          rt('err');
-
-        return;
-
-      }
+    var t=
+      tx.value.trim();
 
 
-      var v={
-        n:n,
-        e:e,
-        t:t,
-        s:rate,
-        d:Date.now()
-      };
+    if(
+      !n||
+      t.length<10
+    ){
+
+      document.getElementById(
+        "rer"
+      ).textContent=
+        rt("err");
+
+      return;
+
+    }
 
 
-      var L=
-        mine();
+    var v={
+      n:n,
+      e:e,
+      t:t,
+      s:rate,
+      d:Date.now()
+    };
 
-      L.push(v);
 
+    var list=
+      mine();
+
+    list.push(v);
+
+
+    try{
+
+      stor(
+        "myReviews",
+        JSON.stringify(
+          list.slice(-20)
+        )
+      );
+
+    }catch(x){}
+
+
+    if(REVIEW_POST){
 
       try{
 
-        stor(
-          'myReviews',
-          JSON.stringify(
-            L.slice(-20)
-          )
+        fetch(
+          REVIEW_POST,
+          {
+            method:"POST",
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
+            body:
+              JSON.stringify(v)
+          }
+        ).catch(
+          function(){}
         );
 
       }catch(x){}
 
-
-      if(REVIEW_POST){
-
-        try{
-
-          fetch(
-            REVIEW_POST,
-            {
-              method:'POST',
-              headers:{
-                'Content-Type':
-                  'application/json'
-              },
-              body:
-                JSON.stringify(v)
-            }
-          )
-          .catch(
-            function(){}
-          );
-
-        }catch(x){}
-
-      }
+    }
 
 
-      r.insertAdjacentHTML(
-        'afterbegin',
-        cardHTML(v)
+    r.insertAdjacentHTML(
+      "afterbegin",
+      cardHTML(v)
+    );
+
+
+    r.scrollTo({
+      left:0,
+      behavior:"smooth"
+    });
+
+
+    until=
+      Date.now()+8000;
+
+
+    document.getElementById(
+      "rn"
+    ).value="";
+
+    document.getElementById(
+      "re"
+    ).value="";
+
+    tx.value="";
+
+
+    document.getElementById(
+      "rcn"
+    ).textContent=
+      "0/200";
+
+
+    rate=5;
+
+    paint();
+
+    closeM();
+
+
+    var ts=
+      document.getElementById(
+        "ts"
       );
 
 
-      r.scrollTo({
-        left:0,
-        behavior:'smooth'
-      });
+    ts.textContent=
+      rt("thanks");
+
+    ts.classList.add(
+      "on"
+    );
 
 
-      until=
-        Date.now()+8000;
+    setTimeout(
+      function(){
 
-
-      document.getElementById(
-        'rn'
-      ).value='';
-
-      document.getElementById(
-        're'
-      ).value='';
-
-      tx.value='';
-
-      document.getElementById(
-        'rcn'
-      ).textContent=
-        '0/200';
-
-      rate=5;
-
-      paint();
-
-      closeM();
-
-
-      var ts=
-        document.getElementById(
-          'ts'
+        ts.classList.remove(
+          "on"
         );
 
-      ts.textContent=
-        rt('thanks');
+      },
+      3200
+    );
 
-      ts.classList.add('on');
+  };
 
-
-      setTimeout(
-        function(){
-
-          ts.classList.remove(
-            'on'
-          );
-
-        },
-        3200
-      );
-
-    };
-
-
-  /* KEYBOARD ACCESS */
 
   document.addEventListener(
-    'keydown',
+    "keydown",
     function(e){
 
       if(
         (
-          e.key=='Enter'||
-          e.key==' '
+          e.key==="Enter"||
+          e.key===" "
         )&&
         e.target.matches&&
-        e.target.matches('.soc a')
+        e.target.matches(
+          ".soc a"
+        )
       ){
 
         e.preventDefault();
@@ -2365,26 +2664,30 @@ new MutationObserver(
   );
 
 
-  /* REDUCED MOTION */
-
   if(
     window.matchMedia&&
     matchMedia(
-      '(prefers-reduced-motion:reduce)'
+      "(prefers-reduced-motion:reduce)"
     ).matches
   ){
 
-    [].forEach.call(
-      document.querySelectorAll(
-        'svg.fire'
-      ),
-      function(x){
+    []
+      .forEach.call(
+        document.querySelectorAll(
+          "svg.fire"
+        ),
+        function(x){
 
-        x.pauseAnimations&&
-        x.pauseAnimations();
+          if(
+            x.pauseAnimations
+          ){
 
-      }
-    );
+            x.pauseAnimations();
+
+          }
+
+        }
+      );
 
   }
 
@@ -2399,7 +2702,7 @@ new MutationObserver(
 
   var h=
     document.querySelector(
-      'header'
+      "header"
     );
 
   var last=
@@ -2408,12 +2711,11 @@ new MutationObserver(
   var tm;
 
 
-  if(!h)
-    return;
+  if(!h)return;
 
 
   addEventListener(
-    'scroll',
+    "scroll",
     function(){
 
       var y=
@@ -2426,41 +2728,43 @@ new MutationObserver(
 
 
       if(
-        y>80&&
+        y>80 &&
         Math.abs(d)>2
       ){
 
         h.classList.add(
-          'hid'
+          "hid"
         );
 
 
         var am=
           document.getElementById(
-            'am'
+            "am"
           );
 
 
-        if(am)
+        if(am){
+
           am.classList.remove(
-            'on'
+            "on"
           );
 
-      }
+        }
 
-
-      else if(
+      }else if(
         y<=80
       ){
 
         h.classList.remove(
-          'hid'
+          "hid"
         );
 
       }
 
 
-      clearTimeout(tm);
+      clearTimeout(
+        tm
+      );
 
 
       tm=
@@ -2468,7 +2772,7 @@ new MutationObserver(
           function(){
 
             h.classList.remove(
-              'hid'
+              "hid"
             );
 
           },
@@ -2476,700 +2780,631 @@ new MutationObserver(
         );
 
     },
-    {
-      passive:true
-    }
+    {passive:true}
   );
 
 })();
 
 
 /* =========================================================
-   GLOBAL SUPABASE PDF SOLD COUNTER
+   FINAL FIXES
 ========================================================= */
 
 (function(){
 
-  var SUPABASE_URL=
-    'https://xitiwikhzvfyeqdxspqk.supabase.co';
+  "use strict";
 
-  var SUPABASE_KEY=
-    'sb_publishable_PzuDMCMLsQRnpbuob8uhEQ_xQ20Y75D';
 
-  var client=null;
+  /* -------------------------------------------------------
+     1. Remove any accidental literal undefined
+  ------------------------------------------------------- */
 
-  var loading=null;
-
-
-  function showTotal(total){
-
-    var n=
-      Number(total);
-
-    if(
-      !Number.isFinite(n)
-    )
-      return;
-
-
-    document
-      .querySelectorAll(
-        '.wb-total-pdf-added'
-      )
-      .forEach(function(el){
-
-        el.textContent=
-          'Total PDF Sold : '+
-          n.toLocaleString(
-            'en-IN'
-          );
-
-      });
-
-  }
-
-
-  function loadSupabase(){
-
-    if(
-      window.supabase&&
-      typeof window.supabase.createClient===
-        'function'
-    ){
-
-      client=
-        window.supabase.createClient(
-          SUPABASE_URL,
-          SUPABASE_KEY
-        );
-
-      return Promise.resolve(
-        client
-      );
-
-    }
-
-
-    if(loading)
-      return loading;
-
-
-    loading=
-      new Promise(
-        function(resolve,reject){
-
-          var sc=
-            document.createElement(
-              'script'
-            );
-
-
-          sc.src=
-            'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-
-          sc.async=true;
-
-
-          sc.onload=
-            function(){
-
-              if(
-                window.supabase&&
-                typeof window.supabase.createClient===
-                  'function'
-              ){
-
-                client=
-                  window.supabase.createClient(
-                    SUPABASE_URL,
-                    SUPABASE_KEY
-                  );
-
-                resolve(client);
-
-              }else{
-
-                reject(
-                  new Error(
-                    'Supabase library unavailable'
-                  )
-                );
-
-              }
-
-            };
-
-
-          sc.onerror=
-            function(){
-
-              reject(
-                new Error(
-                  'Supabase library failed to load'
-                )
-              );
-
-            };
-
-
-          document.head.appendChild(sc);
-
-        }
-      );
-
-
-    return loading;
-
-  }
-
-
-  async function loadTotal(){
-
-    try{
-
-      var db=
-        await loadSupabase();
-
-
-      var result=
-        await db
-          .from(
-            'pdf_sales_counter'
-          )
-          .select(
-            'total_sold'
-          )
-          .eq(
-            'id',
-            1
-          )
-          .single();
-
-
-      if(result.error){
-
-        console.error(
-          'WBExamPDF counter load error:',
-          result.error
-        );
-
-        return;
-
-      }
-
-
-      if(
-        result.data&&
-        typeof result.data.total_sold!=='undefined'
-      ){
-
-        showTotal(
-          result.data.total_sold
-        );
-
-      }
-
-    }catch(error){
-
-      console.error(
-        'WBExamPDF counter error:',
-        error
-      );
-
-    }
-
-  }
-
-
-  async function incrementGlobalCounter(){
-
-    try{
-
-      var db=
-        await loadSupabase();
-
-
-      var result=
-        await db.rpc(
-          'increment_pdf_sales'
-        );
-
-
-      if(result.error){
-
-        console.error(
-          'WBExamPDF counter increment error:',
-          result.error
-        );
-
-        return;
-
-      }
-
-
-      if(
-        typeof result.data!=='undefined'
-      ){
-
-        showTotal(
-          result.data
-        );
-
-      }
-
-    }catch(error){
-
-      console.error(
-        'WBExamPDF counter increment error:',
-        error
-      );
-
-    }
-
-  }
-
-
-  document.addEventListener(
-    'click',
-    function(e){
-
-      var cartButton=
-        e.target.closest&&
-        e.target.closest('.lk');
-
-
-      if(!cartButton)
-        return;
-
-
-      var wasOn=
-        cartButton.classList.contains(
-          'on'
-        );
-
-
-      if(!wasOn){
-
-        setTimeout(
-          function(){
-
-            if(
-              cartButton.classList.contains(
-                'on'
-              )
-            ){
-
-              incrementGlobalCounter();
-
-            }
-
-          },
-          150
-        );
-
-      }
-
-    }
-  );
-
-
-  if(
-    document.readyState===
-    'loading'
+  function cleanUndefined(
+    root
   ){
 
-    document.addEventListener(
-      'DOMContentLoaded',
-      function(){
+    root=
+      root||
+      document.body;
 
-        setTimeout(
-          loadTotal,
-          200
-        );
+
+    var walker=
+      document.createTreeWalker(
+        root,
+        NodeFilter.SHOW_TEXT
+      );
+
+
+    var nodes=[];
+
+    var n;
+
+
+    while(
+      n=walker.nextNode()
+    ){
+
+      nodes.push(n);
+
+    }
+
+
+    nodes.forEach(
+      function(x){
+
+        if(
+          /\bundefined\b/.test(
+            x.nodeValue
+          )
+        ){
+
+          x.nodeValue=
+            x.nodeValue.replace(
+              /\bundefined\b/g,
+              ""
+            );
+
+        }
 
       }
     );
 
-  }else{
+  }
 
-    setTimeout(
-      loadTotal,
-      200
+
+  cleanUndefined(
+    document.body
+  );
+
+
+  new MutationObserver(
+    function(){
+
+      cleanUndefined(
+        document.body
+      );
+
+    }
+  ).observe(
+    document.body,
+    {
+      subtree:true,
+      childList:true,
+      characterData:true
+    }
+  );
+
+
+  /* -------------------------------------------------------
+     2. Ensure language never outputs undefined
+  ------------------------------------------------------- */
+
+  apply=function(){
+
+    NODES.forEach(
+      function(x){
+
+        var a=
+          DX[x[1]]||
+          [];
+
+        var v=
+          a[IDX[LG]];
+
+
+        if(
+          v===undefined||
+          v===null||
+          v===""
+        ){
+
+          v=x[1];
+
+        }
+
+
+        x[0].nodeValue=
+          x[2].replace(
+            "§",
+            v
+          );
+
+      }
     );
+
+  };
+
+
+  apply();
+
+
+  /* -------------------------------------------------------
+     3. Desktop Write Review → right side
+  ------------------------------------------------------- */
+
+  function reviewButtonPosition(){
+
+    var rv=
+      document.querySelector(
+        ".rv"
+      );
+
+    var sh=
+      rv &&
+      rv.querySelector(
+        ".sh"
+      );
+
+    var holder=
+      rv &&
+      rv.querySelector(
+        ".rvf"
+      );
+
+
+    if(
+      !rv||
+      !sh||
+      !holder
+    ){
+
+      return;
+
+    }
+
+
+    if(
+      innerWidth>=900
+    ){
+
+      holder.classList.add(
+        "wb-review-desktop-right"
+      );
+
+    }else{
+
+      holder.classList.remove(
+        "wb-review-desktop-right"
+      );
+
+    }
 
   }
 
-})();
+
+  reviewButtonPosition();
 
 
-/* =========================================================
-   FINAL DESIGN PATCH
-   ONLY:
-   1. IMAGE BADGE AREA ANIMATION
-   2. MOBILE COPYRIGHT POSITION
-   3. HIDE ANY OLD HTML .tag TO PREVENT DUPLICATE BADGES
-========================================================= */
+  window.addEventListener(
+    "resize",
+    reviewButtonPosition
+  );
 
-(function(){
+
+  /* -------------------------------------------------------
+     4. Total PDF Sold before Follow Us
+  ------------------------------------------------------- */
+
+  function fixBottomOrder(){
+
+    var counter=
+      document.querySelector(
+        ".wb-total-pdf-section"
+      );
+
+    var follow=
+      document.querySelector(
+        ".follow"
+      );
+
+    var footer=
+      document.querySelector(
+        "footer"
+      );
+
+
+    if(
+      counter&&
+      follow&&
+      follow.parentNode
+    ){
+
+      follow.parentNode.insertBefore(
+        counter,
+        follow
+      );
+
+    }
+
+
+    if(
+      follow&&
+      footer&&
+      footer.parentNode
+    ){
+
+      footer.parentNode.insertBefore(
+        follow,
+        footer
+      );
+
+    }
+
+  }
+
+
+  fixBottomOrder();
+
+
+  /* -------------------------------------------------------
+     5. CSS
+  ------------------------------------------------------- */
 
   var style=
     document.createElement(
-      'style'
+      "style"
     );
 
+
   style.id=
-    'wb-final-badge-footer-style';
+    "wb-final-fix-style";
 
 
   style.textContent=`
 
-    /* =========================================
-       PDF BADGES
-       The words are already inside JPG images.
-       So NO duplicate HTML badge is displayed.
-    ========================================= */
+/* ==========================================
+   BADGE
+   The badge is already inside card images.
+   Hide HTML duplicate badge.
+========================================== */
 
-    .card .tag{
-      display:none !important;
-    }
+.card .tag{
+  display:none !important;
+}
 
 
-    /* =========================================
-       PDF IMAGE ANIMATION
-       Subtle shine/pulse so the image badge
-       area looks alive without adding duplicate text.
-    ========================================= */
+/* ==========================================
+   DESKTOP — WRITE REVIEW RIGHT
+========================================== */
 
-    .card .im{
-      position:relative !important;
-      overflow:hidden !important;
-    }
+@media(min-width:900px){
 
+  .rv{
+    position:relative;
+  }
 
-    .card .im img{
-      position:relative;
-      z-index:1;
-      display:block;
-      width:100%;
-      animation:
-        wbPdfImagePulse
-        3.6s
-        ease-in-out
-        infinite;
-      transform-origin:center center;
-    }
+  .rvf.wb-review-desktop-right{
 
+    position:absolute;
 
-    .card .im::after{
+    right:10px;
 
-      content:"";
+    top:10px;
 
-      position:absolute;
+    margin:0 !important;
 
-      z-index:2;
+    display:flex !important;
 
-      top:0;
+    justify-content:flex-end !important;
 
-      left:-120%;
+  }
 
-      width:55%;
+}
 
-      height:100%;
 
-      pointer-events:none;
+/* ==========================================
+   MOBILE
+========================================== */
 
-      background:
-        linear-gradient(
-          105deg,
-          transparent 0%,
-          rgba(255,255,255,0.02) 25%,
-          rgba(255,255,255,0.34) 50%,
-          rgba(255,255,255,0.02) 75%,
-          transparent 100%
-        );
+@media(max-width:899px){
 
-      transform:skewX(-18deg);
+  /*
+     Mobile social icons slightly smaller
+  */
 
-      animation:
-        wbPdfImageShine
-        3.8s
-        ease-in-out
-        infinite;
+  .follow .soc a{
 
-    }
+    width:32px !important;
 
+    height:32px !important;
 
-    @keyframes wbPdfImagePulse{
+    min-width:32px !important;
 
-      0%,
-      100%{
-        filter:
-          brightness(1)
-          saturate(1);
-      }
+    min-height:32px !important;
 
-      50%{
-        filter:
-          brightness(1.045)
-          saturate(1.035);
-      }
+    border-radius:10px !important;
 
-    }
+  }
 
 
-    @keyframes wbPdfImageShine{
+  .follow .soc svg{
 
-      0%{
-        left:-120%;
-        opacity:0;
-      }
+    width:17px !important;
 
-      12%{
-        opacity:0;
-      }
+    height:17px !important;
 
-      30%{
-        opacity:1;
-      }
+  }
 
-      55%{
-        left:125%;
-        opacity:1;
-      }
 
-      70%{
-        left:125%;
-        opacity:0;
-      }
+  /*
+     Mobile copyright:
+     show only the copyright line.
+  */
 
-      100%{
-        left:125%;
-        opacity:0;
-      }
+  footer{
 
-    }
+    display:block !important;
 
+    padding:
+      8px
+      10px
+      86px !important;
 
-    /* =========================================
-       MOBILE COPYRIGHT
-       Keep copyright at the bottom,
-       immediately above fixed bottom menu.
-    ========================================= */
+    text-align:center !important;
 
-    @media(max-width:899px){
+  }
 
-      footer{
 
-        display:block !important;
+  footer>.logo,
+  footer>nav,
+  footer>.r{
 
-        width:100% !important;
+    display:none !important;
 
-        margin:0 !important;
+  }
 
-        padding:
-          8px
-          10px
-          54px !important;
 
-        text-align:center !important;
+  footer>div:last-child{
 
-      }
+    display:block !important;
 
+    width:100% !important;
 
-      footer>.logo,
-      footer>nav,
-      footer>.r{
+    font-size:10px !important;
 
-        display:none !important;
+    line-height:1.4 !important;
 
-      }
+    color:#cfe0ff !important;
 
+  }
 
-      footer>div:last-child{
 
-        display:block !important;
+  /*
+     Mobile PDF card:
+     original/larger size
+  */
 
-        width:100% !important;
+  .pdf-row-wrap .row{
 
-        margin:0 !important;
+    gap:10px !important;
 
-        padding:0 !important;
+    padding:
+      0
+      22px
+      4px
+      0 !important;
 
-        font-size:10px !important;
+    overflow-x:auto !important;
 
-        line-height:1.25 !important;
+    scrollbar-width:none;
 
-        color:#cfe0ff !important;
+  }
 
-        text-align:center !important;
 
-      }
+  .pdf-row-wrap .row::-webkit-scrollbar{
 
-    }
+    display:none;
 
+  }
 
-    /* =========================================
-       MOBILE PDF CARD SIZE
-       Keep the requested 236px size.
-    ========================================= */
 
-    @media(max-width:899px){
+  .pdf-row-wrap .card{
 
-      #r1 .card,
-      #r2 .card{
+    flex:
+      0 0 236px !important;
 
-        flex:
-          0 0 236px !important;
+    min-width:
+      236px !important;
 
-        width:
-          236px !important;
+    width:
+      236px !important;
 
-        min-width:
-          236px !important;
+    padding:
+      7px !important;
 
-      }
+    border-radius:
+      12px !important;
 
-    }
+  }
 
 
-    /* =========================================
-       SMOOTH PDF SCROLL
-    ========================================= */
+  .pdf-row-wrap .card .im{
 
-    #r1{
+    aspect-ratio:
+      232/95 !important;
 
-      scroll-behavior:
-        smooth !important;
+    border-radius:
+      8px !important;
 
-    }
+  }
 
 
-    #r1 .card{
+  .pdf-row-wrap .card h3{
 
-      scroll-snap-align:
-        start !important;
+    font-size:
+      17px !important;
 
-    }
+    line-height:
+      1.15 !important;
 
+    margin:
+      8px 2px 0 !important;
 
-    /* =========================================
-       MOBILE ARROWS
-    ========================================= */
+    display:block !important;
 
-    @media(max-width:899px){
+    overflow:visible !important;
 
-      .pdf-row-wrap .pdf-arrow{
+  }
 
-        position:absolute;
 
-        top:50%;
+  .pdf-row-wrap .card h3 small{
 
-        transform:
-          translateY(-50%);
+    font-size:
+      15px !important;
 
-        width:26px;
+  }
 
-        height:26px;
 
-        border:0;
+  .pdf-row-wrap .card p{
 
-        border-radius:50%;
+    font-size:
+      14px !important;
 
-        padding:0;
+    line-height:
+      1.3 !important;
 
-        background:#06153acc;
+    margin:
+      4px 2px 6px !important;
 
-        color:#fff;
+    display:block !important;
 
-        display:grid;
+    overflow:visible !important;
 
-        place-items:center;
+  }
 
-        font:
-          700
-          20px/24px
-          Arial,
-          sans-serif;
 
-        z-index:5;
+  .pdf-row-wrap .pr{
 
-        opacity:0;
+    gap:
+      5px !important;
 
-        pointer-events:none;
+  }
 
-        box-shadow:
-          0 1px 5px #0005;
 
-      }
+  .pdf-row-wrap .pr div{
 
+    font-size:
+      14px !important;
 
-      .pdf-row-wrap .pdf-arrow.left{
+  }
 
-        left:1px;
 
-      }
+  .pdf-row-wrap .pr div span{
 
+    font-size:
+      11px !important;
 
-      .pdf-row-wrap .pdf-arrow.right{
+  }
 
-        right:1px;
 
-      }
+  .pdf-row-wrap .pr s{
 
+    font-size:
+      10px !important;
 
-      .sec.pdf-active
-      .pdf-arrow{
+  }
 
-        opacity:.82;
 
-        pointer-events:auto;
+  .pdf-row-wrap .pr em{
 
-        animation:
-          pdfArrowHint
-          1.8s
-          ease-in-out
-          infinite;
+    font-size:
+      10px !important;
 
-      }
+  }
 
-    }
 
+  .pdf-row-wrap .buy{
 
-    @keyframes pdfArrowHint{
+    margin:
+      7px 0 !important;
 
-      0%,
-      100%{
-        opacity:.55;
-      }
+    padding:
+      6px !important;
 
-      50%{
-        opacity:.95;
-      }
+    font-size:
+      14px !important;
 
-    }
+    border-radius:
+      7px !important;
 
+  }
 
-    /* =========================================
-       REDUCED MOTION
-    ========================================= */
 
-    @media(prefers-reduced-motion:reduce){
+  .pdf-row-wrap .mt{
 
-      .card .im img,
-      .card .im::after,
-      .sec.pdf-active .pdf-arrow{
+    font-size:
+      11px !important;
 
-        animation:none !important;
+    min-height:
+      21px !important;
 
-      }
+  }
 
-    }
 
-  `;
+  .pdf-row-wrap .mt button{
+
+    padding:
+      3px 7px !important;
+
+    font-size:
+      11px !important;
+
+  }
+
+
+  .pdf-row-wrap .ft{
+
+    font-size:
+      10px !important;
+
+    gap:
+      4px !important;
+
+  }
+
+
+  .pdf-row-wrap .ft svg{
+
+    font-size:
+      16px !important;
+
+  }
+
+}
+
+
+/* ==========================================
+   COUNTER ANIMATION
+========================================== */
+
+.wb-total-pdf-added.wb-counter-update{
+
+  transform:
+    scale(1.035);
+
+  transition:
+    transform .25s ease;
+
+}
+
+`;
 
 
   document.head.appendChild(
     style
   );
 
+
+  cleanUndefined(
+    document.body
+  );
+
+
 })();
+
+
+/* =========================================================
+   INITIAL GLOBAL COUNTER LOAD
+========================================================= */
+
+loadSold();
