@@ -633,7 +633,7 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
 })();
 /* =========================================================
-   WBExamPDF — TOTAL PDF ADDED COUNTER
+   WBExamPDF — TOTAL PDF Sold COUNTER
    Add to Cart করলে +1
    Remove করলে count কমবে না
    ========================================================= */
@@ -643,7 +643,7 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
   var START_COUNT = 1250;
   var STORAGE_KEY = 'wb_pdf_added_total';
 
-  function getTotalAdded() {
+  function getTotalSold() {
 
     var saved = localStorage.getItem(STORAGE_KEY);
 
@@ -676,14 +676,14 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
   function updateDisplay() {
 
-    var total = getTotalAdded();
+    var total = getTotalSold();
 
     document
-      .querySelectorAll('.wb-total-pdf-added')
+      .querySelectorAll('.wb-total-pdf-Sold')
       .forEach(function (el) {
 
         el.textContent =
-          'Total PDF Added counting : ' +
+          'Total PDF Sold counting : ' +
           total.toLocaleString('en-IN');
 
       });
