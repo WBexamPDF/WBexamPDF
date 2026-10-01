@@ -74,19 +74,43 @@ function rp(n){return '₹'+n.toLocaleString('en-IN')}
 function likes(){try{return JSON.parse(stor('likes')||'{}')}catch(e){return {}}}
 card=function(d,id){var lk=likes()[id],sd=d[5]||0,soon=d[0]=='Offer Ending Soon';
 var pr=TI.map(function(x){return '<div class="'+x[0]+'"><span>'+x[1]+'</span><s>'+rp(x[2])+'</s>'+rp(x[3])+'<em>70% '+tr('off')+'</em></div>'}).join('');
-return '<div class="card"><div class="im"><img src="'+I[d[1]]+'" alt=""><span class="tag" style="background:'+col[d[0]]+'">'+(soon?'<svg class="i spin"><use href="#t"/></svg>':'')+d[0]+'</span></div><h3>'+d[2]+'<small>'+d[3]+'</small></h3><p>'+(id[0]=='a'?DS[DK[+id.slice(1)]][IDX[LG]]:'')+'</p><div class="pr">'+pr+'</div><a class="buy" data-link="buy" data-exam="'+d[2]+'">'+tr('buy')+'</a><div class="mt">'+(sd>0?'<span><svg class="i"><use href="#w"/></svg> '+sd+' '+tr('sold')+'</span>':'')+'<span class="ac"><button class="lk'+(lk?' on':'')+'" data-id="'+id+'"><svg class="i"><use href="#hr"/></svg><b>'+(lk?1:'')+'</b></button><button class="sb" data-n="'+d[2]+'"><svg class="i"><use href="#sh"/></svg>'+tr('share')+'</button></span></div><div class="ft"><div data-link="sample" data-exam="'+d[2]+'"><svg class="i"><use href="#e"/></svg><span>'+tr('sample')+'<br>'+tr('pg')+'</span></div><div><svg class="i"><use href="#l"/></svg><span>'+tr('pw1')+'<br>'+tr('pw2')+'</span></div></div></div>'};
+return '<div class="card"><div class="im"><img src="'+I[d[1]]+'" alt=""><span class="tag" style="background:'+col[d[0]]+'">'+(soon?'<svg class="i spin"><use href="#t"/></svg>':'')+d[0]+'</span></div><h3>'+d[2]+'<small>'+d[3]+'</small></h3><p>'+(id[0]=='a'?DS[DK[+id.slice(1)]][IDX[LG]]:'')+'</p><div class="pr">'+pr+'</div><a class="buy" data-link="buy" data-exam="'+d[2]+'">'+tr('buy')+'</a><div class="mt">'+(sd>0?'<span><svg class="i"><use href="#w"/></svg> '+sd+' '+tr('sold')+'</span>':'')+'<span class="ac"><button class="lk'+(lk?' on':'')+'" data-id="'+id+'" aria-label="'+(lk?'Added to cart':'Add to cart')+'" title="'+(lk?'Added to cart':'Add to cart')+'"><svg class="i"><use href="#hr"/></svg><b>'+(lk?1:'')+'</b></button><button class="sb" data-n="'+d[2]+'"><svg class="i"><use href="#sh"/></svg>'+tr('share')+'</button></span></div><div class="ft"><div data-link="sample" data-exam="'+d[2]+'"><svg class="i"><use href="#e"/></svg><span>'+tr('sample')+'<br>'+tr('pg')+'</span></div><div><svg class="i"><use href="#l"/></svg><span>'+tr('pw1')+'<br>'+tr('pw2')+'</span></div></div></div>'};
 function sec(a,p){return a.map(function(d,i){return [d,p+i]}).sort(function(x,y){return (y[0][5]||0)-(x[0][5]||0)}).map(function(z){return card(z[0],z[1])}).join('')}
 function render(){if(!document.getElementById('r1'))return;document.getElementById('r1').innerHTML=sec(C1,'a');document.getElementById('r2').innerHTML=sec(C2,'b')}
 var NODES=[];function scan(){var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n;while(n=w.nextNode()){var p=n.parentNode.nodeName;if(p=='SCRIPT'||p=='STYLE'||p=='OPTION')continue;var k=n.nodeValue.trim();if(DX[k])NODES.push([n,k,n.nodeValue.replace(k,'§')])}}
 function apply(){NODES.forEach(function(x){x[0].nodeValue=x[2].replace('§',DX[x[1]][IDX[LG]])})}
 function setLang(l){LG=l;stor('lang',l);document.getElementById('lg').value=l;document.documentElement.lang=l;apply();render()}
-scan();render();document.getElementById('lg').value=LG;document.documentElement.lang=LG;apply();
+scan();render();setupPdfRows();window.addEventListener('resize',function(){if(innerWidth<900)setupPdfRows()});document.getElementById('lg').value=LG;document.documentElement.lang=LG;apply();
 var lp=document.getElementById('lp');if(lp&&IS_HOME&&!stor('langChosen'))lp.classList.add('on');
 document.getElementById('lg').onchange=function(){stor('langChosen','1');setLang(this.value)};
+
+/* Mobile PDF carousel controls + heart-as-cart behavior. Desktop is untouched. */
+function carts(){try{var raw=stor('cart');if(raw)return JSON.parse(raw);var old=likes();if(Object.keys(old).length){stor('cart',JSON.stringify(old));return old}return {}}catch(e){return {}}}
+function cartCount(){var C=carts(),n=Object.keys(C).length;document.querySelectorAll('[data-link=cart] em').forEach(function(e){e.textContent=n});return n}
+function setupPdfRows(){
+  if(innerWidth>=900)return;
+  document.querySelectorAll('.sec .row').forEach(function(row){
+    if(row.parentElement.classList.contains('pdf-row-wrap'))return;
+    var wrap=document.createElement('div');wrap.className='pdf-row-wrap';
+    row.parentNode.insertBefore(wrap,row);wrap.appendChild(row);
+    var l=document.createElement('button'),r=document.createElement('button');
+    l.className='pdf-arrow left';r.className='pdf-arrow right';l.type=r.type='button';
+    l.innerHTML='‹';r.innerHTML='›';l.setAttribute('aria-label','Previous PDF');r.setAttribute('aria-label','Next PDF');
+    wrap.appendChild(l);wrap.appendChild(r);
+    l.addEventListener('click',function(){row.scrollBy({left:-(row.clientWidth*.92),behavior:'smooth'})});
+    r.addEventListener('click',function(){row.scrollBy({left:row.clientWidth*.92,behavior:'smooth'})});
+  });
+  if(!window.__pdfIO){
+    window.__pdfIO=new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle('pdf-active',e.isIntersecting&&e.intersectionRatio>.22)})},{threshold:[.22]});
+    document.querySelectorAll('.sec').forEach(function(sec){if(sec.querySelector('.pdf-row-wrap'))window.__pdfIO.observe(sec)});
+  }
+}
+cartCount();
+
 var lx=document.getElementById('lx');if(lx)lx.onclick=function(){stor('langChosen','1');lp.classList.remove('on')};
 document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
 if(b.dataset.l){stor('langChosen','1');setLang(b.dataset.l);lp.classList.remove('on')}
-else if(b.classList.contains('lk')){var L=likes();if(L[b.dataset.id])delete L[b.dataset.id];else L[b.dataset.id]=1;stor('likes',JSON.stringify(L));b.classList.toggle('on');b.querySelector('b').textContent=L[b.dataset.id]?1:''}
+else if(b.classList.contains('lk')){var L=likes(),C=carts(),id=b.dataset.id;if(L[id]){delete L[id];delete C[id]}else{L[id]=1;C[id]=1}stor('likes',JSON.stringify(L));stor('cart',JSON.stringify(C));b.classList.toggle('on',!!L[id]);b.querySelector('b').textContent=L[id]?1:'';b.setAttribute('aria-label',L[id]?'Added to cart':'Add to cart');b.title=L[id]?'Added to cart':'Add to cart';cartCount()}
 else if(b.classList.contains('sb')){var u=location.href.split('#')[0],x=b.dataset.n+' – WBExamPDF';if(navigator.share)navigator.share({title:x,url:u}).catch(function(){});else window.open('https://wa.me/?text='+encodeURIComponent(x+' '+u),'_blank')}});
 new MutationObserver(function(ms){ms.forEach(function(m){var e=m.target.nodeType==3?m.target.parentNode:m.target;if(e&&e.classList&&e.classList.contains('n')){e.classList.remove('fl');void e.offsetWidth;e.classList.add('fl')}});if(t<3600)document.querySelectorAll('.tim,.box').forEach(function(x){x.classList.add('hot')})}).observe(document.body,{subtree:true,childList:true,characterData:true});
 
