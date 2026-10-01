@@ -1,144 +1,94 @@
 /* WBExamPDF — script.js
    LINKS (নিচে) এ প্রতিটি পেজের ফাইলের নাম বসান। এই ফাইল সব পেজে একই থাকবে। */
-
-var I={
-  c1:"images/card1.jpg",
-  c2:"images/card2.jpg",
-  c3:"images/card3.jpg",
-  c4:"images/card4.jpg"
-},
-F=[
-  "images/review1.jpg",
-  "images/review2.jpg",
-  "images/review3.jpg",
-  "images/review4.jpg"
-];
-
-var T={
-  Live:"#e0202a",
-  Popular:"#f59a23",
-  New:"#1fa64a",
-  Soon:"#1a55d1",
-  Trending:"#e0202a"
-};
-
-var L={
-  Live:"Live",
-  "Most Popular":"Most Popular",
-  New:"New",
-  "Offer Ending Soon":"Offer Ending Soon",
-  Trending:"Trending"
-};
-
-var C1=[
-  ["Live","c1","WBPSC 2025","(Prelims + Mains)","বাংলা, ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],
-  ["Most Popular","c2","RRB NTPC 2025","(Graduate & Under Graduate)","পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],
-  ["New","c3","SSC GD 2025","(Constable)","বাংলা, পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],
-  ["Offer Ending Soon","c4","West Bengal Police","(Constable & SI)","বাংলা, অঙ্ক, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],
-  ["Trending","c2","Railway Group D 2025","(Level 1)","পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],
-  ["Trending","c1","WBPSC 2025","(Prelims + Mains)","ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"]
-];
-
-var C2=[
-  ["Trending","c1","WBPSC 2025","(প্রিলিমস + প্রধানস)",""],
-  ["Most Popular","c3","SSC CHSL 2025","(Tier 1 + Tier 2)",""],
-  ["New","c2","Railway RRB NTPC","(CBT 1 + CBT 2)",""],
-  ["Offer Ending Soon","c4","WB Police Constable","(Prelims + Mains)",""]
-];
-
-var col={
-  Live:"#e0202a",
-  "Most Popular":"#f59a23",
-  New:"#1fa64a",
-  "Offer Ending Soon":"#1a55d1",
-  Trending:"#e0202a"
-};
+var I={c1:"images/card1.jpg",c2:"images/card2.jpg",c3:"images/card3.jpg",c4:"images/card4.jpg"},F=["images/review1.jpg","images/review2.jpg","images/review3.jpg","images/review4.jpg"];
+var T={Live:"#e0202a",Popular:"#f59a23",New:"#1fa64a",Soon:"#1a55d1",Trending:"#e0202a"};
+var L={Live:"Live","Most Popular":"Most Popular",New:"New","Offer Ending Soon":"Offer Ending Soon",Trending:"Trending"};
+var C1=[["Live","c1","WBPSC 2025","(Prelims + Mains)","বাংলা, ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],["Most Popular","c2","RRB NTPC 2025","(Graduate & Under Graduate)","পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],["New","c3","SSC GD 2025","(Constable)","বাংলা, পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],["Offer Ending Soon","c4","West Bengal Police","(Constable & SI)","বাংলা, অঙ্ক, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],["Trending","c2","Railway Group D 2025","(Level 1)","পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"],["Trending","c1","WBPSC 2025","(Prelims + Mains)","ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি"]];
+var C2=[["Trending","c1","WBPSC 2025","(প্রিলিমস + প্রধানস)",""],["Most Popular","c3","SSC CHSL 2025","(Tier 1 + Tier 2)",""],["New","c2","Railway RRB NTPC","(CBT 1 + CBT 2)",""],["Offer Ending Soon","c4","WB Police Constable","(Prelims + Mains)",""]];
+var col={Live:"#e0202a","Most Popular":"#f59a23",New:"#1fa64a","Offer Ending Soon":"#1a55d1",Trending:"#e0202a"};
 
 function card(d){
-  return '<div class="card"><div class="im"><img src="'+I[d[1]]+'" alt=""><span class="tag" style="background:'+col[d[0]]+'">'+d[0]+'</span></div><h3>'+d[2]+'<small>'+d[3]+'</small></h3>'+(d[4]?'<p>'+d[4]+'</p>':'<p></p>')+'<div class="pr"><div class="a"><span>★ 100%</span>₹1000</div><div class="b"><span>★ 50%</span>₹500</div><div class="c"><span>★ 20%</span>₹100</div></div><a class="buy">BUY NOW →</a><div class="ft"><div data-link="sample" data-exam="'+d[2]+'"><svg class="i"><use href="#e"/></svg><span>Sample Preview<br>(2-3 Page)</span></div><div><svg class="i"><use href="#l"/></svg><span>PDF + Unique<br>Password</span></div></div></div>';
+return '<div class="card"><div class="im"><img src="'+I[d[1]]+'" alt=""><span class="tag" style="background:'+col[d[0]]+'">'+d[0]+'</span></div><h3>'+d[2]+'<small>'+d[3]+'</small></h3>'+(d[4]?'<p>'+d[4]+'</p>':'<p></p>')+'<div class="pr"><div class="a"><span>★ 100%</span>₹1000</div><div class="b"><span>★ 50%</span>₹500</div><div class="c"><span>★ 20%</span>₹100</div></div><a class="buy">BUY NOW →</a><div class="ft"><div data-link="sample" data-exam="'+d[2]+'"><svg class="i"><use href="#e"/></svg><span>Sample Preview<br>(2-3 Page)</span></div><div><svg class="i"><use href="#l"/></svg><span>PDF + Unique<br>Password</span></div></div></div>'
 }
 
 if(document.getElementById('r1')){
-  document.getElementById('r1').innerHTML=C1.map(card).join('');
-  document.getElementById('r2').innerHTML=C2.map(card).join('');
+document.getElementById('r1').innerHTML=C1.map(card).join('');
+document.getElementById('r2').innerHTML=C2.map(card).join('')
 }
 
 var R=[
-  ["Rohit Das","“PDF গুলো খুবই ভালোভাবে সাজানো, পরীক্ষার প্রস্তুতির জন্য খুবই সহায়ক!”","WBPSC Aspirant | 2 দিন আগে"],
-  ["Priya Mondal","“প্রতিটি টপিক খুবই ক্লিয়ার এবং সহজ ভাষায় লেখা আছে।”","SSC CHSL Aspirant | 5 দিন আগে"],
-  ["Arindam Pal","“চলমান পরীক্ষার জন্য PDF খুবই উপকারী। সাম্প্রতিক ঘটনা এবং 100% ম্যাচ।”","Railway NTPC Aspirant | 1 সপ্তাহ আগে"],
-  ["Soma Ghosh","“আমি TET এর জন্য নিয়েছি, সত্যিই ভালো কনটেন্ট। সব কিছু এক জায়গায় পাওয়া যায়!”","TET Aspirant | 3 দিন আগে"]
+["Rohit Das","“PDF গুলো খুবই ভালোভাবে সাজানো, পরীক্ষার প্রস্তুতির জন্য খুবই সহায়ক!”","WBPSC Aspirant | 2 দিন আগে"],
+["Priya Mondal","“প্রতিটি টপিক খুবই ক্লিয়ার এবং সহজ ভাষায় লেখা আছে।”","SSC CHSL Aspirant | 5 দিন আগে"],
+["Arindam Pal","“চলমান পরীক্ষার জন্য PDF খুবই উপকারী। সাম্প্রতিক ঘটনা এবং 100% ম্যাচ।”","Railway NTPC Aspirant | 1 সপ্তাহ আগে"],
+["Soma Ghosh","“আমি TET এর জন্য নিয়েছি, সত্যিই ভালো কনটেন্ট। সব কিছু এক জায়গায় পাওয়া যায়!”","TET Aspirant | 3 দিন আগে"]
 ];
 
 if(document.getElementById('rr')){
-  document.getElementById('rr').innerHTML=R.map(function(r,i){
-    return '<div class="rc"><img src="'+F[i]+'" alt=""><div><b>'+r[0]+'</b><span class="st">★★★★★</span><q>'+r[1]+'</q><small>'+r[2]+'</small></div></div>';
-  }).join('');
+document.getElementById('rr').innerHTML=R.map(function(r,i){
+return '<div class="rc"><img src="'+F[i]+'" alt=""><div><b>'+r[0]+'</b><span class="st">★★★★★</span><q>'+r[1]+'</q><small>'+r[2]+'</small></div></div>'
+}).join('')
 }
 
 var t=1*86400+23*3600+45*60+12;
 
 setInterval(function(){
-  t--;
+t--;
+var v=[
+Math.floor(t/86400),
+Math.floor(t%86400/3600),
+Math.floor(t%3600/60),
+t%60
+];
 
-  var v=[
-    Math.floor(t/86400),
-    Math.floor(t%86400/3600),
-    Math.floor(t%3600/60),
-    t%60
-  ];
+document.querySelectorAll('.cd .n').forEach(function(n,k){
+var x=String(v[k%4]).padStart(2,'0'),
+o=n.dataset.v||n.textContent;
 
-  document.querySelectorAll('.cd .n').forEach(function(n,k){
-    var x=String(v[k%4]).padStart(2,'0'),
-        o=n.dataset.v||n.textContent;
+if(n.dataset.v===x)return;
 
-    if(n.dataset.v===x)return;
-
-    n.dataset.v=x;
-    n.innerHTML='<span class="ro"><span>'+x+'</span><span>'+o+'</span></span>';
-  });
+n.dataset.v=x;
+n.innerHTML='<span class="ro"><span>'+x+'</span><span>'+o+'</span></span>'
+})
 },1000);
 
 
-/* =====================================================
-   LINKS
-===================================================== */
+/* ===== LINKS: নতুন পেজ বানালে শুধু এখানে ফাইলের নাম/URL বসান, বাকি সব নিজে থেকে কাজ করবে ===== */
 
 var LINKS={
-  youtube:'',
-  facebook:'',
-  instagram:'',
-  home:'',
-  upcoming:'',
-  bestselling:'',
-  college:'',
-  school:'',
-  courses:'',
-  pdfpackage:'',
-  notifications:'',
-  cart:'',
-  search:'',
-  login:'',
-  register:'',
-  allRunning:'',
-  allUpcoming:'',
-  allReviews:'',
-  buy:'',
-  sample:''
+youtube:'',
+facebook:'',
+instagram:'',
+home:'',
+upcoming:'',
+bestselling:'',
+college:'',
+school:'',
+courses:'',
+pdfpackage:'',
+notifications:'',
+cart:'',
+search:'',
+login:'',
+register:'',
+allRunning:'',
+allUpcoming:'',
+allReviews:'',
+buy:'',
+sample:''
 };
 
+/* buy/sample-এ {exam} লিখলে পরীক্ষার নাম বসে যাবে, যেমন buy:'buy.html?exam={exam}' */
 
-/* buy/sample-এ {exam} লিখলে পরীক্ষার নাম বসে যাবে */
 var IS_HOME=document.body.hasAttribute('data-home'),
-    IDX={bn:0,en:1,hi:2};
+IDX={bn:0,en:1,hi:2};
 
 function stor(k,v){
-  try{
-    if(v===undefined)return localStorage.getItem(k);
-    localStorage.setItem(k,v);
-  }catch(e){
-    return null;
-  }
+try{
+if(v===undefined)return localStorage.getItem(k);
+localStorage.setItem(k,v)
+}catch(e){
+return null
+}
 }
 
 var LG=stor('lang')||'bn';
@@ -193,1468 +143,1154 @@ LIMITED TIME OFFER~সীমিত সময়ের অফার~Limited Time 
 জরুরি বিষয় আগে, সময় বাঁচান~~Urgent topics first, save time~ज़रूरी विषय पहले, समय बचाएँ
 নমুনা দেখে, তারপর কিনুন~~Preview a sample, then buy~पहले नमूना देखें, फिर खरीदें
 সীমিত সময়ের জন্য ৭০% পর্যন্ত ছাড়~~Up to 70% off for a limited time~सीमित समय के लिए 70% तक की छूट
-Follow Us~ফলো করুন~Follow Us~फ़ॉलो करें`
-.split("\n")
-.forEach(function(l){
-  var p=l.split("~");
-  DX[p[0]]=[p[1]||p[0],p[2],p[3]];
+Follow Us~ফলো করুন~Follow Us~फ़ॉलो करें`.split("\n").forEach(function(l){
+var p=l.split("~");
+DX[p[0]]=[p[1]||p[0],p[2],p[3]]
 });
 
 var Y={
-  buy:['এখনই কিনুন →','BUY NOW →','अभी खरीदें →'],
-  sample:['নমুনা দেখুন','Sample Preview','नमूना देखें'],
-  pg:['(২-৩ পৃষ্ঠা)','(2-3 Page)','(2-3 पृष्ठ)'],
-  pw1:['PDF + ইউনিক','PDF + Unique','PDF + यूनिक'],
-  pw2:['পাসওয়ার্ড','Password','पासवर्ड'],
-  off:['ছাড়','OFF','छूट'],
-  sold:['জন কিনেছেন','bought','ने खरीदा'],
-  share:['শেয়ার','Share','शेयर']
+buy:['এখনই কিনুন →','BUY NOW →','अभी खरीदें →'],
+sample:['নমুনা দেখুন','Sample Preview','नमूना देखें'],
+pg:['(২-৩ পৃষ্ঠা)','(2-3 Page)','(2-3 पृष्ठ)'],
+pw1:['PDF + ইউনিক','PDF + Unique','PDF + यूनिक'],
+pw2:['পাসওয়ার্ড','Password','पासवर्ड'],
+off:['ছাড়','OFF','छूट'],
+sold:['জন কিনেছেন','bought','ने खरीदा'],
+share:['শেয়ার','Share','शेयर']
 };
 
 function tr(k){
-  return Y[k][IDX[LG]];
+return Y[k][IDX[LG]]
 }
 
 var DS={
-  a:[
-    'বাংলা, ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি',
-    'Complete preparation with Bengali, History, Geography, Constitution, Economy & Current Affairs',
-    'बंगाली, इतिहास, भूगोल, संविधान, अर्थशास्त्र और करेंट अफेयर्स के साथ पूरी तैयारी'
-  ],
-  b:[
-    'পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি',
-    'Complete preparation with Arithmetic, Reasoning, GK & Current Affairs',
-    'अंकगणित, रीज़निंग, सामान्य ज्ञान और करेंट अफेयर्स के साथ पूरी तैयारी'
-  ],
-  c:[
-    'বাংলা, অঙ্ক, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি',
-    'Complete preparation with Bengali, Maths, Reasoning, GK & Current Affairs',
-    'बंगाली, गणित, रीज़निंग, सामान्य ज्ञान और करेंट अफेयर्स के साथ पूरी तैयारी'
-  ]
+a:[
+'বাংলা, ইতিহাস, ভূগোল, সংবিধান, অর্থনীতি, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি',
+'Complete preparation with Bengali, History, Geography, Constitution, Economy & Current Affairs',
+'बंगाली, इतिहास, भूगोल, संविधान, अर्थशास्त्र और करेंट अफेयर्स के साथ पूरी तैयारी'
+],
+b:[
+'পাটিগণিত, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি',
+'Complete preparation with Arithmetic, Reasoning, GK & Current Affairs',
+'अंकगणित, रीज़निंग, सामान्य ज्ञान और करेंट अफेयर्स के साथ पूरी तैयारी'
+],
+c:[
+'বাংলা, অঙ্ক, রিজনিং, সাধারণ জ্ঞান, কারেন্ট অ্যাফেয়ার্স সহ সম্পূর্ণ প্রস্তুতি',
+'Complete preparation with Bengali, Maths, Reasoning, GK & Current Affairs',
+'बंगाली, गणित, रीज़निंग, सामान्य ज्ञान और करेंट अफेयर्स के साथ पूरी तैयारी'
+]
 };
 
-var DK=['a','b','c','c','b','a'];
-
-var TI=[
-  ['a','★ 100%',3333,1000],
-  ['b','★ 50%',1667,500],
-  ['c','★ 20%',333,100]
+var DK=['a','b','c','c','b','a'],
+TI=[
+['a','★ 100%',3333,1000],
+['b','★ 50%',1667,500],
+['c','★ 20%',333,100]
 ];
 
 function rp(n){
-  return '₹'+n.toLocaleString('en-IN');
+return '₹'+n.toLocaleString('en-IN')
 }
 
 function likes(){
-  try{
-    return JSON.parse(stor('likes')||'{}');
-  }catch(e){
-    return {};
-  }
+try{
+return JSON.parse(stor('likes')||'{}')
+}catch(e){
+return {}
+}
 }
 
-
-/* =====================================================
-   PDF CARD
-===================================================== */
-
 card=function(d,id){
+var lk=likes()[id],
+sd=d[5]||0,
+soon=d[0]=='Offer Ending Soon';
 
-  var lk=likes()[id],
-      sd=d[5]||0,
-      soon=d[0]=='Offer Ending Soon';
+var pr=TI.map(function(x){
+return '<div class="'+x[0]+'"><span>'+x[1]+'</span><s>'+rp(x[2])+'</s>'+rp(x[3])+'<em>70% '+tr('off')+'</em></div>'
+}).join('');
 
-  var pr=TI.map(function(x){
-    return '<div class="'+x[0]+'"><span>'+x[1]+'</span><s>'+rp(x[2])+'</s>'+rp(x[3])+'<em>70% '+tr('off')+'</em></div>';
-  }).join('');
+return '<div class="card"><div class="im"><img src="'+I[d[1]]+'" alt=""><span class="tag" style="background:'+col[d[0]]+'">'+
+(soon?'<svg class="i spin"><use href="#t"/></svg>':'')+
+d[0]+
+'</span></div><h3>'+d[2]+'<small>'+d[3]+'</small></h3><p>'+
+(id[0]=='a'?DS[DK[+id.slice(1)]][IDX[LG]]:'')+
+'</p><div class="pr">'+pr+'</div><a class="buy" data-link="buy" data-exam="'+d[2]+'">'+
+tr('buy')+
+'</a><div class="mt">'+
+(sd>0?'<span><svg class="i"><use href="#w"/></svg> '+sd+' '+tr('sold')+'</span>':'')+
+'<span class="ac"><button class="lk'+(lk?' on':'')+'" data-id="'+id+'" aria-label="'+(lk?'Added to cart':'Add to cart')+'" title="'+(lk?'Added to cart':'Add to cart')+'"><svg class="i"><use href="#c"/></svg><b>'+(lk?1:'')+
+'</b></button><button class="sb" data-n="'+d[2]+'"><svg class="i"><use href="#sh"/></svg>'+
+tr('share')+
+'</button></span></div><div class="ft"><div data-link="sample" data-exam="'+d[2]+'"><svg class="i"><use href="#e"/></svg><span>'+
+tr('sample')+
+'<br>'+
+tr('pg')+
+'</span></div><div><svg class="i"><use href="#l"/></svg><span>'+
+tr('pw1')+
+'<br>'+
+tr('pw2')+
+'</span></div></div></div>'
+};
 
-  return '<div class="card"><div class="im"><img src="'+I[d[1]]+'" alt=""><span class="tag" style="background:'+col[d[0]]+'">'+
-    (soon?'<svg class="i spin"><use href="#t"/></svg>':'')+
-    d[0]+
-    '</span></div>'+
-    '<h3>'+d[2]+'<small>'+d[3]+'</small></h3>'+
-    '<p>'+(id[0]=='a'?DS[DK[+id.slice(1)]][IDX[LG]]:'')+'</p>'+
-    '<div class="pr">'+pr+'</div>'+
-    '<a class="buy" data-link="buy" data-exam="'+d[2]+'">'+tr('buy')+'</a>'+
-    '<div class="mt">'+
-      (sd>0?'<span><svg class="i"><use href="#w"/></svg> '+sd+' '+tr('sold')+'</span>':'')+
-      '<span class="ac">'+
-        '<button class="lk'+(lk?' on':'')+'" data-id="'+id+'" aria-label="'+(lk?'Added to cart':'Add to cart')+'" title="'+(lk?'Added to cart':'Add to cart')+'">'+
-          '<svg class="i"><use href="#c"/></svg><b>'+(lk?1:'')+'</b>'+
-        '</button>'+
-        '<button class="sb" data-n="'+d[2]+'"><svg class="i"><use href="#sh"/></svg>'+tr('share')+'</button>'+
-      '</span>'+
-    '</div>'+
-    '<div class="ft">'+
-      '<div data-link="sample" data-exam="'+d[2]+'"><svg class="i"><use href="#e"/></svg><span>'+tr('sample')+'<br>'+tr('pg')+'</span></div>'+
-      '<div><svg class="i"><use href="#l"/></svg><span>'+tr('pw1')+'<br>'+tr('pw2')+'</span></div>'+
-    '</div>'+
-  '</div>';
+function sec(a,p){
+return a.map(function(d,i){
+return [d,p+i]
+}).sort(function(x,y){
+return (y[0][5]||0)-(x[0][5]||0)
+}).map(function(z){
+return card(z[0],z[1])
+}).join('')
+}
+
+function render(){
+if(!document.getElementById('r1'))return;
+document.getElementById('r1').innerHTML=sec(C1,'a');
+document.getElementById('r2').innerHTML=sec(C2,'b')
+}
+
+var NODES=[];
+
+function scan(){
+var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n;
+
+while(n=w.nextNode()){
+var p=n.parentNode.nodeName;
+
+if(p=='SCRIPT'||p=='STYLE'||p=='OPTION')continue;
+
+var k=n.nodeValue.trim();
+
+if(DX[k])NODES.push([n,k,n.nodeValue.replace(k,'§')])
+}
+}
+
+function apply(){
+NODES.forEach(function(x){
+x[0].nodeValue=x[2].replace('§',DX[x[1]][IDX[LG]])
+})
+}
+
+function setLang(l){
+LG=l;
+stor('lang',l);
+document.getElementById('lg').value=l;
+document.documentElement.lang=l;
+apply();
+render()
+}
+
+scan();
+render();
+setupPdfRows();
+
+window.addEventListener('resize',function(){
+if(innerWidth<900)setupPdfRows()
+});
+
+document.getElementById('lg').value=LG;
+document.documentElement.lang=LG;
+apply();
+
+var lp=document.getElementById('lp');
+
+if(lp&&IS_HOME&&!stor('langChosen'))lp.classList.add('on');
+
+document.getElementById('lg').onchange=function(){
+stor('langChosen','1');
+setLang(this.value)
 };
 
 
-/* =====================================================
-   SECTION DATA
-===================================================== */
+/* Mobile PDF carousel controls + heart-as-cart behavior. */
 
-function sec(a,p){
-  return a.map(function(d,i){
-    return [d,p+i];
-  })
-  .sort(function(x,y){
-    return (y[0][5]||0)-(x[0][5]||0);
-  })
-  .map(function(z){
-    return card(z[0],z[1]);
-  })
-  .join('');
+function carts(){
+try{
+var raw=stor('cart');
+
+if(raw)return JSON.parse(raw);
+
+var old=likes();
+
+if(Object.keys(old).length){
+stor('cart',JSON.stringify(old));
+return old
 }
 
-function renderPDFs(){
-  var r1=document.getElementById('r1'),
-      r2=document.getElementById('r2');
-
-  if(r1)r1.innerHTML=sec(C1,'a');
-  if(r2)r2.innerHTML=sec(C2,'b');
+return {}
+}catch(e){
+return {}
 }
-
-
-/* =====================================================
-   LANGUAGE
-===================================================== */
-
-function setLang(l){
-
-  if(!IDX.hasOwnProperty(l))return;
-
-  LG=l;
-  stor('lang',LG);
-
-  document.querySelectorAll('[data-link]').forEach(function(el){
-
-    var key=el.dataset.link;
-
-    if(DX[key]){
-      if(el.children.length===0){
-        el.textContent=DX[key][IDX[LG]];
-      }
-    }
-  });
-
-  document.querySelectorAll('[data-l]').forEach(function(b){
-    b.classList.toggle('on',b.dataset.l===LG);
-  });
-
-  var lg=document.getElementById('lg');
-
-  if(lg)lg.value=LG;
-
-  renderPDFs();
-  cartCount();
-}
-
-document.addEventListener('change',function(e){
-
-  if(e.target.id==='lg'){
-    setLang(e.target.value);
-  }
-
-});
-
-
-/* =====================================================
-   LANGUAGE POPUP
-===================================================== */
-
-(function(){
-
-  var lp=document.getElementById('lp'),
-      lx=document.getElementById('lx');
-
-  if(!lp)return;
-
-  document.querySelectorAll('[data-l]').forEach(function(b){
-
-    b.addEventListener('click',function(){
-      setLang(b.dataset.l);
-      lp.classList.remove('on');
-    });
-
-  });
-
-  if(lx){
-    lx.addEventListener('click',function(){
-      lp.classList.remove('on');
-      stor('langSkipped','1');
-    });
-  }
-
-  if(!stor('langSkipped') && !stor('lang')){
-    setTimeout(function(){
-      lp.classList.add('on');
-    },500);
-  }
-
-})();
-
-
-/* =====================================================
-   CART
-===================================================== */
-
-function cartItems(){
-
-  try{
-    return JSON.parse(stor('cart')||'[]');
-  }catch(e){
-    return [];
-  }
-
-}
-
-function saveCart(a){
-  stor('cart',JSON.stringify(a));
 }
 
 function cartCount(){
+var C=carts(),
+n=Object.keys(C).length;
 
-  var a=cartItems();
+document.querySelectorAll('[data-link=cart] em').forEach(function(e){
+e.textContent=n
+});
 
-  document.querySelectorAll('[data-link="cart"] em').forEach(function(el){
-    el.textContent=a.length;
-  });
+return n
+}
 
-  document.querySelectorAll('.bn [data-link="cart"] em').forEach(function(el){
-    el.textContent=a.length;
-  });
+function setupPdfRows(){
 
+var mobile=innerWidth<900;
+
+document.querySelectorAll('.sec .row').forEach(function(row){
+
+var isRunning=row.id==='r1';
+
+if(mobile && !row.parentElement.classList.contains('pdf-row-wrap')){
+
+var wrap=document.createElement('div');
+wrap.className='pdf-row-wrap';
+
+row.parentNode.insertBefore(wrap,row);
+wrap.appendChild(row);
+
+var l=document.createElement('button'),
+r=document.createElement('button');
+
+l.className='pdf-arrow left';
+r.className='pdf-arrow right';
+
+l.type=r.type='button';
+
+l.innerHTML='‹';
+r.innerHTML='›';
+
+l.setAttribute('aria-label','Previous PDF');
+r.setAttribute('aria-label','Next PDF');
+
+wrap.appendChild(l);
+wrap.appendChild(r);
+
+l.addEventListener('click',function(){
+row.scrollBy({
+left:-Math.max(220,row.clientWidth*.72),
+behavior:'smooth'
+});
+});
+
+r.addEventListener('click',function(){
+row.scrollBy({
+left:Math.max(220,row.clientWidth*.72),
+behavior:'smooth'
+});
+});
+}
+
+if(isRunning && !row.dataset.autoSlide){
+
+row.dataset.autoSlide='1';
+
+var timer=null;
+
+function nextRunning(){
+
+if(!document.body.contains(row))return;
+
+var max=row.scrollWidth-row.clientWidth;
+
+if(max<=2)return;
+
+var step=mobile?236:row.clientWidth;
+
+var next=row.scrollLeft+step;
+
+if(next>=max-2)next=0;
+
+row.scrollTo({
+left:next,
+behavior:'smooth'
+});
+}
+
+function startAuto(){
+clearInterval(timer);
+timer=setInterval(nextRunning,3000);
+}
+
+row.addEventListener('mouseenter',function(){
+if(innerWidth>=900)clearInterval(timer)
+});
+
+row.addEventListener('mouseleave',function(){
+if(innerWidth>=900)startAuto()
+});
+
+row.addEventListener('touchstart',function(){
+clearInterval(timer)
+},{passive:true});
+
+row.addEventListener('touchend',function(){
+setTimeout(startAuto,900)
+},{passive:true});
+
+startAuto();
+}
+});
+
+if(!window.__pdfIO){
+
+window.__pdfIO=new IntersectionObserver(function(es){
+
+es.forEach(function(e){
+
+e.target.classList.toggle(
+'pdf-active',
+e.isIntersecting&&e.intersectionRatio>.22
+);
+
+});
+
+},{threshold:[.22]});
+
+document.querySelectorAll('.sec').forEach(function(sec){
+
+if(sec.querySelector('.pdf-row-wrap'))
+window.__pdfIO.observe(sec);
+
+});
+}
 }
 
 cartCount();
 
+var lx=document.getElementById('lx');
 
-/* =====================================================
-   CART CLICK
-===================================================== */
+if(lx)lx.onclick=function(){
+stor('langChosen','1');
+lp.classList.remove('on')
+};
 
 document.addEventListener('click',function(e){
 
-  var b=e.target.closest&&e.target.closest('.lk');
+var b=e.target.closest('button');
 
-  if(!b)return;
+if(!b)return;
 
-  var id=b.dataset.id,
-      a=cartItems(),
-      pos=a.indexOf(id);
+if(b.dataset.l){
+stor('langChosen','1');
+setLang(b.dataset.l);
+lp.classList.remove('on')
+}
 
-  if(pos===-1){
+else if(b.classList.contains('lk')){
 
-    a.push(id);
-    saveCart(a);
+var L=likes(),
+C=carts(),
+id=b.dataset.id;
 
-    var l=likes();
-    l[id]=1;
-    stor('likes',JSON.stringify(l));
+if(L[id]){
+delete L[id];
+delete C[id]
+}else{
+L[id]=1;
+C[id]=1
+}
 
-    b.classList.add('on');
-    b.querySelector('b').textContent='1';
-    b.setAttribute('aria-label','Added to cart');
-    b.title='Added to cart';
+stor('likes',JSON.stringify(L));
+stor('cart',JSON.stringify(C));
 
-  }else{
+b.classList.toggle('on',!!L[id]);
 
-    a.splice(pos,1);
-    saveCart(a);
+b.querySelector('b').textContent=L[id]?1:'';
 
-    var l2=likes();
-    delete l2[id];
-    stor('likes',JSON.stringify(l2));
+b.setAttribute(
+'aria-label',
+L[id]?'Added to cart':'Add to cart'
+);
 
-    b.classList.remove('on');
-    b.querySelector('b').textContent='';
-    b.setAttribute('aria-label','Add to cart');
-    b.title='Add to cart';
-  }
+b.title=L[id]?'Added to cart':'Add to cart';
 
-  cartCount();
+cartCount()
+}
+
+else if(b.classList.contains('sb')){
+
+var u=location.href.split('#')[0],
+x=b.dataset.n+' – WBExamPDF';
+
+if(navigator.share)
+navigator.share({title:x,url:u}).catch(function(){});
+
+else
+window.open(
+'https://wa.me/?text='+encodeURIComponent(x+' '+u),
+'_blank'
+)
+}
+});
+
+new MutationObserver(function(ms){
+
+ms.forEach(function(m){
+
+var e=m.target.nodeType==3?m.target.parentNode:m.target;
+
+if(e&&e.classList&&e.classList.contains('n')){
+
+e.classList.remove('fl');
+void e.offsetWidth;
+e.classList.add('fl')
+
+}
+});
+
+if(t<3600)
+document.querySelectorAll('.tim,.box').forEach(function(x){
+x.classList.add('hot')
+})
+
+}).observe(document.body,{
+subtree:true,
+childList:true,
+characterData:true
+});
+
+
+(function(){
+
+var am=document.getElementById('am');
+
+function tog(el,up){
+
+if(am.classList.contains('on')){
+am.classList.remove('on');
+return
+}
+
+var r=el.getBoundingClientRect();
+
+am.style.right=Math.max(
+8,
+innerWidth-r.right-4
+)+'px';
+
+am.style.top=up?'auto':(r.bottom+8)+'px';
+
+am.style.bottom=up?
+(innerHeight-r.top+8)+'px':
+'auto';
+
+am.classList.add('on')
+}
+
+document.addEventListener('click',function(e){
+
+var p=e.target.closest('.pf,.pfb');
+
+if(p){
+e.preventDefault();
+tog(p,!!p.closest('.bn'));
+return
+}
+
+if(!e.target.closest('#am'))
+am.classList.remove('on');
+
+var a=e.target.closest('[data-link]');
+
+if(!a)return;
+
+e.preventDefault();
+
+var u=LINKS[a.dataset.link]||'';
+
+if(!u)return;
+
+am.classList.remove('on');
+
+if(/^(youtube|facebook|instagram)$/.test(a.dataset.link)){
+
+window.open(u,'_blank','noopener');
+return
+}
+
+location.href=u.replace(
+'{exam}',
+encodeURIComponent(a.dataset.exam||'')
+)
+});
+
+document.addEventListener('keydown',function(e){
+
+if(e.key=='Escape')
+am.classList.remove('on')
+
+});
+
+if(!document.getElementById('trk'))return;
+
+var trk=document.getElementById('trk'),
+dots=document.getElementById('dots'),
+n=trk.children.length,
+i=0,
+tm;
+
+function go(k){
+
+i=(k+n)%n;
+
+trk.style.transform='translateX(-'+i*100+'%)';
+
+[].forEach.call(dots.children,function(x,j){
+x.className=j==i?'on':''
+})
+}
+
+function start(){
+
+clearInterval(tm);
+
+tm=setInterval(function(){
+go(i+1)
+},3000)
+}
+
+for(var k=0;k<n;k++){
+
+(function(k){
+
+var d=document.createElement('button');
+
+d.setAttribute(
+'aria-label',
+'Slide '+(k+1)
+);
+
+d.onclick=function(){
+go(k);
+start()
+};
+
+dots.appendChild(d)
+
+})(k)
+}
+
+var sl=document.getElementById('sl'),
+sx=0;
+
+sl.onmouseenter=function(){
+clearInterval(tm)
+};
+
+sl.onmouseleave=start;
+
+sl.addEventListener('touchstart',function(e){
+sx=e.touches[0].clientX
+},{passive:true});
+
+sl.addEventListener('touchend',function(e){
+
+var dx=e.changedTouches[0].clientX-sx;
+
+if(Math.abs(dx)>40){
+go(i+(dx<0?1:-1));
+start()
+}
+
+});
+
+go(0);
+start()
+
+})();
+
+
+(function(){
+
+if(!document.getElementById('rr'))return;
+
+var RT={
+title:['আপনার রিভিউ লিখুন','Write your review','अपना रिव्यू लिखें'],
+open:['রিভিউ লিখুন','Write a review','रिव्यू लिखें'],
+rate:['আপনার রেটিং','Your rating','आपकी रेटिंग'],
+submit:['রিভিউ জমা দিন','Submit review','रिव्यू जमा करें'],
+name:['আপনার নাম','Your name','आपका नाम'],
+exam:['কোন পরীক্ষার জন্য নিয়েছেন? (ঐচ্ছিক)','Which exam did you prepare for? (optional)','किस परीक्षा के लिए लिया? (वैकल्पिक)'],
+text:['আপনার অভিজ্ঞতা লিখুন...','Share your experience...','अपना अनुभव लिखें...'],
+err:['নাম ও রিভিউ (কমপক্ষে ১০ অক্ষর) লিখুন','Please enter your name and a review (min 10 characters)','नाम और रिव्यू (कम से कम 10 अक्षर) लिखें'],
+thanks:['ধন্যবাদ! আপনার রিভিউ যোগ হয়েছে','Thank you! Your review has been added','धन्यवाद! आपका रिव्यू जुड़ गया'],
+just:['এইমাত্র','Just now','अभी-अभी']
+};
+
+function rt(k){
+return RT[k][IDX[LG]]
+}
+
+function rtApply(){
+
+[].forEach.call(
+document.querySelectorAll('[data-rt]'),
+function(e){
+e.textContent=rt(e.dataset.rt)
+}
+);
+
+[].forEach.call(
+document.querySelectorAll('[data-ph]'),
+function(e){
+e.placeholder=rt(e.dataset.ph)
+}
+)
+}
+
+var _sl=setLang;
+
+setLang=function(l){
+_sl(l);
+rtApply()
+};
+
+rtApply();
+
+
+/* ---- reviews carousel: slides every 3s, jumps back to the first when finished ---- */
+
+var r=document.getElementById('rr'),
+hold=false,
+until=0;
+
+function step(){
+
+if(hold||Date.now()<until)return;
+
+var c=r.firstElementChild;
+
+if(!c)return;
+
+if(r.scrollLeft+r.clientWidth>=r.scrollWidth-6)
+r.scrollTo({
+left:0,
+behavior:'smooth'
+});
+else
+r.scrollBy({
+left:c.offsetWidth+10,
+behavior:'smooth'
+})
+}
+
+setInterval(step,3000);
+
+r.addEventListener('mouseenter',function(){
+hold=true
+});
+
+r.addEventListener('mouseleave',function(){
+hold=false
+});
+
+['touchstart','pointerdown','wheel'].forEach(function(e){
+
+r.addEventListener(e,function(){
+until=Date.now()+6000
+},{passive:true})
 
 });
 
 
-/* =====================================================
-   RUNNING / UPCOMING PDF ROW
-   Desktop = 4 cards
-   Desktop auto-slide = 4 sec
-   Mobile = 2 compact cards
-   Mobile auto-slide = 2 sec
-===================================================== */
+/* ---- user reviews (saved in this browser; set REVIEW_POST to also send to your server) ---- */
 
-function setupPdfRows(){
+var REVIEW_POST='';
 
-  var mobile=innerWidth<900;
+function esc(x){
 
-  document.querySelectorAll('.sec .row').forEach(function(row){
+return String(x).replace(
+/[&<>\"']/g,
+function(c){
+return {
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'\"':'&quot;',
+"'":'&#39;'
+}[c]
+}
+)
+}
 
-    var isRunning=row.id==='r1';
+function mine(){
 
-    if(mobile){
+try{
+return JSON.parse(stor('myReviews')||'[]')
+}catch(e){
+return []
+}
+}
 
-      if(!row.parentElement.classList.contains('pdf-row-wrap')){
+function cardHTML(v){
 
-        var wrap=document.createElement('div');
+var st='★'.repeat(v.s)+'☆'.repeat(5-v.s);
 
-        wrap.className='pdf-row-wrap';
+return '<div class="rc mine"><div class="av">'+
+esc(v.n.trim().charAt(0).toUpperCase())+
+'</div><div><b>'+
+esc(v.n)+
+'</b><span class="st">'+st+
+'</span><q>“'+
+esc(v.t)+
+'”</q><small>'+
+(v.e?esc(v.e)+' | ':'')+
+rt('just')+
+'</small></div></div>'
+}
 
-        row.parentNode.insertBefore(wrap,row);
-        wrap.appendChild(row);
+mine().slice().reverse().forEach(function(v){
+r.insertAdjacentHTML(
+'afterbegin',
+cardHTML(v)
+)
+});
 
-        var l=document.createElement('button'),
-            r=document.createElement('button');
 
-        l.className='pdf-arrow left';
-        r.className='pdf-arrow right';
+var rm=document.getElementById('rm'),
+rs=document.getElementById('rs'),
+rate=5,
+tx=document.getElementById('rtx');
 
-        l.type='button';
-        r.type='button';
+function paint(){
 
-        l.innerHTML='‹';
-        r.innerHTML='›';
+[].forEach.call(
+rs.children,
+function(b,i){
+b.className=i<rate?'on':''
+}
+)
+}
 
-        l.setAttribute('aria-label','Previous PDF');
-        r.setAttribute('aria-label','Next PDF');
+paint();
 
-        wrap.appendChild(l);
-        wrap.appendChild(r);
+rs.addEventListener('click',function(e){
 
-        l.addEventListener('click',function(){
+var b=e.target.closest('button');
 
-          row.scrollBy({
-            left:-(row.clientWidth*.96),
-            behavior:'smooth'
-          });
+if(!b)return;
 
-        });
+rate=+b.dataset.s;
 
-        r.addEventListener('click',function(){
+paint()
+});
 
-          row.scrollBy({
-            left:row.clientWidth*.96,
-            behavior:'smooth'
-          });
+function openM(){
 
-        });
+rm.classList.add('on');
 
-      }
+document.body.style.overflow='hidden';
 
-    }
+document.getElementById('rer').textContent='';
 
+setTimeout(function(){
+document.getElementById('rn').focus()
+},50)
+}
 
-    /* =================================================
-       RUNNING PDF AUTO SLIDER
-    ================================================= */
+function closeM(){
 
-    if(isRunning && !row.dataset.autoSlide){
+rm.classList.remove('on');
 
-      row.dataset.autoSlide='1';
+document.body.style.overflow=''
+}
 
-      var timer=null;
+document.getElementById('rvb').onclick=openM;
 
-      function nextRunning(){
+document.getElementById('rmx').onclick=closeM;
 
-        if(!document.body.contains(row))return;
+rm.addEventListener('click',function(e){
 
-        var max=row.scrollWidth-row.clientWidth;
+if(e.target===rm)
+closeM()
 
-        if(max<=2)return;
+});
 
-        var step=row.clientWidth;
+document.addEventListener('keydown',function(e){
 
-        var next=row.scrollLeft+step;
+if(e.key=='Escape')
+closeM()
 
-        if(next>=max-2)next=0;
+});
 
-        row.scrollTo({
-          left:next,
-          behavior:'smooth'
-        });
+tx.addEventListener('input',function(){
 
-      }
+document.getElementById('rcn').textContent=
+tx.value.length+'/200'
 
-      function startAuto(){
+});
 
-        clearInterval(timer);
+document.getElementById('rsb').onclick=function(){
 
-        timer=setInterval(
-          nextRunning,
-          mobile?2000:4000
-        );
+var n=document.getElementById('rn').value.trim(),
+e=document.getElementById('re').value.trim(),
+t=tx.value.trim();
 
-      }
+if(!n||t.length<10){
 
-      row.addEventListener('mouseenter',function(){
+document.getElementById('rer').textContent=rt('err');
 
-        if(!mobile)clearInterval(timer);
+return
+}
 
-      });
+var v={
+n:n,
+e:e,
+t:t,
+s:rate,
+d:Date.now()
+},
+L=mine();
 
-      row.addEventListener('mouseleave',function(){
+L.push(v);
 
-        if(!mobile)startAuto();
+try{
+stor('myReviews',JSON.stringify(L.slice(-20)))
+}catch(x){}
 
-      });
+if(REVIEW_POST){
 
-      row.addEventListener('touchstart',function(){
+try{
 
-        clearInterval(timer);
+fetch(REVIEW_POST,{
+method:'POST',
+headers:{
+'Content-Type':'application/json'
+},
+body:JSON.stringify(v)
+}).catch(function(){});
 
-      },{
-        passive:true
-      });
+}catch(x){}
+}
 
-      row.addEventListener('touchend',function(){
+r.insertAdjacentHTML(
+'afterbegin',
+cardHTML(v)
+);
 
-        setTimeout(startAuto,900);
+r.scrollTo({
+left:0,
+behavior:'smooth'
+});
 
-      },{
-        passive:true
-      });
+until=Date.now()+8000;
 
-      startAuto();
+document.getElementById('rn').value='';
+document.getElementById('re').value='';
 
-    }
+tx.value='';
 
-  });
+document.getElementById('rcn').textContent='0/200';
 
+rate=5;
 
-  /* =================================================
-     MOBILE ARROW VISIBILITY
-  ================================================= */
+paint();
 
-  if(mobile && !window.__pdfIO){
+closeM();
 
-    window.__pdfIO=new IntersectionObserver(function(es){
+var ts=document.getElementById('ts');
 
-      es.forEach(function(e){
+ts.textContent=rt('thanks');
 
-        e.target.classList.toggle(
-          'pdf-active',
-          e.isIntersecting && e.intersectionRatio>.22
-        );
+ts.classList.add('on');
 
-      });
+setTimeout(function(){
+ts.classList.remove('on')
+},3200)
+};
 
-    },{
-      threshold:[.22]
-    });
 
+/* ---- keyboard access for social icons ---- */
 
-    document.querySelectorAll('.sec').forEach(function(sec){
+document.addEventListener('keydown',function(e){
 
-      if(sec.querySelector('.pdf-row-wrap')){
-        window.__pdfIO.observe(sec);
-      }
+if(
+(e.key=='Enter'||e.key==' ')&&
+e.target.matches&&
+e.target.matches('.soc a')
+){
 
-    });
+e.preventDefault();
+e.target.click()
 
-  }
+}
+});
+
+
+/* ---- respect reduced-motion for flame SVG animation ---- */
+
+if(
+window.matchMedia&&
+matchMedia('(prefers-reduced-motion:reduce)').matches
+)
+
+[].forEach.call(
+document.querySelectorAll('svg.fire'),
+function(x){
+x.pauseAnimations&&x.pauseAnimations()
+}
+);
+
+})();
+
+
+(function(){
+
+var h=document.querySelector('header'),
+last=scrollY,
+tm;
+
+if(!h)return;
+
+addEventListener('scroll',function(){
+
+var y=scrollY,
+d=y-last;
+
+last=y;
+
+if(y>80&&Math.abs(d)>2){
+
+h.classList.add('hid');
+
+var am=document.getElementById('am');
+
+if(am)
+am.classList.remove('on')
 
 }
 
-setupPdfRows();
+else if(y<=80)
+h.classList.remove('hid');
 
+clearTimeout(tm);
 
-/* =====================================================
-   SHARE BUTTON
-===================================================== */
+tm=setTimeout(function(){
+h.classList.remove('hid')
+},500)
 
-document.addEventListener('click',function(e){
-
-  var b=e.target.closest&&e.target.closest('.sb');
-
-  if(!b)return;
-
-  var u=location.href.split('#')[0],
-      x=b.dataset.n+' – WBExamPDF';
-
-  if(navigator.share){
-
-    navigator.share({
-      title:x,
-      url:u
-    }).catch(function(){});
-
-  }else{
-
-    window.open(
-      'https://wa.me/?text='+encodeURIComponent(x+' '+u),
-      '_blank'
-    );
-
-  }
-
-});
-
-
-/* =====================================================
-   LINK HANDLER
-===================================================== */
-
-(function(){
-
-  var am=document.getElementById('am');
-
-  function tog(el,up){
-
-    if(am.classList.contains('on')){
-
-      am.classList.remove('on');
-      return;
-
-    }
-
-    var r=el.getBoundingClientRect();
-
-    am.style.right=Math.max(
-      8,
-      innerWidth-r.right-4
-    )+'px';
-
-    am.style.top=up
-      ?'auto'
-      :(r.bottom+8)+'px';
-
-    am.style.bottom=up
-      ?(innerHeight-r.top+8)+'px'
-      :'auto';
-
-    am.classList.add('on');
-
-  }
-
-  document.addEventListener('click',function(e){
-
-    var p=e.target.closest('.pf,.pfb');
-
-    if(p){
-
-      e.preventDefault();
-      tog(p,!!p.closest('.bn'));
-      return;
-
-    }
-
-    if(!e.target.closest('#am')){
-      am.classList.remove('on');
-    }
-
-    var a=e.target.closest('[data-link]');
-
-    if(!a)return;
-
-    e.preventDefault();
-
-    var u=LINKS[a.dataset.link]||'';
-
-    if(!u)return;
-
-    am.classList.remove('on');
-
-    if(
-      /^(youtube|facebook|instagram)$/.test(
-        a.dataset.link
-      )
-    ){
-
-      window.open(
-        u,
-        '_blank',
-        'noopener'
-      );
-
-      return;
-
-    }
-
-    location.href=u.replace(
-      '{exam}',
-      encodeURIComponent(a.dataset.exam||'')
-    );
-
-  });
-
-  document.addEventListener('keydown',function(e){
-
-    if(e.key=='Escape'){
-      am.classList.remove('on');
-    }
-
-  });
-
-})();
-
-
-/* =====================================================
-   HERO SLIDER
-===================================================== */
-
-(function(){
-
-  if(!document.getElementById('trk'))return;
-
-  var trk=document.getElementById('trk'),
-      dots=document.getElementById('dots'),
-      n=trk.children.length,
-      i=0,
-      tm;
-
-  function go(k){
-
-    i=(k+n)%n;
-
-    trk.style.transform=
-      'translateX(-'+i*100+'%)';
-
-    [].forEach.call(
-      dots.children,
-      function(x,j){
-        x.className=j==i?'on':'';
-      }
-    );
-
-  }
-
-  function start(){
-
-    clearInterval(tm);
-
-    tm=setInterval(function(){
-      go(i+1);
-    },3000);
-
-  }
-
-  for(var k=0;k<n;k++){
-
-    (function(k){
-
-      var d=document.createElement('button');
-
-      d.setAttribute(
-        'aria-label',
-        'Slide '+(k+1)
-      );
-
-      d.onclick=function(){
-
-        go(k);
-        start();
-
-      };
-
-      dots.appendChild(d);
-
-    })(k);
-
-  }
-
-  var sl=document.getElementById('sl'),
-      sx=0;
-
-  sl.onmouseenter=function(){
-    clearInterval(tm);
-  };
-
-  sl.onmouseleave=start;
-
-  sl.addEventListener(
-    'touchstart',
-    function(e){
-      sx=e.touches[0].clientX;
-    },
-    {passive:true}
-  );
-
-  sl.addEventListener(
-    'touchend',
-    function(e){
-
-      var dx=e.changedTouches[0].clientX-sx;
-
-      if(Math.abs(dx)>40){
-
-        go(
-          i+(dx<0?1:-1)
-        );
-
-        start();
-
-      }
-
-    }
-  );
-
-  go(0);
-  start();
-
-})();
-
-
-/* =====================================================
-   REVIEWS
-===================================================== */
-
-(function(){
-
-  if(!document.getElementById('rr'))return;
-
-  var RT={
-    title:[
-      'আপনার রিভিউ লিখুন',
-      'Write your review',
-      'अपना रिव्यू लिखें'
-    ],
-
-    open:[
-      'রিভিউ লিখুন',
-      'Write a review',
-      'रिव्यू लिखें'
-    ],
-
-    rate:[
-      'আপনার রেটিং',
-      'Your rating',
-      'आपकी रेटिंग'
-    ],
-
-    submit:[
-      'রিভিউ জমা দিন',
-      'Submit review',
-      'रिव्यू जमा करें'
-    ],
-
-    name:[
-      'আপনার নাম',
-      'Your name',
-      'आपका नाम'
-    ],
-
-    exam:[
-      'কোন পরীক্ষার জন্য নিয়েছেন? (ঐচ্ছিক)',
-      'Which exam did you prepare for? (optional)',
-      'किस परीक्षा के लिए लिया? (वैकल्पिक)'
-    ],
-
-    text:[
-      'আপনার অভিজ্ঞতা লিখুন...',
-      'Share your experience...',
-      'अपना अनुभव लिखें...'
-    ],
-
-    err:[
-      'নাম ও রিভিউ (কমপক্ষে ১০ অক্ষর) লিখুন',
-      'Please enter your name and a review (min 10 characters)',
-      'नाम और रिव्यू (कम से कम 10 अक्षर) लिखें'
-    ],
-
-    thanks:[
-      'ধন্যবাদ! আপনার রিভিউ যোগ হয়েছে',
-      'Thank you! Your review has been added',
-      'धन्यवाद! आपका रिव्यू जुड़ गया'
-    ],
-
-    just:[
-      'এইমাত্র',
-      'Just now',
-      'अभी-अभी'
-    ]
-  };
-
-  function rt(k){
-    return RT[k][IDX[LG]];
-  }
-
-  function rtApply(){
-
-    [].forEach.call(
-      document.querySelectorAll('[data-rt]'),
-      function(e){
-        e.textContent=rt(e.dataset.rt);
-      }
-    );
-
-    [].forEach.call(
-      document.querySelectorAll('[data-ph]'),
-      function(e){
-        e.placeholder=rt(e.dataset.ph);
-      }
-    );
-
-  }
-
-  var _sl=setLang;
-
-  setLang=function(l){
-
-    _sl(l);
-    rtApply();
-
-  };
-
-  rtApply();
-
-
-  /* reviews carousel */
-
-  var r=document.getElementById('rr'),
-      hold=false,
-      until=0;
-
-  function step(){
-
-    if(hold||Date.now()<until)return;
-
-    var c=r.firstElementChild;
-
-    if(!c)return;
-
-    if(
-      r.scrollLeft+r.clientWidth
-      >=r.scrollWidth-6
-    ){
-
-      r.scrollTo({
-        left:0,
-        behavior:'smooth'
-      });
-
-    }else{
-
-      r.scrollBy({
-        left:c.offsetWidth+10,
-        behavior:'smooth'
-      });
-
-    }
-
-  }
-
-  setInterval(step,3000);
-
-  r.addEventListener(
-    'mouseenter',
-    function(){
-      hold=true;
-    }
-  );
-
-  r.addEventListener(
-    'mouseleave',
-    function(){
-      hold=false;
-    }
-  );
-
-  [
-    'touchstart',
-    'pointerdown',
-    'wheel'
-  ].forEach(function(e){
-
-    r.addEventListener(
-      e,
-      function(){
-        until=Date.now()+6000;
-      },
-      {passive:true}
-    );
-
-  });
-
-
-  /* =================================================
-     USER REVIEWS
-  ================================================= */
-
-  var REVIEW_POST='';
-
-  function esc(x){
-
-    return String(x).replace(
-      /[&<>"']/g,
-      function(c){
-
-        return {
-          '&':'&amp;',
-          '<':'&lt;',
-          '>':'&gt;',
-          '"':'&quot;',
-          "'":'&#39;'
-        }[c];
-
-      }
-    );
-
-  }
-
-  function mine(){
-
-    try{
-      return JSON.parse(
-        stor('myReviews')||'[]'
-      );
-    }catch(e){
-      return [];
-    }
-
-  }
-
-  function cardHTML(v){
-
-    var st=
-      '★'.repeat(v.s)+
-      '☆'.repeat(5-v.s);
-
-    return '<div class="rc mine"><div class="av">'+
-      esc(v.n.trim().charAt(0).toUpperCase())+
-      '</div><div><b>'+
-      esc(v.n)+
-      '</b><span class="st">'+
-      st+
-      '</span><q>“'+
-      esc(v.t)+
-      '”</q><small>'+
-      (v.e?esc(v.e)+' | ':'')+
-      rt('just')+
-      '</small></div></div>';
-
-  }
-
-  mine()
-    .slice()
-    .reverse()
-    .forEach(function(v){
-      r.insertAdjacentHTML(
-        'afterbegin',
-        cardHTML(v)
-      );
-    });
-
-
-  var rm=document.getElementById('rm'),
-      rs=document.getElementById('rs'),
-      rate=5,
-      tx=document.getElementById('rtx');
-
-  function paint(){
-
-    [].forEach.call(
-      rs.children,
-      function(b,i){
-        b.className=i<rate?'on':'';
-      }
-    );
-
-  }
-
-  paint();
-
-  rs.addEventListener(
-    'click',
-    function(e){
-
-      var b=e.target.closest('button');
-
-      if(!b)return;
-
-      rate=+b.dataset.s;
-
-      paint();
-
-    }
-  );
-
-
-  function openM(){
-
-    rm.classList.add('on');
-
-    document.body.style.overflow='hidden';
-
-    document.getElementById('rer').textContent='';
-
-    setTimeout(function(){
-
-      document.getElementById('rn').focus();
-
-    },50);
-
-  }
-
-
-  function closeM(){
-
-    rm.classList.remove('on');
-
-    document.body.style.overflow='';
-
-  }
-
-
-  document.getElementById('rvb').onclick=openM;
-
-  document.getElementById('rmx').onclick=closeM;
-
-  rm.addEventListener(
-    'click',
-    function(e){
-
-      if(e.target===rm)closeM();
-
-    }
-  );
-
-  document.addEventListener(
-    'keydown',
-    function(e){
-
-      if(e.key=='Escape')closeM();
-
-    }
-  );
-
-
-  tx.addEventListener(
-    'input',
-    function(){
-
-      document.getElementById('rcn').textContent=
-        tx.value.length+'/200';
-
-    }
-  );
-
-
-  document.getElementById('rsb').onclick=function(){
-
-    var n=
-      document.getElementById('rn')
-      .value.trim();
-
-    var e=
-      document.getElementById('re')
-      .value.trim();
-
-    var t=
-      tx.value.trim();
-
-    if(!n||t.length<10){
-
-      document.getElementById('rer').textContent=
-        rt('err');
-
-      return;
-
-    }
-
-    var v={
-      n:n,
-      e:e,
-      t:t,
-      s:rate,
-      d:Date.now()
-    };
-
-    var L=mine();
-
-    L.push(v);
-
-    try{
-
-      stor(
-        'myReviews',
-        JSON.stringify(
-          L.slice(-20)
-        )
-      );
-
-    }catch(x){}
-
-
-    if(REVIEW_POST){
-
-      try{
-
-        fetch(
-          REVIEW_POST,
-          {
-            method:'POST',
-            headers:{
-              'Content-Type':
-              'application/json'
-            },
-            body:JSON.stringify(v)
-          }
-        ).catch(function(){});
-
-      }catch(x){}
-
-    }
-
-
-    r.insertAdjacentHTML(
-      'afterbegin',
-      cardHTML(v)
-    );
-
-    r.scrollTo({
-      left:0,
-      behavior:'smooth'
-    });
-
-    until=Date.now()+8000;
-
-    document.getElementById('rn').value='';
-    document.getElementById('re').value='';
-    tx.value='';
-
-    document.getElementById('rcn').textContent=
-      '0/200';
-
-    rate=5;
-
-    paint();
-
-    closeM();
-
-    var ts=document.getElementById('ts');
-
-    ts.textContent=rt('thanks');
-
-    ts.classList.add('on');
-
-    setTimeout(function(){
-      ts.classList.remove('on');
-    },3200);
-
-  };
-
-
-  /* keyboard access for social icons */
-
-  document.addEventListener(
-    'keydown',
-    function(e){
-
-      if(
-        (e.key=='Enter'||e.key==' ') &&
-        e.target.matches &&
-        e.target.matches('.soc a')
-      ){
-
-        e.preventDefault();
-        e.target.click();
-
-      }
-
-    }
-  );
-
-
-  /* reduced motion */
-
-  if(
-    window.matchMedia &&
-    matchMedia(
-      '(prefers-reduced-motion:reduce)'
-    ).matches
-  ){
-
-    [].forEach.call(
-      document.querySelectorAll('svg.fire'),
-      function(x){
-
-        x.pauseAnimations &&
-        x.pauseAnimations();
-
-      }
-    );
-
-  }
-
-})();
-
-
-/* =====================================================
-   HEADER SCROLL
-===================================================== */
-
-(function(){
-
-  var h=document.querySelector('header'),
-      last=scrollY,
-      tm;
-
-  if(!h)return;
-
-  addEventListener(
-    'scroll',
-    function(){
-
-      var y=scrollY,
-          d=y-last;
-
-      last=y;
-
-      if(y>80&&Math.abs(d)>2){
-
-        h.classList.add('hid');
-
-        var am=document.getElementById('am');
-
-        if(am)am.classList.remove('on');
-
-      }else if(y<=80){
-
-        h.classList.remove('hid');
-
-      }
-
-      clearTimeout(tm);
-
-      tm=setTimeout(
-        function(){
-          h.classList.remove('hid');
-        },
-        500
-      );
-
-    },
-    {passive:true}
-  );
+},{passive:true});
 
 })();
 
 
 /* =========================================================
    WBExamPDF — GLOBAL SUPABASE PDF SOLD COUNTER
-
    Starting Count = 1,250
    Add to Cart = +1
    Remove = NO decrease
-   Re-add = +1
-========================================================= */
+   ========================================================= */
 
 (function(){
 
-  var SUPABASE_URL=
-    'https://xitiwikhzvfyeqdxspqk.supabase.co';
+var SUPABASE_URL='https://xitiwikhzvfyeqdxspqk.supabase.co';
 
-  var SUPABASE_KEY=
-    'sb_publishable_PzuDMCMLsQRnpbuob8uhEQ_xQ20Y75D';
+var SUPABASE_KEY='sb_publishable_PzuDMCMLsQRnpbuob8uhEQ_xQ20Y75D';
 
+var client=null;
 
-  /* =================================================
-     CHECK SUPABASE
-  ================================================= */
+var loading=null;
 
-  if(
-    !window.supabase ||
-    typeof window.supabase.createClient!=='function'
-  ){
 
-    console.error(
-      'WBExamPDF: Supabase JS library পাওয়া যায়নি। index.html-এ Supabase script যোগ করুন।'
-    );
+function showTotal(total){
 
-    return;
+var n=Number(total);
 
-  }
+if(!Number.isFinite(n))return;
 
+document.querySelectorAll('.wb-total-pdf-added').forEach(function(el){
 
-  var supabaseClient=
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+el.textContent=
+'Total PDF Sold : '+
+n.toLocaleString('en-IN');
 
+});
 
-  /* =================================================
-     SHOW TOTAL
-  ================================================= */
+}
 
-  function showTotal(total){
 
-    document
-      .querySelectorAll('.wb-total-pdf-added')
-      .forEach(function(el){
+function loadSupabase(){
 
-        el.textContent=
-          'Total PDF Sold : '+
-          Number(total).toLocaleString('en-IN');
+if(
+window.supabase&&
+typeof window.supabase.createClient==='function'
+){
 
-      });
+client=
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
-  }
+return Promise.resolve(client)
+}
 
+if(loading)return loading;
 
-  /* =================================================
-     LOAD CURRENT TOTAL
-  ================================================= */
+loading=new Promise(function(resolve,reject){
 
-  async function loadTotal(){
+var sc=document.createElement('script');
 
-    try{
+sc.src=
+'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
 
-      var result=
-        await supabaseClient
-          .from('pdf_sales_counter')
-          .select('total_sold')
-          .eq('id',1)
-          .single();
+sc.async=true;
 
+sc.onload=function(){
 
-      if(result.error){
+if(
+window.supabase&&
+typeof window.supabase.createClient==='function'
+){
 
-        console.error(
-          'WBExamPDF counter load error:',
-          result.error
-        );
+client=
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
-        return;
+resolve(client)
 
-      }
+}else{
 
+reject(
+new Error('Supabase library unavailable')
+)
 
-      if(
-        result.data &&
-        typeof result.data.total_sold!=='undefined'
-      ){
+}
 
-        showTotal(
-          result.data.total_sold
-        );
+};
 
-      }
+sc.onerror=function(){
 
-    }catch(error){
+reject(
+new Error('Supabase library failed to load')
+)
 
-      console.error(
-        'WBExamPDF counter error:',
-        error
-      );
+};
 
-    }
+document.head.appendChild(sc)
 
-  }
+});
 
+return loading
+}
 
-  /* =================================================
-     INCREMENT GLOBAL COUNTER
-  ================================================= */
 
-  async function incrementGlobalCounter(){
+async function loadTotal(){
 
-    try{
+try{
 
-      var result=
-        await supabaseClient
-          .rpc('increment_pdf_sales');
+var db=await loadSupabase();
 
+var result=await db
+.from('pdf_sales_counter')
+.select('total_sold')
+.eq('id',1)
+.single();
 
-      if(result.error){
+if(result.error){
 
-        console.error(
-          'WBExamPDF counter increment error:',
-          result.error
-        );
+console.error(
+'WBExamPDF counter load error:',
+result.error
+);
 
-        return;
+return
+}
 
-      }
+if(
+result.data&&
+typeof result.data.total_sold!=='undefined'
+)
 
+showTotal(result.data.total_sold);
 
-      showTotal(
-        result.data
-      );
+}catch(error){
 
-    }catch(error){
+console.error(
+'WBExamPDF counter error:',
+error
+);
 
-      console.error(
-        'WBExamPDF counter increment error:',
-        error
-      );
+}
 
-    }
+}
 
-  }
 
+async function incrementGlobalCounter(){
 
-  /* =================================================
-     CART CLICK → GLOBAL +1
+try{
 
-     Only when button becomes ACTIVE.
+var db=await loadSupabase();
 
-     Remove করলে +1 হবে না.
-     আবার Add করলে +1 হবে.
-  ================================================= */
+var result=
+await db.rpc('increment_pdf_sales');
 
-  document.addEventListener(
-    'click',
-    function(e){
+if(result.error){
 
-      var cartButton=
-        e.target.closest &&
-        e.target.closest('.lk');
+console.error(
+'WBExamPDF counter increment error:',
+result.error
+);
 
-      if(!cartButton)return;
+return
+}
 
+if(typeof result.data!=='undefined')
+showTotal(result.data);
 
-      setTimeout(
-        function(){
+}catch(error){
 
-          if(
-            cartButton.classList.contains('on')
-          ){
+console.error(
+'WBExamPDF counter increment error:',
+error
+);
 
-            incrementGlobalCounter();
+}
 
-          }
+}
 
-        },
-        120
-      );
 
-    }
-  );
+document.addEventListener('click',function(e){
 
+var cartButton=
+e.target.closest&&
+e.target.closest('.lk');
 
-  /* =================================================
-     INITIAL LOAD
-  ================================================= */
+if(!cartButton)return;
 
-  if(
-    document.readyState==='loading'
-  ){
+var wasOn=
+cartButton.classList.contains('on');
 
-    document.addEventListener(
-      'DOMContentLoaded',
-      function(){
+if(!wasOn){
 
-        setTimeout(
-          loadTotal,
-          200
-        );
+setTimeout(function(){
 
-      }
-    );
+if(cartButton.classList.contains('on'))
+incrementGlobalCounter();
 
-  }else{
+},150);
 
-    setTimeout(
-      loadTotal,
-      200
-    );
+}
 
-  }
+});
+
+
+if(document.readyState==='loading'){
+
+document.addEventListener(
+'DOMContentLoaded',
+function(){
+setTimeout(loadTotal,200)
+}
+);
+
+}else{
+
+setTimeout(loadTotal,200);
+
+}
 
 })();
