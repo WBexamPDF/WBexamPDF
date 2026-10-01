@@ -188,8 +188,8 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
         top: 50% !important;
         transform: translateY(-50%) !important;
 
-        width: 20px !important;
-        height: 20px !important;
+        width: 26px !important;
+        height: 26px !important;
 
         padding: 0 !important;
         margin: 0 !important;
@@ -201,9 +201,9 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
         color: #06153a !important;
 
         font-family: Arial,sans-serif !important;
-        font-size: 16px !important;
+        font-size: 20px !important;
         font-weight: 700 !important;
-        line-height: 18px !important;
+        line-height: 24px !important;
 
         display: none !important;
 
