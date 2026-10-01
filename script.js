@@ -162,255 +162,363 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
  else if(y<=80)h.classList.remove('hid');
  clearTimeout(tm);tm=setTimeout(function(){h.classList.remove('hid')},500)},{passive:true});
 })();
-/* ===== MOBILE-ONLY REQUESTED FEATURES =====
-   No desktop layout/code changes. */
+/* =========================================================
+   WBExamPDF — PDF ARROW + HEART CART ADD-ON
+   Existing design/functionality untouched
+   ========================================================= */
 
-(function(){
+(function () {
 
-  function getLikes(){
-    try{
-      return JSON.parse(stor('likes') || '{}');
-    }catch(e){
-      return {};
+  /* =========================================================
+     1. MOBILE PDF ARROWS
+     Desktop-এ কোনো arrow থাকবে না
+     ========================================================= */
+
+  var mobileStyle = document.createElement('style');
+
+  mobileStyle.textContent = `
+    @media (max-width: 899px) {
+
+      /* PDF section wrapper */
+      .wb-pdf-mobile-wrap {
+        position: relative;
+      }
+
+      /* Small PDF arrows */
+      .wb-pdf-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        width: 18px;
+        height: 18px;
+
+        padding: 0;
+        margin: 0;
+
+        border: 1px solid rgba(6,21,58,.25);
+        border-radius: 50%;
+
+        background: rgba(255,255,255,.92);
+        color: #06153a;
+
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 16px;
+
+        display: none;
+        align-items: center;
+        justify-content: center;
+
+        z-index: 20;
+        cursor: pointer;
+
+        box-shadow: 0 1px 4px rgba(0,0,0,.15);
+      }
+
+      .wb-pdf-arrow.left {
+        left: 1px;
+      }
+
+      .wb-pdf-arrow.right {
+        right: 1px;
+      }
+
+      /* Section screen-এ এলে arrow দেখা + blink */
+      .wb-pdf-mobile-wrap.wb-pdf-visible .wb-pdf-arrow {
+        display: flex;
+        animation: wbPdfArrowBlink 1.8s ease-in-out infinite;
+      }
+
+      @keyframes wbPdfArrowBlink {
+        0%, 100% {
+          opacity: .25;
+        }
+
+        50% {
+          opacity: 1;
+        }
+      }
     }
-  }
+  `;
 
-  function getCart(){
-    try{
-      return JSON.parse(stor('cart') || '{}');
-    }catch(e){
+  document.head.appendChild(mobileStyle);
+
+
+  /* =========================================================
+     2. CART COUNT
+     Heart-এর existing likes data-কে Cart হিসেবে ব্যবহার
+     ========================================================= */
+
+  function getCartItems() {
+
+    try {
+
+      return JSON.parse(
+        localStorage.getItem('likes') || '{}'
+      );
+
+    } catch (e) {
+
       return {};
+
     }
-  }
 
-  function syncCart(){
-
-    var L = getLikes();
-    var C = getCart();
-
-    Object.keys(C).forEach(function(id){
-      if(!L[id]) delete C[id];
-    });
-
-    Object.keys(L).forEach(function(id){
-      if(L[id]) C[id] = 1;
-    });
-
-    stor('cart', JSON.stringify(C));
-
-    var count = Object.keys(C).length;
-
-    document.querySelectorAll('.bn a[data-link="cart"] em').forEach(function(el){
-      el.textContent = count;
-    });
   }
 
 
-  function setupPdfMobile(){
+  function updateCartCount() {
 
-    if(window.innerWidth >= 900){
-      syncCart();
+    var items = getCartItems();
+
+    var count = Object.keys(items).filter(function (key) {
+
+      return items[key];
+
+    }).length;
+
+
+    /* Header Cart */
+    document
+      .querySelectorAll('[data-link="cart"] em')
+      .forEach(function (el) {
+
+        el.textContent = count;
+
+      });
+
+
+    /* Mobile bottom Cart */
+    document
+      .querySelectorAll('.bn [data-link="cart"] em')
+      .forEach(function (el) {
+
+        el.textContent = count;
+
+      });
+
+  }
+
+
+  /* =========================================================
+     3. PDF SECTION ARROWS
+     r1 + r2 only
+     ========================================================= */
+
+  function createPDFArrows() {
+
+    /* Desktop-এ কিছুই করবে না */
+    if (window.innerWidth >= 900) {
       return;
     }
 
-    ['r1','r2'].forEach(function(id){
+
+    ['r1', 'r2'].forEach(function (id) {
 
       var row = document.getElementById(id);
 
-      if(!row) return;
-
-      var wrap = row.parentElement;
-
-      if(!wrap.classList.contains('pdf-mobile-row')){
-
-        wrap = document.createElement('div');
-
-        wrap.className = 'pdf-mobile-row';
-
-        row.parentNode.insertBefore(wrap,row);
-
-        wrap.appendChild(row);
+      if (!row) {
+        return;
       }
 
 
-      if(!wrap.querySelector('.pdf-mobile-prev')){
-
-        var prev = document.createElement('button');
-        var next = document.createElement('button');
-
-        prev.type = 'button';
-        next.type = 'button';
-
-        prev.className = 'pdf-mobile-prev';
-        next.className = 'pdf-mobile-next';
-
-        prev.innerHTML = '‹';
-        next.innerHTML = '›';
-
-        prev.setAttribute('aria-label','Previous PDF');
-        next.setAttribute('aria-label','Next PDF');
-
-        wrap.appendChild(prev);
-        wrap.appendChild(next);
-
-
-        prev.addEventListener('click',function(){
-
-          row.scrollBy({
-            left:-row.clientWidth,
-            behavior:'smooth'
-          });
-
-        });
-
-
-        next.addEventListener('click',function(){
-
-          row.scrollBy({
-            left:row.clientWidth,
-            behavior:'smooth'
-          });
-
-        });
-
+      /* আগে তৈরি করা থাকলে আবার করবে না */
+      if (
+        row.parentElement &&
+        row.parentElement.classList.contains(
+          'wb-pdf-mobile-wrap'
+        )
+      ) {
+        return;
       }
 
-    });
+
+      /* Wrapper */
+      var wrap = document.createElement('div');
+
+      wrap.className = 'wb-pdf-mobile-wrap';
 
 
-    if(!window.__wbPdfSectionObserver){
+      row.parentNode.insertBefore(
+        wrap,
+        row
+      );
 
-      window.__wbPdfSectionObserver =
-      new IntersectionObserver(function(entries){
+      wrap.appendChild(row);
 
-        entries.forEach(function(entry){
 
-          entry.target.classList.toggle(
-            'pdf-mobile-visible',
-            entry.isIntersecting &&
-            entry.intersectionRatio > .18
-          );
+      /* LEFT ARROW */
+      var left = document.createElement('button');
 
+      left.type = 'button';
+      left.className = 'wb-pdf-arrow left';
+      left.innerHTML = '‹';
+
+      left.setAttribute(
+        'aria-label',
+        'Previous PDF'
+      );
+
+
+      /* RIGHT ARROW */
+      var right = document.createElement('button');
+
+      right.type = 'button';
+      right.className = 'wb-pdf-arrow right';
+      right.innerHTML = '›';
+
+      right.setAttribute(
+        'aria-label',
+        'Next PDF'
+      );
+
+
+      wrap.appendChild(left);
+      wrap.appendChild(right);
+
+
+      /* Previous PDF */
+      left.addEventListener('click', function () {
+
+        row.scrollBy({
+          left: -row.clientWidth,
+          behavior: 'smooth'
         });
 
-      },{
-        threshold:[.18]
       });
 
-    }
 
+      /* Next PDF */
+      right.addEventListener('click', function () {
 
-    document.querySelectorAll('.pdf-mobile-row').forEach(function(w){
+        row.scrollBy({
+          left: row.clientWidth,
+          behavior: 'smooth'
+        });
 
-      window.__wbPdfSectionObserver.observe(w);
+      });
 
     });
 
 
-    syncCart();
+    setupPDFVisibility();
 
   }
 
 
-  /* MOBILE ONLY CSS
-     Desktop design is not changed. */
+  /* =========================================================
+     4. PDF SECTION VISIBLE হলে ARROW SHOW + BLINK
+     ========================================================= */
 
-  var style = document.createElement('style');
-
-  style.id = 'wb-mobile-pdf-requested-only';
-
-  style.textContent =
-  '@media(max-width:899px){' +
-
-    '.pdf-mobile-row{' +
-      'position:relative;' +
-      'overflow:visible;' +
-    '}' +
-
-    '.pdf-mobile-row .row{' +
-      'width:100%;' +
-      'box-sizing:border-box;' +
-      'scroll-behavior:smooth;' +
-      'scrollbar-width:none;' +
-    '}' +
-
-    '.pdf-mobile-row .row::-webkit-scrollbar{' +
-      'display:none;' +
-    '}' +
-
-    /* TWO FULL PDF CARDS */
-    '.pdf-mobile-row .card{' +
-      'flex:0 0 calc((100% - 10px)/2);' +
-      'min-width:0;' +
-      'box-sizing:border-box;' +
-    '}' +
-
-    /* SMALL ARROWS */
-    '.pdf-mobile-prev,.pdf-mobile-next{' +
-      'position:absolute;' +
-      'top:50%;' +
-      'transform:translateY(-50%);' +
-      'z-index:8;' +
-      'width:19px;' +
-      'height:19px;' +
-      'padding:0;' +
-      'border:1px solid rgba(6,21,58,.25);' +
-      'border-radius:50%;' +
-      'background:rgba(255,255,255,.92);' +
-      'color:#06153a;' +
-      'font:bold 16px/17px Arial;' +
-      'display:none;' +
-      'align-items:center;' +
-      'justify-content:center;' +
-      'box-shadow:0 1px 5px rgba(0,0,0,.16);' +
-    '}' +
-
-    '.pdf-mobile-prev{' +
-      'left:-3px;' +
-    '}' +
-
-    '.pdf-mobile-next{' +
-      'right:-3px;' +
-    '}' +
-
-    /* SHOW + BLINK ONLY WHEN PDF SECTION IS ON SCREEN */
-    '.pdf-mobile-visible .pdf-mobile-prev,' +
-    '.pdf-mobile-visible .pdf-mobile-next{' +
-      'display:flex;' +
-      'animation:wbPdfArrowBlink 1.8s ease-in-out infinite;' +
-    '}' +
-
-    '@keyframes wbPdfArrowBlink{' +
-      '0%,100%{opacity:.25}' +
-      '50%{opacity:1}' +
-    '}' +
-
-  '}';
+  var pdfObserver = null;
 
 
-  document.head.appendChild(style);
+  function setupPDFVisibility() {
+
+    if (window.innerWidth >= 900) {
+      return;
+    }
 
 
-  /* HEART = CART
-     Existing heart design stays exactly the same. */
+    if (!pdfObserver) {
 
-  document.addEventListener('click',function(e){
+      pdfObserver = new IntersectionObserver(
 
-    var heart =
-      e.target.closest &&
-      e.target.closest('button.lk');
+        function (entries) {
 
-    if(heart){
+          entries.forEach(function (entry) {
 
-      setTimeout(syncCart,0);
+            entry.target.classList.toggle(
+              'wb-pdf-visible',
+              entry.isIntersecting
+            );
+
+          });
+
+        },
+
+        {
+          threshold: 0.15
+        }
+
+      );
 
     }
 
-  });
+
+    document
+      .querySelectorAll('.wb-pdf-mobile-wrap')
+      .forEach(function (wrap) {
+
+        pdfObserver.observe(wrap);
+
+      });
+
+  }
 
 
-  setupPdfMobile();
+  /* =========================================================
+     5. HEART = CART
+     Existing Heart functionality untouched
+     ========================================================= */
 
-  window.addEventListener('resize',setupPdfMobile);
+  document.addEventListener(
+    'click',
+    function (event) {
+
+      var heart =
+        event.target.closest &&
+        event.target.closest('.lk');
+
+
+      if (!heart) {
+        return;
+      }
+
+
+      /*
+        Original script-এর Heart action আগে চলবে।
+        তারপর Cart count update হবে।
+      */
+
+      setTimeout(function () {
+
+        updateCartCount();
+
+      }, 50);
+
+    },
+    false
+  );
+
+
+  /* =========================================================
+     6. PAGE LOAD
+     ========================================================= */
+
+  updateCartCount();
+
+  createPDFArrows();
+
+
+  /* =========================================================
+     7. RESIZE
+     ========================================================= */
+
+  window.addEventListener(
+    'resize',
+    function () {
+
+      if (window.innerWidth < 900) {
+
+        createPDFArrows();
+        setupPDFVisibility();
+
+      }
+
+    }
+  );
+
 
 })();
