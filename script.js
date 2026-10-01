@@ -163,123 +163,131 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
  clearTimeout(tm);tm=setTimeout(function(){h.classList.remove('hid')},500)},{passive:true});
 })();
 /* =========================================================
-   WBExamPDF — PDF ARROW + HEART CART ADD-ON
-   Existing design/functionality untouched
+   WBExamPDF — MOBILE PDF ARROW + CART
+   ADD-ON ONLY
    ========================================================= */
 
 (function () {
 
-  /* =========================================================
-     1. MOBILE PDF ARROWS
-     Desktop-এ কোনো arrow থাকবে না
-     ========================================================= */
+  /* =========================
+     MOBILE ARROW STYLE
+     ========================= */
 
-  var mobileStyle = document.createElement('style');
+  var st = document.createElement('style');
 
-  mobileStyle.textContent = `
+  st.textContent = `
     @media (max-width: 899px) {
 
-      /* PDF section wrapper */
       .wb-pdf-mobile-wrap {
-        position: relative;
+        position: relative !important;
+        width: 100% !important;
       }
 
-      /* Small PDF arrows */
       .wb-pdf-arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+        position: absolute !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
 
-        width: 18px;
-        height: 18px;
+        width: 20px !important;
+        height: 20px !important;
 
-        padding: 0;
-        margin: 0;
+        padding: 0 !important;
+        margin: 0 !important;
 
-        border: 1px solid rgba(6,21,58,.25);
-        border-radius: 50%;
+        border: 1px solid rgba(6,21,58,.25) !important;
+        border-radius: 50% !important;
 
-        background: rgba(255,255,255,.92);
-        color: #06153a;
+        background: rgba(255,255,255,.95) !important;
+        color: #06153a !important;
 
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 16px;
+        font-family: Arial,sans-serif !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        line-height: 18px !important;
 
-        display: none;
-        align-items: center;
-        justify-content: center;
+        display: none !important;
 
-        z-index: 20;
-        cursor: pointer;
+        align-items: center !important;
+        justify-content: center !important;
 
-        box-shadow: 0 1px 4px rgba(0,0,0,.15);
+        z-index: 999 !important;
+
+        box-shadow: 0 1px 5px rgba(0,0,0,.18) !important;
       }
 
       .wb-pdf-arrow.left {
-        left: 1px;
+        left: 2px !important;
       }
 
       .wb-pdf-arrow.right {
-        right: 1px;
+        right: 2px !important;
       }
 
-      /* Section screen-এ এলে arrow দেখা + blink */
-      .wb-pdf-mobile-wrap.wb-pdf-visible .wb-pdf-arrow {
-        display: flex;
-        animation: wbPdfArrowBlink 1.8s ease-in-out infinite;
+      /*
+        PDF section screen-এ থাকলে
+        arrow show + blink
+      */
+
+      .wb-pdf-mobile-wrap.wb-pdf-visible
+      .wb-pdf-arrow {
+        display: flex !important;
+
+        animation:
+          wbPdfArrowBlink
+          1.6s
+          ease-in-out
+          infinite !important;
       }
 
       @keyframes wbPdfArrowBlink {
-        0%, 100% {
+
+        0% {
           opacity: .25;
         }
 
         50% {
           opacity: 1;
         }
+
+        100% {
+          opacity: .25;
+        }
+
       }
+
     }
   `;
 
-  document.head.appendChild(mobileStyle);
+  document.head.appendChild(st);
 
 
-  /* =========================================================
-     2. CART COUNT
-     Heart-এর existing likes data-কে Cart হিসেবে ব্যবহার
-     ========================================================= */
-
-  function getCartItems() {
-
-    try {
-
-      return JSON.parse(
-        localStorage.getItem('likes') || '{}'
-      );
-
-    } catch (e) {
-
-      return {};
-
-    }
-
-  }
-
+  /* =========================
+     CART COUNT
+     ========================= */
 
   function updateCartCount() {
 
-    var items = getCartItems();
+    var data = {};
 
-    var count = Object.keys(items).filter(function (key) {
+    try {
+      data = JSON.parse(
+        localStorage.getItem('likes') || '{}'
+      );
+    } catch (e) {
+      data = {};
+    }
 
-      return items[key];
+    var count = 0;
 
-    }).length;
+    Object.keys(data).forEach(function (key) {
+
+      if (data[key]) {
+        count++;
+      }
+
+    });
 
 
-    /* Header Cart */
     document
       .querySelectorAll('[data-link="cart"] em')
       .forEach(function (el) {
@@ -288,27 +296,15 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
       });
 
-
-    /* Mobile bottom Cart */
-    document
-      .querySelectorAll('.bn [data-link="cart"] em')
-      .forEach(function (el) {
-
-        el.textContent = count;
-
-      });
-
   }
 
 
-  /* =========================================================
-     3. PDF SECTION ARROWS
-     r1 + r2 only
-     ========================================================= */
+  /* =========================
+     CREATE ARROWS
+     ========================= */
 
-  function createPDFArrows() {
+  function addPDFArrows() {
 
-    /* Desktop-এ কিছুই করবে না */
     if (window.innerWidth >= 900) {
       return;
     }
@@ -323,21 +319,28 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
       }
 
 
-      /* আগে তৈরি করা থাকলে আবার করবে না */
+      /*
+        Already created?
+      */
+
       if (
         row.parentElement &&
         row.parentElement.classList.contains(
           'wb-pdf-mobile-wrap'
         )
       ) {
+
         return;
+
       }
 
 
-      /* Wrapper */
+      /* wrapper */
+
       var wrap = document.createElement('div');
 
-      wrap.className = 'wb-pdf-mobile-wrap';
+      wrap.className =
+        'wb-pdf-mobile-wrap';
 
 
       row.parentNode.insertBefore(
@@ -348,12 +351,17 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
       wrap.appendChild(row);
 
 
-      /* LEFT ARROW */
-      var left = document.createElement('button');
+      /* LEFT */
+
+      var left =
+        document.createElement('button');
 
       left.type = 'button';
-      left.className = 'wb-pdf-arrow left';
-      left.innerHTML = '‹';
+
+      left.className =
+        'wb-pdf-arrow left';
+
+      left.textContent = '‹';
 
       left.setAttribute(
         'aria-label',
@@ -361,12 +369,17 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
       );
 
 
-      /* RIGHT ARROW */
-      var right = document.createElement('button');
+      /* RIGHT */
+
+      var right =
+        document.createElement('button');
 
       right.type = 'button';
-      right.className = 'wb-pdf-arrow right';
-      right.innerHTML = '›';
+
+      right.className =
+        'wb-pdf-arrow right';
+
+      right.textContent = '›';
 
       right.setAttribute(
         'aria-label',
@@ -378,98 +391,154 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
       wrap.appendChild(right);
 
 
-      /* Previous PDF */
-      left.addEventListener('click', function () {
+      /* LEFT CLICK */
 
-        row.scrollBy({
-          left: -row.clientWidth,
-          behavior: 'smooth'
-        });
+      left.addEventListener(
+        'click',
+        function (e) {
 
-      });
+          e.preventDefault();
+          e.stopPropagation();
+
+          row.scrollBy({
+
+            left: -row.clientWidth,
+
+            behavior: 'smooth'
+
+          });
+
+        }
+      );
 
 
-      /* Next PDF */
-      right.addEventListener('click', function () {
+      /* RIGHT CLICK */
 
-        row.scrollBy({
-          left: row.clientWidth,
-          behavior: 'smooth'
-        });
+      right.addEventListener(
+        'click',
+        function (e) {
 
-      });
+          e.preventDefault();
+          e.stopPropagation();
+
+          row.scrollBy({
+
+            left: row.clientWidth,
+
+            behavior: 'smooth'
+
+          });
+
+        }
+      );
 
     });
 
 
-    setupPDFVisibility();
+    observePDFSections();
 
   }
 
 
-  /* =========================================================
-     4. PDF SECTION VISIBLE হলে ARROW SHOW + BLINK
-     ========================================================= */
+  /* =========================
+     OBSERVE PDF SECTION
+     ========================= */
 
-  var pdfObserver = null;
+  var observer = null;
 
 
-  function setupPDFVisibility() {
+  function observePDFSections() {
 
     if (window.innerWidth >= 900) {
       return;
     }
 
 
-    if (!pdfObserver) {
+    if (!window.IntersectionObserver) {
 
-      pdfObserver = new IntersectionObserver(
+      /*
+        Fallback
+      */
 
-        function (entries) {
+      document
+        .querySelectorAll(
+          '.wb-pdf-mobile-wrap'
+        )
+        .forEach(function (el) {
 
-          entries.forEach(function (entry) {
+          el.classList.add(
+            'wb-pdf-visible'
+          );
 
-            entry.target.classList.toggle(
-              'wb-pdf-visible',
-              entry.isIntersecting
+        });
+
+      return;
+
+    }
+
+
+    if (!observer) {
+
+      observer =
+        new IntersectionObserver(
+
+          function (entries) {
+
+            entries.forEach(
+              function (entry) {
+
+                if (entry.isIntersecting) {
+
+                  entry.target.classList.add(
+                    'wb-pdf-visible'
+                  );
+
+                } else {
+
+                  entry.target.classList.remove(
+                    'wb-pdf-visible'
+                  );
+
+                }
+
+              }
             );
 
-          });
+          },
 
-        },
+          {
+            threshold: 0.05
+          }
 
-        {
-          threshold: 0.15
-        }
-
-      );
+        );
 
     }
 
 
     document
-      .querySelectorAll('.wb-pdf-mobile-wrap')
-      .forEach(function (wrap) {
+      .querySelectorAll(
+        '.wb-pdf-mobile-wrap'
+      )
+      .forEach(function (el) {
 
-        pdfObserver.observe(wrap);
+        observer.observe(el);
 
       });
 
   }
 
 
-  /* =========================================================
-     5. HEART = CART
-     Existing Heart functionality untouched
-     ========================================================= */
+  /* =========================
+     HEART → CART COUNT
+     ========================= */
 
   document.addEventListener(
     'click',
-    function (event) {
+    function (e) {
 
       var heart =
-        event.target.closest &&
-        event.target.closest('.lk');
+        e.target.closest &&
+        e.target.closest('.lk');
 
 
       if (!heart) {
@@ -478,33 +547,73 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
 
       /*
-        Original script-এর Heart action আগে চলবে।
-        তারপর Cart count update হবে।
+        Original Heart function আগে চলবে।
       */
 
-      setTimeout(function () {
+      setTimeout(
+        updateCartCount,
+        100
+      );
 
-        updateCartCount();
-
-      }, 50);
-
-    },
-    false
+    }
   );
 
 
-  /* =========================================================
-     6. PAGE LOAD
-     ========================================================= */
+  /* =========================
+     INITIALIZE
+     ========================= */
 
-  updateCartCount();
+  function initPDFMobile() {
 
-  createPDFArrows();
+    addPDFArrows();
+
+    updateCartCount();
+
+  }
 
 
-  /* =========================================================
-     7. RESIZE
-     ========================================================= */
+  /*
+    Page সম্পূর্ণ load হওয়ার পরে
+    arrow তৈরি করবে।
+  */
+
+  if (
+    document.readyState ===
+    'loading'
+  ) {
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      function () {
+
+        setTimeout(
+          initPDFMobile,
+          300
+        );
+
+      }
+    );
+
+  } else {
+
+    setTimeout(
+      initPDFMobile,
+      300
+    );
+
+  }
+
+
+  /*
+    Render / language change-এর পরে
+    আবার check করবে।
+  */
+
+  setTimeout(
+    initPDFMobile,
+    1000
+  );
+
 
   window.addEventListener(
     'resize',
@@ -512,8 +621,9 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
       if (window.innerWidth < 900) {
 
-        createPDFArrows();
-        setupPDFVisibility();
+        addPDFArrows();
+
+        observePDFSections();
 
       }
 
