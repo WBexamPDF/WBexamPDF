@@ -1866,7 +1866,7 @@ new MutationObserver(function(ms){
   */
 
   var SUPABASE_KEY=
-    'PASTE_YOUR_SUPABASE_KEY_HERE';
+    'sb_publishable_PzuDMCMLsQRnpbuob8uhEQ_xQ20Y75D';
 
 
   /* =======================================================
