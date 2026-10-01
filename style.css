@@ -186,6 +186,21 @@ footer>div:last-child{grid-row:3}
   .hero{min-width:0}.slider{width:100%}.ttl{min-width:0}.ttl h1{font-size:clamp(34px,11vw,44px)}
   .pri{min-width:0}.pri div{min-width:min(150px,100%);max-width:100%}
   .card{min-width:0}
+
+  /* Mobile PDF rows: show two complete cards, keep the rest horizontally scrollable. */
+  .pdf-row-wrap{position:relative;min-width:0}
+  .pdf-row-wrap .row{gap:8px;padding:0 22px 6px 0;scroll-padding-left:0;scrollbar-width:none}
+  .pdf-row-wrap .row::-webkit-scrollbar{display:none}
+  .pdf-row-wrap .card{flex:0 0 calc((100% - 8px) / 2);min-width:0;width:auto}
+  .pdf-row-wrap .pdf-arrow{position:absolute;top:50%;transform:translateY(-50%);width:20px;height:20px;border:0;border-radius:50%;padding:0;background:#06153acc;color:#fff;display:grid;place-items:center;font:700 18px/1 Arial,sans-serif;z-index:5;opacity:0;pointer-events:none;box-shadow:0 1px 5px #0005}
+  .pdf-row-wrap .pdf-arrow.left{left:1px}
+  .pdf-row-wrap .pdf-arrow.right{right:1px}
+  .sec.pdf-active .pdf-arrow{opacity:.82;pointer-events:auto;animation:pdfArrowHint 1.8s ease-in-out infinite}
+  @keyframes pdfArrowHint{0%,100%{opacity:.42}50%{opacity:.9}}
+
+  /* Heart is the mobile add-to-cart action; keep the existing look. */
+  .card .lk{cursor:pointer}
+  .card .lk.on{color:#e0202a}
 }
 @media(max-width:379px){
   .bn a{font-size:9px}
