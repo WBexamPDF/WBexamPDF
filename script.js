@@ -632,3 +632,99 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
 
 })();
+/* =========================================================
+   WBExamPDF — TOTAL PDF ADDED COUNTER
+   Add to Cart করলে +1
+   Remove করলে count কমবে না
+   ========================================================= */
+
+(function () {
+
+  var START_COUNT = 1250;
+  var STORAGE_KEY = 'wb_pdf_added_total';
+
+  function getTotalAdded() {
+
+    var saved = localStorage.getItem(STORAGE_KEY);
+
+    if (saved === null) {
+      localStorage.setItem(
+        STORAGE_KEY,
+        START_COUNT
+      );
+
+      return START_COUNT;
+    }
+
+    return parseInt(saved, 10) || START_COUNT;
+  }
+
+
+  function setTotalAdded(count) {
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      count
+    );
+
+    updateDisplay();
+  }
+
+
+  function updateDisplay() {
+
+    var total = getTotalAdded();
+
+    document
+      .querySelectorAll('.wb-total-pdf-added')
+      .forEach(function (el) {
+
+        el.textContent =
+          'Total PDF Added counting : ' +
+          total.toLocaleString();
+
+      });
+
+  }
+
+
+  /*
+    Heart / Add to Cart click
+  */
+
+  document.addEventListener(
+    'click',
+    function (e) {
+
+      var heart =
+        e.target.closest &&
+        e.target.closest('.lk');
+
+      if (!heart) {
+        return;
+      }
+
+
+      /*
+        Original Heart function আগে চলবে।
+        তারপর প্রতিবার click = +1
+      */
+
+      var total = getTotalAdded();
+
+      total++;
+
+      setTotalAdded(total);
+
+    }
+  );
+
+
+  /*
+    Page load
+  */
+
+  updateDisplay();
+
+
+})();
