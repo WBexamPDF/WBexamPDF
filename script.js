@@ -633,15 +633,21 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
 })();
 /* =========================================================
-   WBExamPDF — TOTAL PDF Sold COUNTER
-   Add to Cart করলে +1
+   WBExamPDF — TOTAL PDF SOLD COUNTER
+   Cart / Add করলে +1
    Remove করলে count কমবে না
+   Starting Sold Count = 1,257
    ========================================================= */
 
 (function () {
 
-  var START_COUNT = 1250;
+  var START_COUNT = 1257;
   var STORAGE_KEY = 'wb_pdf_added_total';
+
+
+  /* =========================
+     GET TOTAL SOLD
+     ========================= */
 
   function getTotalSold() {
 
@@ -651,7 +657,7 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
       localStorage.setItem(
         STORAGE_KEY,
-        START_COUNT
+        String(START_COUNT)
       );
 
       return START_COUNT;
@@ -659,31 +665,41 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
     var total = parseInt(saved, 10);
 
-    return isNaN(total) ? START_COUNT : total;
+    return isNaN(total)
+      ? START_COUNT
+      : total;
   }
 
 
-  function saveTotal(count) {
+  /* =========================
+     SAVE TOTAL SOLD
+     ========================= */
+
+  function saveTotalSold(count) {
 
     localStorage.setItem(
       STORAGE_KEY,
       String(count)
     );
 
-    updateDisplay();
+    updateSoldDisplay();
   }
 
 
-  function updateDisplay() {
+  /* =========================
+     UPDATE DISPLAY
+     ========================= */
+
+  function updateSoldDisplay() {
 
     var total = getTotalSold();
 
     document
-      .querySelectorAll('.wb-total-pdf-Sold')
+      .querySelectorAll('.wb-total-pdf-added')
       .forEach(function (el) {
 
         el.textContent =
-          'Total PDF Sold counting : ' +
+          'Total PDF Sold : ' +
           total.toLocaleString('en-IN');
 
       });
@@ -691,10 +707,9 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
   }
 
 
-  /*
-    Add to Cart / Heart click
-    শুধুমাত্র ON হলে +1 হবে।
-  */
+  /* =========================
+     CART / ADD PDF
+     ========================= */
 
   document.addEventListener(
     'click',
@@ -710,25 +725,29 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
 
       /*
-        Original heart function আগে চলতে দিচ্ছি।
-      */
+       * Main heart/cart system আগে
+       * .on class change করবে।
+       *
+       * তাই একটু delay দিয়ে check করছি।
+       */
 
       setTimeout(function () {
 
         /*
-          Click-এর পরে button-এর নতুন অবস্থাটা দেখছি।
-          .on থাকলে বুঝব PDF Add হয়েছে।
-        */
+         * শুধু Add হলে +1
+         *
+         * Remove করলে count কমবে না
+         */
 
         if (
           heart.classList.contains('on')
         ) {
 
-          var total = getTotalAdded();
+          var total = getTotalSold();
 
           total++;
 
-          saveTotal(total);
+          saveTotalSold(total);
 
         }
 
@@ -738,9 +757,9 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
   );
 
 
-  /*
-    Page load
-  */
+  /* =========================
+     INITIAL DISPLAY
+     ========================= */
 
   if (
     document.readyState === 'loading'
@@ -748,12 +767,12 @@ addEventListener('scroll',function(){var y=scrollY,d=y-last;last=y;
 
     document.addEventListener(
       'DOMContentLoaded',
-      updateDisplay
+      updateSoldDisplay
     );
 
   } else {
 
-    updateDisplay();
+    updateSoldDisplay();
 
   }
 
