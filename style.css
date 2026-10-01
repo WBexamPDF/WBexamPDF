@@ -191,4 +191,14 @@ footer>div:last-child{grid-row:3}
   .bn a{font-size:9px}
   .bn svg{font-size:24px}
 }
+.wb-total-pdf-section{
+  width:100%;
+  text-align:center;
+  padding:18px 10px 22px;
+}
 
+.wb-total-pdf-added{
+  font-size:15px;
+  font-weight:700;
+  color:#06153a;
+}
